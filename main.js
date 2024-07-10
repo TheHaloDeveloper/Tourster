@@ -11,15 +11,32 @@ function message_send() {
 
     let ai_msg = document.createElement('li');
     ai_msg.classList += "list-ai";
-    ai_msg.innerHTML = "Message Received!";
+    ai_msg.innerHTML = "";
     messages_list.appendChild(ai_msg);
 
-    //scroll to bottom
-    messages.scrollTop = messages.scrollHeight;
+    scrollToBottom()
+    typeWriter(ai_msg, "heres a nice long message that demonstrates the fade in + typewriter effect i added lmk if u like it for the ai messages!");
 }
 
 function input_key(e) {
     if (e.keyCode == 13) {
         message_send();
     }
+}
+
+function typeWriter(element, text, speed = 50) {
+    let i = 0;
+    function type() {
+        if (i < text.length) {
+            element.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(type, speed);
+            scrollToBottom()
+        }
+    }
+    type();
+}
+
+function scrollToBottom() {
+    messages.scrollTop = messages.scrollHeight;
 }

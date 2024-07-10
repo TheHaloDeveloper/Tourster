@@ -93,3 +93,16 @@ body {
     color: white;
     align-self: flex-end;
 }
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.list-ai, .list-user {
+    animation: fadeIn 0.5s ease-in-out;
+}
