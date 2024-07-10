@@ -43,3 +43,7 @@ body {
     border-left: 3px solid black;
     border-radius: 0 15px 15px 0;
 }
+
+#send_btn i {
+    margin-left: -5px;
+}
