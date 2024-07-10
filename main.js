@@ -29,12 +29,14 @@ function message_send() {
         animateLogo();
     }
 }
+window.message_send = message_send;
 
 function input_key(e) {
     if (e.keyCode == 13) {
         message_send();
     }
 }
+window.input_key = input_key;
 
 function typeWriter(element, text, speed = 50) {
     let i = 0;
