@@ -9,20 +9,37 @@ function animateLogo() {
     mainLogo.classList.add("spin-fade");
 }
 
+function msg(sender, text) {
+    let message = document.createElement('li');
+    message.classList.add(`list-${sender}`);
+
+    if(sender == "ai"){
+        message.innerHTML = "";
+        
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                message.innerHTML += text.charAt(i);
+                i++;
+                setTimeout(type, 50);
+                scrollToBottom();
+            }
+        }
+        type();
+    } else {
+        message.innerHTML = text;
+    }
+
+    messages_list.appendChild(message)
+}
+
 function message_send() {
-    let msg = document.createElement('li');
-    msg.classList.add("list-user");
-    msg.innerHTML = message_input.value;
-    messages_list.appendChild(msg);
+    msg("user", message_input.value)
     message_input.value = '';
 
-    let ai_msg = document.createElement('li');
-    ai_msg.classList.add("list-ai");
-    ai_msg.innerHTML = "";
-    messages_list.appendChild(ai_msg);
+    msg("ai", "heres a nice long message that demonstrates the fade in + typewriter effect i added lmk if u like it for the ai messages!")
 
     scrollToBottom();
-    typeWriter(ai_msg, "heres a nice long message that demonstrates the fade in + typewriter effect i added lmk if u like it for the ai messages!");
 
     if (!first_message) {
         first_message = true;
@@ -37,19 +54,6 @@ function input_key(e) {
     }
 }
 window.input_key = input_key;
-
-function typeWriter(element, text, speed = 50) {
-    let i = 0;
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-            scrollToBottom();
-        }
-    }
-    type();
-}
 
 function scrollToBottom() {
     messages.scrollTop = messages.scrollHeight;
