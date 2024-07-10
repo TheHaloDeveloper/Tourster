@@ -44,6 +44,10 @@ body {
     border-radius: 0 15px 15px 0;
 }
 
+#send_btn:hover {
+    cursor: pointer;
+}
+
 #send_btn i {
     margin-left: -5px;
 }

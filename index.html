@@ -11,8 +11,8 @@
 <body>
     <div id="messages_container">
         <div id="input_holder">
-            <input type="text" placeholder="Type here..." id="message_input" autocomplete="off">
-            <button type="submit" id="send_btn">
+            <input type="text" placeholder="Type here..." id="message_input" autocomplete="off" onkeydown="input_key(event)">
+            <button type="submit" id="send_btn" onclick="message_send()">
                 <i class="fa-solid fa-paper-plane"></i>
             </button>
         </div>
