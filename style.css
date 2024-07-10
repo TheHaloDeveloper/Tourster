@@ -6,7 +6,7 @@ body {
 #messages_container {
     width: 100vw;
     height: calc(100vh - 60px);
-    background-color: red;
+    /* background-color: red; */
 }
 
 #input_holder {
@@ -58,5 +58,32 @@ body {
     height: calc(100vh - 60px - 40px);
     top: 20px;
     left: 20px;
-    background-color: green;
+    /* background-color: green; */
+}
+
+#messages ul {
+    list-style: none;
+    margin-left: 15px;
+    padding: 0;
+}
+
+#messages ul li {
+    display: inline-block;
+    max-width: 30%;
+    height: auto;
+    padding: 10px 10px;
+    border-radius: 20px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    margin-bottom: 15px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.list-ai {
+    background-color: lightgray;
+}
+
+.list-user {
+    background-color: rgb(0, 145, 255);
+    color: white;
 }
