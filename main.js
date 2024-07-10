@@ -35,10 +35,51 @@ function msg(sender, text) {
 
 function message_send() {
     msg("user", message_input.value)
+    // fetch('https://api.openai.com/v1/chat/completions', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Authorization': `Bearer ${apiKey}`,
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         "model": "gpt-3.5-turbo",
+    //         "messages": [
+    //             {
+    //                 "role": "user",
+    //                 "content": message_input.value
+    //             }
+    //         ],
+    //         "max_tokens": 50
+    //     })
+    // }).then(response => {
+    //     return response.json()
+    // }).then(data => {
+    //     console.log(data)
+    //     msg("ai", "sent")
+    // })    
+
+    // fetch('https://gemini.googleapis.com/v1beta3/projects/PROJECT_ID/locations/LOCATION_ID/models/MODEL_ID:predict', {
+    //     method: 'POST',
+    //     headers: {
+    //         'Authorization': `Bearer ${apiKey}`,
+    //         'Content-Type': 'application/json'
+    //     },
+    //     body: JSON.stringify({
+    //         "instances": [
+    //             {
+    //                 "prompt": message_input.value,
+    //                 "max_tokens": 50
+    //             }
+    //         ]
+    //     })
+    // }).then(response => {
+    //     return response.json()
+    // }).then(data => {
+    //     console.log(data)
+    //     msg("ai", "sent")
+    // })    
+
     message_input.value = '';
-
-    msg("ai", "heres a nice long message that demonstrates the fade in + typewriter effect i added lmk if u like it for the ai messages!")
-
     scrollToBottom();
 
     if (!first_message) {
