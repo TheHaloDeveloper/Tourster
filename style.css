@@ -1,18 +1,17 @@
 body {
     margin: 0;
     overscroll-behavior: none;
+    background-color: rgb(229, 229, 229);
 }
 
 #messages_container {
     width: 100vw;
     height: calc(100vh - 60px);
-    /* background-color: red; */
 }
 
 #input_holder {
     width: 100vw;
     height: 60px;
-    /* background-color: blue; */
     position: absolute;
     bottom: 0;
 }
@@ -61,7 +60,6 @@ body {
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    /* background-color: green; */
 }
 
 #messages ul {
@@ -81,6 +79,8 @@ body {
     margin-bottom: 15px;
     word-wrap: break-word;
     white-space: pre-wrap;
+    opacity: 0;
+    animation: fadeInSlideUp 0.5s ease-in-out forwards;
 }
 
 .list-ai {
@@ -94,15 +94,13 @@ body {
     align-self: flex-end;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInSlideUp {
     from {
         opacity: 0;
+        transform: translateY(100px);
     }
     to {
         opacity: 1;
+        transform: translateY(0);
     }
-}
-
-.list-ai, .list-user {
-    animation: fadeIn 0.5s ease-in-out;
 }
