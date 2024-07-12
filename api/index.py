@@ -8,8 +8,20 @@ app = Flask(__name__)
 def home():
     return render_template('chat.html')
 
+history = [
+        {
+            "role": "user",
+            "parts": ["System Prompt: You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your job is to ask the user questions and identifying their travel situation, and create filters based on that information. Your responses should be a max of 100 words. YOU WILL NOT GO OFF TRACK, AND YOUR RESPONSES WILL BE STRICTLY RESTRICTED TO TRAVEL."]
+        },
+        {
+            "role": "model",
+            "parts": ["Understood."]
+        }
+]
+
 @app.route('/ai_response', methods=['POST'])
 def ai_response():
+    global history
     data = request.json
     message = data.get('message', '')
 
@@ -28,20 +40,20 @@ def ai_response():
         generation_config=generation_config,
     )
 
-    history = [
+    chat_session = model.start_chat(history=history)
+    response = chat_session.send_message(message)
+
+    history.extend([
         {
             "role": "user",
-            "parts": ["System Prompt: You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your job is to ask the user questions and identifying their travel situation, and create filters based on that information. Your responses should be a max of 100 words. YOU WILL NOT GO OFF TRACK, AND YOUR RESPONSES WILL BE STRICTLY RESTRICTED TO TRAVEL."]
+            "parts": [message]
         },
         {
             "role": "model",
-            "parts": ["Understood."]
+            "parts": [response.text]
         }
-    ]
+    ])
 
-    chat_session = model.start_chat(history=history)
-    response = chat_session.send_message(message)
-    
     return jsonify({'response': response.text})
 
 if __name__ == '__main__':
