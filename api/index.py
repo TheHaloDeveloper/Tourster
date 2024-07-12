@@ -54,6 +54,9 @@ def ai_response():
         }
     ])
 
+    if len(history) >= 20:
+        del history[2:4]
+
     return jsonify({'response': response.text})
 
 if __name__ == '__main__':
