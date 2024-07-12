@@ -192,57 +192,23 @@
 
         function message_send() {
             msg("user", message_input.value)
-            // fetch('https://api.openai.com/v1/chat/completions', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Authorization': `Bearer ${apiKey}`,
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         "model": "gpt-3.5-turbo",
-            //         "messages": [
-            //             {
-            //                 "role": "user",
-            //                 "content": message_input.value
-            //             }
-            //         ],
-            //         "max_tokens": 50
-            //     })
-            // }).then(response => {
-            //     return response.json()
-            // }).then(data => {
-            //     console.log(data)
-            //     msg("ai", "sent")
-            // })    
 
-            // fetch('https://gemini.googleapis.com/v1beta3/projects/PROJECT_ID/locations/LOCATION_ID/models/MODEL_ID:predict', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Authorization': `Bearer ${apiKey}`,
-            //         'Content-Type': 'application/json'
-            //     },
-            //     body: JSON.stringify({
-            //         "instances": [
-            //             {
-            //                 "prompt": message_input.value,
-            //                 "max_tokens": 50
-            //             }
-            //         ]
-            //     })
-            // }).then(response => {
-            //     return response.json()
-            // }).then(data => {
-            //     console.log(data)
-            //     msg("ai", "sent")
-            // })    
+            fetch('/ai_response', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({message: message_input.value})
+            }).then(response => response.json()).then(data => {
+                message_input.value = '';
+                scrollToBottom();
+                msg("ai", data.response)
 
-            message_input.value = '';
-            scrollToBottom();
-
-            if (!first_message) {
-                first_message = true;
-                animateLogo();
-            }
+                if (!first_message) {
+                    first_message = true;
+                    animateLogo();
+                }
+            })
         }
         window.message_send = message_send;
 
@@ -256,21 +222,6 @@
         function scrollToBottom() {
             messages.scrollTop = messages.scrollHeight;
         }
-
-        fetch('/process', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ message: "test message!" })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('flask responded, the response is ' + data.response)
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
     </script>
 </body>
 </html>

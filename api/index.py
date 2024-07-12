@@ -6,8 +6,8 @@ app = Flask(__name__)
 def home():
     return render_template('chat.html')
 
-@app.route('/process', methods=['POST'])
-def process():
+@app.route('/ai_response', methods=['POST'])
+def ai_response():
     data = request.json
     message = data.get('message', '')
     
