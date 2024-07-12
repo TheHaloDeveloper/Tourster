@@ -8,7 +8,7 @@ app = Flask(__name__)
 def home():
     return render_template('chat.html')
 
-apiKey = ""
+apiKey = "AIzaSyAGzYp0VuOWfs44r1sRHOn3y55H7dv4jIs"
 
 @app.route('/ai_response', methods=['POST'])
 def ai_response():
@@ -22,7 +22,7 @@ def ai_response():
         "temperature": 1,
         "top_p": 0.95,
         "top_k": 64,
-        "max_output_tokens": 100,
+        "max_output_tokens": 200,
         "response_mime_type": "text/plain",
     }
 
@@ -33,8 +33,12 @@ def ai_response():
 
     history = [
         {
+            "role": "user",
+            "parts": ["System Prompt: You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your job is to ask the user questions and identifying their travel situation, and create filters based on that information. Your responses should be a max of 100 words. YOU WILL NOT GO OFF TRACK, AND YOUR RESPONSES WILL BE STRICTLY RESTRICTED TO TRAVEL."]
+        },
+        {
             "role": "model",
-            "parts": ["Hello, I am ToursterAI, created to help you plan your trips. How can I help you today?"]
+            "parts": ["Understood."]
         }
     ]
 
