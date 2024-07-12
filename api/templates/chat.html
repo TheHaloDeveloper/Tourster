@@ -193,24 +193,25 @@
         msg("ai", "Hello, I am ToursterAI, created to help you plan your trips. How can I help you today?")
 
         function message_send() {
-            msg("user", message_input.value)
+            if (message_input.value.replace(/ /g, '') != ''){
+                msg("user", message_input.value)
+                fetch('/ai_response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({message: message_input.value})
+                }).then(response => response.json()).then(data => {
+                    message_input.value = '';
+                    scrollToBottom();
+                    msg("ai", data.response)
 
-            fetch('/ai_response', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({message: message_input.value})
-            }).then(response => response.json()).then(data => {
-                message_input.value = '';
-                scrollToBottom();
-                msg("ai", data.response)
-
-                if (!first_message) {
-                    first_message = true;
-                    animateLogo();
-                }
-            })
+                    if (!first_message) {
+                        first_message = true;
+                        animateLogo();
+                    }
+                })
+            }
         }
         window.message_send = message_send;
 
