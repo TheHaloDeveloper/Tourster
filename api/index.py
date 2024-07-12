@@ -8,7 +8,7 @@ app = Flask(__name__)
 def home():
     return render_template('chat.html')
 
-apiKey = "AIzaSyAGzYp0VuOWfs44r1sRHOn3y55H7dv4jIs"
+apiKey = ""
 
 @app.route('/ai_response', methods=['POST'])
 def ai_response():
