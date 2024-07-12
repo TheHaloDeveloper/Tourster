@@ -8,15 +8,12 @@ app = Flask(__name__)
 def home():
     return render_template('chat.html')
 
-apiKey = "AIzaSyAGzYp0VuOWfs44r1sRHOn3y55H7dv4jIs"
-
 @app.route('/ai_response', methods=['POST'])
 def ai_response():
     data = request.json
     message = data.get('message', '')
 
-    # genai.configure(api_key=os.environ["GEMINI_API_KEY"])
-    genai.configure(api_key=apiKey)
+    genai.configure(api_key=os.getenv('API_KEY'))
 
     generation_config = {
         "temperature": 1,
