@@ -194,15 +194,18 @@
 
         function message_send() {
             if (message_input.value.replace(/ /g, '') != ''){
-                msg("user", message_input.value)
+                let req = message_input.value
+                message_input.value = '';
+
+                msg("user",req)
+
                 fetch('/ai_response', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({message: message_input.value})
+                    body: JSON.stringify({message: req})
                 }).then(response => response.json()).then(data => {
-                    message_input.value = '';
                     scrollToBottom();
                     msg("ai", data.response)
 
