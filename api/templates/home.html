@@ -13,6 +13,7 @@
     <style>
         :root {
             --highlight: rgb(35, 41, 127);
+            --accent: rgb(67, 74, 175);
         }
 
         body {
@@ -97,6 +98,7 @@
             outline: 3px solid var(--highlight);
             cursor: pointer;
             font-weight: bold;
+            transition: 0.2s;
         }
 
         #signup_btn {
@@ -105,9 +107,19 @@
             color: white;
         }
 
+        #signup_btn:hover {
+            background-color: var(--accent);
+            outline: 3px solid var(--accent);
+        }
+
         #login_btn {
             background-color: white;
             color: var(--highlight);
+        }
+
+        #login_btn:hover {
+            background-color: var(--highlight);
+            color: white;
         }
     </style>
 </head>
