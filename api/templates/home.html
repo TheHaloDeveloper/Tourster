@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="icon" href="https://www.tourster.app/static/tourster-transparent.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">    
+
+    <style>
+        body {
+            margin: 0;
+            overscroll-behavior: none;
+            color: rgb(50, 50, 100)
+        }
+
+        .noselect {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        .bg-light {
+            font-family: "Josefin Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .bg-semi {
+            font-family: "Josefin Sans", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 600;
+            font-style: normal;
+        }
+
+        #navbar {
+            width: 100vw;
+            height: 75px;
+            border-bottom: 5px solid black;
+        }
+
+        #name {
+            font-size: 40px;
+            line-height: 75px;
+            margin-left: 17.5px;
+        }
+
+        #links {
+            position: absolute;;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            line-height: 75px;
+        }
+
+        #links span {
+            padding: 30px;
+        }
+
+        #links a {
+            color: inherit;
+            text-decoration: inherit;
+        }
+
+        #buttons {
+            position: absolute;
+            top: 0;
+            right: 17.5px;
+            line-height: 75px;
+        }
+
+        #buttons button {
+            height: 40px;
+            width: 70px;
+        }
+
+        #signup_btn {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div id="navbar" class="noselect bg-semi">
+        <span id="name">Tourster</span>
+
+        <div id="links">
+            <span><a href="#">Home</a></span>
+            <span><a href="#">Our Services</a></span>
+            <span><a href="#">Contact</a></span>
+        </div>
+
+        <div id="buttons">
+            <button id="signup_btn">Sign Up</button>
+            <button id="login_btn">Log In</button>
+        </div>
+    </div>  
+</body>
+</html>
