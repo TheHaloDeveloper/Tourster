@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tourster</title>
     <link rel="icon" href="https://www.tourster.app/static/tourster-transparent.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,8 +51,17 @@
 
         #name {
             font-size: 35px;
-            line-height: 75px;
-            margin-left: 17.5px;
+            position: absolute;
+            line-height: 80px;
+            left: 70px;
+            cursor: pointer;
+        }
+
+        #logo {
+            width: 50px;
+            margin-left: 10px;
+            margin-top: 13px;
+            cursor: pointer;
         }
 
         #links {
@@ -60,7 +69,7 @@
             top: 0;
             left: 50%;
             transform: translateX(-50%);
-            line-height: 75px;
+            line-height: 80px;
             font-size: 20px;
         }
 
@@ -104,7 +113,10 @@
 </head>
 <body class="bg-light">
     <div id="navbar" class="noselect bg-semi">
-        <span id="name">Tourster</span>
+        <div id="tourster">
+            <img id="logo" src="https://www.tourster.app/static/tourster-transparent.png">
+            <span id="name">Tourster</span>
+        </div>
 
         <div id="links">
             <span><a href="#">Home</a></span>
