@@ -11,10 +11,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">    
 
     <style>
+        :root {
+            --highlight: rgb(35, 41, 127);
+        }
+
         body {
             margin: 0;
             overscroll-behavior: none;
-            color: rgb(50, 50, 100)
         }
 
         .noselect {
@@ -58,6 +61,7 @@
             left: 50%;
             transform: translateX(-50%);
             line-height: 75px;
+            font-size: 20px;
         }
 
         #links span {
@@ -78,11 +82,23 @@
 
         #buttons button {
             height: 40px;
-            width: 70px;
+            width: 80px;
+            border-radius: 10px;
+            border: none;
+            outline: 3px solid var(--highlight);
+            cursor: pointer;
+            font-weight: bold;
         }
 
         #signup_btn {
-            margin-right: 10px;
+            margin-right: 20px;
+            background-color: var(--highlight);
+            color: white;
+        }
+
+        #login_btn {
+            background-color: white;
+            color: var(--highlight);
         }
     </style>
 </head>
