@@ -23,6 +23,7 @@
 
         body {
             overscroll-behavior: none;
+            color: var(--highlight);
         }
 
         .noselect {
@@ -49,7 +50,7 @@
         }
 
         #navbar {
-            position: absolute;
+            position: fixed;
             top: 0;
             width: 100vw;
             height: 75px;
@@ -132,6 +133,12 @@
         .spawner {
             width: 100%;
             height: 100vh;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-size: cover;
+            z-index: -1;
         }
 
         .particles {
@@ -169,6 +176,32 @@
             }
 
         }
+
+        #heading {
+            position: absolute;
+            top: 200px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 25px;
+            width: 43ch;
+            animation: typing 2s, blink .5s step-end infinite alternate;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 3px solid;
+            color: black;
+        }
+
+        @keyframes typing {
+            from {
+                width: 0
+            }
+        }
+                
+        @keyframes blink {
+            50% {
+                border-color: transparent
+            }
+        }
     </style>
 </head>
 <body class="bg-light">
@@ -192,6 +225,10 @@
             <button id="signup_btn">Sign Up</button>
             <button id="login_btn">Log In</button>
         </div>     
+    </div>
+
+    <div id="heading">
+        <h1>All-in-one AI Travel Planner</h1>
     </div>
     
     <script>
