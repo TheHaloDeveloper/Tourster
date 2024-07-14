@@ -16,8 +16,12 @@
             --accent: rgb(67, 74, 175);
         }
 
-        body {
+        * {
             margin: 0;
+            padding: 0;
+        }
+
+        body {
             overscroll-behavior: none;
         }
 
@@ -45,9 +49,12 @@
         }
 
         #navbar {
+            position: absolute;
+            top: 0;
             width: 100vw;
             height: 75px;
             border-bottom: 5px solid black;
+            background-color: white;
         }
 
         #name {
@@ -121,9 +128,54 @@
             background-color: var(--highlight);
             color: white;
         }
+
+        .spawner {
+            width: 100%;
+            height: 100vh;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particles li {
+            position: absolute;
+            display: block;
+            list-style: none;
+            width: 20px;
+            height: 20px;
+            background: rgba(184, 184, 184, 0.4);
+            animation: animate 25s linear infinite;
+            bottom: -150px;
+        }
+
+        @keyframes animate {
+
+            0%{
+                transform: translateY(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 0;
+            }
+
+            100%{
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+                border-radius: 50%;
+            }
+
+        }
     </style>
 </head>
 <body class="bg-light">
+    <div class="spawner">
+        <ul class="particles"></ul>
+    </div>   
+
     <div id="navbar" class="noselect bg-semi">
         <div id="tourster">
             <img id="logo" src="https://www.tourster.app/static/tourster-transparent.png">
@@ -139,7 +191,29 @@
         <div id="buttons">
             <button id="signup_btn">Sign Up</button>
             <button id="login_btn">Log In</button>
-        </div>
-    </div>  
+        </div>     
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const numberOfCircles = 20;
+            const sizes = [40, 20, 20, 60, 20, 50, 150, 25, 15, 30, 90, 30, 50, 80, 90, 40, 70, 35, 45, 65];
+            const positions = [25, 10, 70, 40, 65, 75, 35, 50, 20, 5, 30, 60, 55, 80, 45, 15, 5, 75, 80, 50];
+            const animationDelays = [0, 2, 4, 0, 0, 3, 7, 15, 2, 0, 5, 10, 1, 6, 12, 8, 11, 9, 13, 14];
+            const animationDurations = [15, 12, 25, 18, 25, 25, 25, 25, 15, 11, 20, 12, 17, 19, 30, 27, 14, 16, 23, 21];
+        
+            const ul = document.querySelector(".particles");
+            
+            for (let i = 0; i < numberOfCircles; i++) {
+                const li = document.createElement("li");
+                li.style.width = `${sizes[i]}px`;
+                li.style.height = `${sizes[i]}px`;
+                li.style.left = `${positions[i]}%`;
+                li.style.animationDelay = `${animationDelays[i]}s`;
+                li.style.animationDuration = `${animationDurations[i]}s`;
+                ul.appendChild(li);
+            }
+        });
+    </script>
 </body>
 </html>
