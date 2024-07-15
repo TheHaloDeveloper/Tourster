@@ -1,8 +1,12 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import os
 import google.generativeai as genai
 
 app = Flask(__name__)
+
+@app.route('/static/soon/')
+def serve_soon():
+    return send_from_directory('static/soon', 'index.html')
 
 @app.route('/')
 def home():
