@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('chat.html')
+    return render_template('home.html')
 
 prompt = """
 You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. 
