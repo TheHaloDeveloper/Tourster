@@ -17,3 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
         ul.appendChild(li);
     }
 });
+
+function waitlist() {
+    window.location.href = 'https://forms.gle/5qgL5C5a9PgmBiA46';
+}

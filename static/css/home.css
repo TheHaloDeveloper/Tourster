@@ -74,6 +74,10 @@ body {
     line-height: 80px;
 }
 
+#tourster2 {
+    margin-bottom: 32px;
+}
+
 #tourster2 img {
     width: 55px;
 }
@@ -317,6 +321,7 @@ footer a {
     margin: 20px;
     margin-left: 3px;
     width: 100px;
+    display: block;
 }
 
 #waitlist:hover {
@@ -355,6 +360,10 @@ footer a {
     height: 10px;
 }
 
+#small_table {
+    display: none;
+}
+
 /* resizing for different sizes/devices */
 @media only screen and (max-width: 872px) {
     #tourster span {
@@ -368,6 +377,18 @@ footer a {
 
     #links span {
         padding: 10px;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    #agreements {
+        display: block;
+        right: unset;
+        left: 0;
+    }
+
+    #agreements a {
+        padding: 5px;
     }
 }
 
@@ -407,6 +428,46 @@ footer a {
         line-height: unset;
         line-height: 115px;
     }
+
+    #large_table {
+        display: none;
+    }
+
+    #small_table {
+        display: block;
+    }
+
+    #footer_topleft {
+        width: 100%;
+        height: unset;
+    }
+
+    #footer_bottom {
+        bottom: -200px
+    }
+
+    #desc {
+        margin-top: -20px;
+    }
+
+    #waitlist {
+        display: inline-block;
+        height: 20px;
+        width: 60px;
+        border-radius: 5px;
+        margin: 10px;
+    }
+
+    #footer_topright {
+        width: 100%;
+        position: absolute;
+        left: unset;
+        top: 220px;
+    }
+
+    #tourster2 {
+        margin-bottom: 0;
+    }
 }
 
 @media only screen and (max-width: 500px) {
@@ -417,6 +478,33 @@ footer a {
 
     #soon {
         top: 240px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    #agreements a {
+        display: block;
+        padding: 0;
+    }
+
+    #footer_bottom {
+        line-height: 25px;
+    }
+}
+
+@media only screen and (max-width: 410px) {
+    #tourster2 img {
+        width: 40px;
+    }
+
+    #tourster2 span {
+        font-size: 25px;
+        line-height: 45px;
+        left: 50px;
+    }
+
+    #desc {
+        font-size: 15px;
     }
 }
 
@@ -432,5 +520,19 @@ footer a {
 
     #soon {
         top: 230px;
+    }
+
+    #footer_bottom span, #agreements a {
+        font-size: 12px;
+    }
+
+    #footer_bottom {
+        line-height: 20px;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    #waitlist {
+        margin-left: 0px;
     }
 }

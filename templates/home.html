@@ -49,15 +49,14 @@
                 <img class="logo" src="/static/images/tourster-transparent.png">
                 <span class="name">Tourster</span>
             </div>
-            <br><br>
 
-            <div id="desc">Click to join our waitlist:</div>
-            <a href="https://forms.gle/5qgL5C5a9PgmBiA46" target="_blank"><button id="waitlist">Waitlist</button></a>
+            <span id="desc">Click to join our waitlist:</span>
+            <button id="waitlist" onclick="waitlist()">Waitlist</button>
             <div id="tiny">Get early access to our first version.</div>
         </div>
 
         <div id="footer_topright">
-            <div class="table_component" role="region" tabindex="0">
+            <div class="table_component" role="region" tabindex="0" id="large_table">
                 <table>
                     <thead>
                         <tr>
@@ -85,6 +84,56 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="table_component" role="region" tabindex="0" id="small_table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tourster</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="/soon">About Us</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/soon">Contact Us</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/soon">FAQs</a></td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Explore</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="/soon">Flights</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/soon">Hotels</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="/soon">Activities</a></td>
+                        </tr>
+                    </tbody>
+                    <thead>
+                        <tr>
+                            <th>Connect with Us</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="https://www.instagram.com/tourster.app/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="https://www.youtube.com/@ToursterApp" target="_blank"><i class="fa-brands fa-youtube"></i> Youtube</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>                       
         </div>
 
         <div id="footer_bottom">
