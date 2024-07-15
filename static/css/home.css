@@ -2,7 +2,6 @@
     --highlight: rgb(35, 41, 127);
     --accent: rgb(67, 74, 175);
     --beige: rgb(242, 235, 223);
-    overscroll-behavior: none;
 }
 
 * {
