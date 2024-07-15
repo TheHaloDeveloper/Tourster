@@ -10,7 +10,7 @@ def home():
 
 @app.route('/soon')
 def serve_soon():
-    return send_from_directory(app.static_folder, '/soon/index.html')
+    return send_from_directory('static/soon', 'index.html')
 
 prompt = """
 You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. 
