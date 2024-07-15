@@ -1,0 +1,4 @@
+Flask==3.0.3
+google-generativeai
+charset_normalizer
+chardet
