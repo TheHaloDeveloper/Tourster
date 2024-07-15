@@ -15,6 +15,7 @@
             --highlight: rgb(35, 41, 127);
             --accent: rgb(67, 74, 175);
             --beige: rgb(242, 235, 223);
+            overscroll-behavior: none;
         }
 
         * {
@@ -22,8 +23,12 @@
             padding: 0;
         }
 
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
+        }
+
         body {
-            overscroll-behavior: none;
             color: var(--highlight);
         }
 
@@ -57,21 +62,39 @@
             height: 75px;
             border-bottom: 5px solid black;
             background-color: var(--beige);
+            z-index: 9999;
         }
 
-        #name {
-            font-size: 35px;
+        .name {
+            font-family: "Josefin Sans", sans-serif;
             position: absolute;
-            line-height: 80px;
             left: 70px;
             cursor: pointer;
         }
 
-        #logo {
-            width: 50px;
-            margin-left: 10px;
-            margin-top: 13px;
+        .logo {
             cursor: pointer;
+        }
+
+        #tourster img {
+            width: 50px;
+            margin-top: 13px;
+            margin-left: 10px;
+        }
+
+        #tourster span {
+            font-size: 35px;
+            line-height: 80px;
+        }
+
+        #tourster2 img {
+            width: 55px;
+        }
+
+        #tourster2 span {
+            font-size: 40px;
+            text-transform: uppercase;
+            line-height: 65px;
         }
 
         #links {
@@ -87,7 +110,7 @@
             padding: 30px;
         }
 
-        #links a {
+        #links a, footer a {
             color: inherit;
             text-decoration: inherit;
         }
@@ -99,7 +122,7 @@
             line-height: 75px;
         }
 
-        #buttons button {
+        #buttons button, #waitlist {
             height: 40px;
             width: 80px;
             border-radius: 10px;
@@ -133,9 +156,9 @@
 
         .spawner {
             width: 100%;
-            height: 100vh;
+            height: 100%;
             display: inline-block;
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
             background-size: cover;
@@ -185,7 +208,7 @@
             transform: translateX(-50%);
             font-size: 25px;
             width: 43ch;
-            animation: typing 2s, blink .5s step-end infinite alternate;
+            animation: typing 2.5s, blink .5s step-end infinite alternate;
             white-space: nowrap;
             overflow: hidden;
             border-right: 3px solid;
@@ -225,6 +248,7 @@
             position: relative;
             white-space: nowrap;
         }
+
         .fancy:after {
             --deco-height: 0.3125em;
             content: "";
@@ -238,18 +262,123 @@
             background-repeat: round;
             background-position: 0em;
         }
+
+        #blocker {
+            width: 100vw;
+            height: 100vh;
+        }
         
+        footer {
+            margin: 50px;
+            height: 350px;
+            width: calc(100% - 100px);
+            position: relative;
+        }
+
+        footer hr {
+            border: none;
+            height: 3px;
+            color: rgb(87, 89, 114);
+            background-color: rgb(87, 89, 114);
+        }
+
+        footer a {
+            text-decoration: underline;
+        }
+
+        #footer_topleft {
+            width: 50%;
+            height: calc(100% - 35px);
+        }
+
+        #footer_topright {
+            width: 50%;
+            height: calc(100% - 35px);
+            position: absolute;
+            top: 0;
+            left: 50%;
+        }
+
+        #footer_bottom {
+            position: absolute;
+            width: 100%;
+            height: 35px;
+            bottom: 0px;
+            line-height: 35px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        #agreements {
+            display: inline-block;
+            position: absolute;
+            right: 0;
+        }
+
+        #agreements a {
+            padding: 15px;
+        }
+
+        #desc {
+            margin-top: 10px;
+            font-size: 20px;
+        }
+
+        #waitlist {
+            background-color: white;
+            color: var(--highlight);
+            margin: 20px;
+            margin-left: 3px;
+            width: 100px;
+        }
+
+        #waitlist:hover {
+            background-color: var(--highlight);
+            color: white;
+        }
+
+        #tiny {
+            font-size: 12px;
+        }
+
+        .table_component {
+            overflow: auto;
+            width: 100%;
+            position: absolute;
+            bottom: 50px;
+        }
+        
+        .table_component table {
+            border: 3px none #000005;
+            height: 180px;
+            width: 100%;
+            table-layout: fixed;
+            text-align: left;
+        }
+        
+        .table_component th {
+            border: 3px none #000005;
+            color: #000000;
+            padding: 30px 0 30px 0;
+        }
+        
+        .table_component td {
+            border: 3px none #000005;
+            color: #000000;
+            height: 10px;
+        }
     </style>
 </head>
 <body class="bg-semi">
     <div class="spawner">
         <ul class="particles"></ul>
-    </div>   
+    </div>
+
+    <div id="blocker"></div>
 
     <div id="navbar" class="noselect bg-semi">
         <div id="tourster">
-            <img id="logo" src="https://www.tourster.app/static/tourster-transparent.png">
-            <span id="name">Tourster</span>
+            <img class="logo" src="https://www.tourster.app/static/tourster-transparent.png">
+            <span class="name">Tourster</span>
         </div>
 
         <div id="links">
@@ -268,6 +397,62 @@
         <h1>All-in-one AI Travel Planner</h1>
     </div>
     <div id="soon">Coming <span class="fancy"><b>Soon</b></span></div>
+
+    <footer>
+        <div id="footer_topleft">
+            <div id="tourster2">
+                <img class="logo" src="https://www.tourster.app/static/tourster-transparent.png">
+                <span class="name">Tourster</span>
+            </div>
+            <br><br>
+
+            <div id="desc">Click to join our waitlist:</div>
+            <a href="https://forms.gle/5qgL5C5a9PgmBiA46" target="_blank"><button id="waitlist">Waitlist</button></a>
+            <div id="tiny">Get early access to our first version.</div>
+        </div>
+
+        <div id="footer_topright">
+            <div class="table_component" role="region" tabindex="0">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tourster</th>
+                            <th>Explore</th>
+                            <th>Connect with Us</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><a href="#">About Us</a></td>
+                            <td><a href="#">Flights</a></td>
+                            <td><a href="https://www.instagram.com/tourster.app/" target="_blank"><i class="fa-brands fa-instagram"></i> Instagram</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">Contact Us</a></td>
+                            <td><a href="#">Hotels</a></td>
+                            <td><a href="https://www.youtube.com/@ToursterApp" target="_blank"><i class="fa-brands fa-youtube"></i> Youtube</a></td>
+                        </tr>
+                        <tr>
+                            <td><a href="#">FAQs</a></td>
+                            <td><a href="#">Activities</a></td>
+                            <td><a href="#"></a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="footer_bottom">
+            <hr>
+            <span>&copy; 2024 Tourster; All Rights Reserved</span>
+
+            <div id="agreements">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Cookie Policy</a>
+            </div>
+        </div>
+    </footer>
     
     <script>
         document.addEventListener("DOMContentLoaded", function() {
