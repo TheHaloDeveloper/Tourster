@@ -194,7 +194,7 @@ body {
     left: 50%;
     transform: translateX(-50%);
     font-size: 25px;
-    width: 43ch;
+    width: 40ch;
     animation: typing 2.5s, blink .5s step-end infinite alternate;
     white-space: nowrap;
     overflow: hidden;
