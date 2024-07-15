@@ -13,6 +13,7 @@
 html, body {
     max-width: 100%;
     overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 body {
@@ -264,6 +265,7 @@ footer {
     height: 350px;
     width: calc(100% - 100px);
     position: relative;
+    overflow: hidden;
 }
 
 footer hr {
@@ -434,6 +436,9 @@ footer a {
     }
 
     #small_table {
+        position: absolute;
+        top: -130px;
+        left: -2px;
         display: block;
     }
 
@@ -443,7 +448,7 @@ footer a {
     }
 
     #footer_bottom {
-        bottom: -200px
+        top: 400px;
     }
 
     #desc {
@@ -466,6 +471,11 @@ footer a {
     }
 
     #tourster2 {
+        margin-bottom: 0;
+    }
+
+    footer {
+        height: 500px;
         margin-bottom: 0;
     }
 }
