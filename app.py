@@ -46,7 +46,7 @@ def ai_response():
     data = request.json
     message = data.get('message', '')
 
-    genai.configure(api_key=os.getenv('API_KEY'))
+    genai.configure(api_key=os.getenv('gemini'))
 
     generation_config = {
         "temperature": 1,
