@@ -1,16 +1,19 @@
 from apify_client import ApifyClient
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 client = ApifyClient(os.getenv('apify'))
 file = open('static/data/info.txt', 'a')
 
 run_input = {
     "locationFullName": "Los Angeles",
-    "maxItemsPerQuery": 500,
+    "maxItemsPerQuery": 100,
     "includeTags": True,
     "includeNearbyResults": False,
     "includeAttractions": True,
-    "includeRestaurants": True,
+    "includeRestaurants": False,
     "includeHotels": True,
     "includeVacationRentals": False,
     "checkInDate": "",
