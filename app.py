@@ -63,7 +63,7 @@ def ai_response():
     )
 
     chat_session = model.start_chat(history=history)
-    response = chat_session.send_message(f'The date today is: {datetime.today().strftime('%m-%d-%Y')}. {message}')
+    response = chat_session.send_message(f"The date today is: {datetime.today().strftime('%m-%d-%Y')}. {message}")
 
     history.extend([
         {
