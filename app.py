@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory
+from datetime import datetime
 import os
 import google.generativeai as genai
 
@@ -62,7 +63,7 @@ def ai_response():
     )
 
     chat_session = model.start_chat(history=history)
-    response = chat_session.send_message(message)
+    response = chat_session.send_message(f'The date today is: {datetime.today().strftime('%m-%d-%Y')}. {message}')
 
     history.extend([
         {
