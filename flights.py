@@ -1,15 +1,24 @@
-import requests
+from requests_html import HTMLSession
+import pyppdf.patch_pyppeteer
 from bs4 import BeautifulSoup
 
 f = open('static/data/info.txt', 'a')
 
-url = 'https://vacation.hotwire.com/Flights-Search?tmid=34297673263&trip=RoundTrip&leg1=from%3ASFO%2Cto%3ALAX%2Cdeparture%3A07%2F20%2F2024TANYT&leg2=from%3ALAX%2Cto%3ASFO%2Cdeparture%3A07%2F23%2F2024TANYT&passengers=children%3A0%2Cadults%3A1%2Cseniors%3A0%2Cinfantinlap%3AY&options=sortby%3Aprice&mode=search&paandi=true&pwaDialog=clientSideErrorDialog'
+url = 'https://www.opodo.com/travel/?locale=en_GB#/results/type=R;buyPath=1006;from=SFO;to=LAX;dep=2024-07-21;adults=1;direct=false;children=0;infants=0;internalSearch=false;collectionmethod=false;ret=2024-07-27'
+session = HTMLSession()
+resp = session.get(url)
+resp.html.render()
+html = resp.html.html
 
-response = requests.get(url)
-soup = BeautifulSoup(response.content, 'html.parser')
+soup = BeautifulSoup(html, 'html.parser')
 
-# main = soup.find("div", {"id": "listWrapper"})
-# list = soup.find("ul")
+# main = soup.find_all("ul", {"class": "uitk-typelist"})[0]
+# children = main.findChildren('li')
+# children.pop(0)
 
-f.write(f'{soup}')
+# for card in children:
+#     print(card.findChildren())
+#     break
+
+f.write(html)
 f.close()
