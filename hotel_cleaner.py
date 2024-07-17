@@ -1,8 +1,8 @@
-import json
+#next page: CFo=
+with open('static/data/info.txt', 'r') as f:
+    lines = f.readlines()
 
-file = open('static/data/info.txt', 'r')
-data = json.loads(''.join(file.readlines()))
-
-print(len(data))
-
-file.close()
+with open('static/data/info.txt', 'w') as f:
+    for line in lines:
+        if len(line.strip("\n").strip()) != 0:
+            f.write(line)

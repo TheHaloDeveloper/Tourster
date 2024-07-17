@@ -3928,11 +3928,7 @@
         "next":"https://serpapi.com/search.json?adults=2&check_in_date=2025-01-15&check_out_date=2025-01-30&children=0&currency=USD&engine=google_hotels&gl=us&hl=en&next_page_token=CBI%3D&q=los+angeles"
     }
 }
-
-
 åå
-
-
 {
     "search_metadata":{
         "id":"6696f260359e998fe962ef61",
@@ -7927,11 +7923,7 @@
         "next":"https://serpapi.com/search.json?adults=2&check_in_date=2025-01-15&check_out_date=2025-01-30&children=0&currency=USD&engine=google_hotels&gl=us&hl=en&next_page_token=CCQ%3D&q=los+angeles"
     }
 }
-
-
 åå
-
-
 {
     "search_metadata":{
         "id":"6696f2ca9bddf7d26770de24",
@@ -11894,11 +11886,7 @@
         "next":"https://serpapi.com/search.json?adults=2&check_in_date=2025-01-15&check_out_date=2025-01-30&children=0&currency=USD&engine=google_hotels&gl=us&hl=en&next_page_token=CDY%3D&q=los+angeles"
     }
 }
-
-
 åå
-
-
 {
     "search_metadata":{
         "id":"6696f34a0574f57255ca1a36",
@@ -16032,11 +16020,7 @@
         "next":"https://serpapi.com/search.json?adults=2&check_in_date=2025-01-15&check_out_date=2025-01-30&children=0&currency=USD&engine=google_hotels&gl=us&hl=en&next_page_token=CEg%3D&q=los+angeles"
     }
 }
-
-
 åå
-
-
 {
     "search_metadata":{
         "id":"6696f38ae0ded48c1a026048",
