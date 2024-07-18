@@ -35,7 +35,7 @@ def login():
     # return oauth.auth0.authorize_redirect(
     #     redirect_uri=url_for("callback", _external=True)
     # )
-    print('hi')
+    return redirect(f"{env.get('AUTH0_DOMAIN')}", code=302)
 
 @app.route("/callback", methods=["GET", "POST"])
 def callback():
