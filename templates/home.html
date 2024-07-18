@@ -33,10 +33,18 @@
             <span><a href="/soon">Contact</a></span>
         </div>
 
-        <div id="buttons">
-            <a href="/soon"><button id="signup_btn">Sign Up</button></a>
-            <a href="/soon"><button id="login_btn">Log In</button></a>
-        </div>     
+        {% if session %}
+            <!-- <h1>Welcome {{session.userinfo.name}}!</h1>
+            <div><pre>{{pretty}}</pre></div> -->
+            <div class="buttons">
+                <a href="/logout"><button id="logout_btn">Logout</button></a>
+            </div>
+        {% else %}
+            <div class="buttons">
+                <a href="/login"><button id="signup_btn">Sign Up</button></a>
+                <a href="/login"><button id="login_btn">Log In</button></a>
+            </div>
+        {% endif %}
     </div>
 
     <div id="heading">

@@ -59,7 +59,7 @@ def logout():
 
 @app.route('/')
 def home():
-    return render_template("testhome.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
+    return render_template("home.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
 
 prompt = """
 You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. 
@@ -130,4 +130,4 @@ def ai_response():
     return jsonify({'response': response.text})
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=env.get("PORT", 3000))
+    app.run(debug=True)

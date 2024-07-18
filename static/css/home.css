@@ -106,14 +106,14 @@ body {
     text-decoration: inherit;
 }
 
-#buttons {
+.buttons {
     position: absolute;
     top: 0;
     right: 17.5px;
     line-height: 75px;
 }
 
-#buttons button, #waitlist {
+.buttons button, #waitlist {
     height: 40px;
     width: 80px;
     border-radius: 10px;
@@ -124,15 +124,18 @@ body {
     transition: 0.2s;
 }
 
-#signup_btn {
-    margin-right: 20px;
+#signup_btn, #logout_btn {
     background-color: var(--highlight);
     color: white;
 }
 
-#signup_btn:hover {
+#signup_btn:hover, #logout_btn:hover {
     background-color: var(--accent);
     outline: 3px solid var(--accent);
+}
+
+#signup_btn {
+    margin-right: 20px;
 }
 
 #login_btn {
