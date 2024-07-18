@@ -30,6 +30,18 @@ oauth.register(
 def serve_soon():
     return send_from_directory('static', 'soon.html')
 
+@app.route('/terms')
+def serve_terms():
+    return send_from_directory('static', 'tac.html')
+
+@app.route('/privacy')
+def serve_privacy():
+    return send_from_directory('static', 'privacy.html')
+
+@app.route('/cookies')
+def serve_cookies():
+    return send_from_directory('static', 'cookies.html')
+
 @app.route("/login")
 def login():
     return oauth.auth0.authorize_redirect(
