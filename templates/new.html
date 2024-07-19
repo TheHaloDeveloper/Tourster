@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="/static/css/new.css?id=1234">
+    <link rel="stylesheet" href="../static/css/new.css?id=1234">
 </head>
 <body class="bg-semi">
     <div class="spawner">
@@ -138,5 +138,10 @@
             </div>
         </div>
     </footer>
+
+    <script>
+        window.embeddedArray = {{ array|tojson }};
+    </script>
+    <script src="../static/js/new.js"></script>
 </body>
 </html>

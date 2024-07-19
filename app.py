@@ -32,7 +32,7 @@ def serve_soon():
 
 @app.route('/new')
 def serve_new():
-    return send_from_directory('static', 'new.html') 
+    return render_template('new.html', array=['test'])
 
 @app.route('/terms')
 def serve_terms():
