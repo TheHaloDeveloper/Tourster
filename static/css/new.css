@@ -272,6 +272,14 @@ footer a {
     display: none;
 }
 
+#datePicker {
+    width: 200px;
+    padding: 5px;
+}
+.flatpickr-calendar {
+    font-size: 12px;
+}
+
 /* resizing for different sizes/devices */
 @media only screen and (max-width: 872px) {
     #tourster span {

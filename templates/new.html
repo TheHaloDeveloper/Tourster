@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-adsense-account" content="ca-pub-4446515835340527">
     <title>Tourster</title>
+
     <link rel="icon" href="/static/images/tourster-transparent.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" href="../static/css/new.css?id=1234">
 </head>
 <body class="bg-semi">
@@ -48,6 +49,8 @@
             <ul class="list" id="from_list"></ul>
             <ul class="list" id="to_list"></ul>
         </form>
+        <h2>When do you want to go?</h2>
+        <input id="datePicker" type="text" placeholder="Select Date Range">
     </div>
 
     <footer>
@@ -142,6 +145,7 @@
     <script>
         window.search = {{ search|tojson }};
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="../static/js/new.js"></script>
 </body>
 </html>

@@ -27,3 +27,27 @@ function displayNames(value, elem) {
 function removeElements() {
     document.querySelectorAll(".list-items").forEach(item => item.remove());
 }
+
+// Calendar
+document.addEventListener("DOMContentLoaded", function() {
+    flatpickr("#datePicker", {
+        mode: "range",
+        dateFormat: "m-d-Y",
+        minDate: "today",
+        maxDate: new Date().fp_incr(365),
+        onChange: function(selectedDates) {
+            if (selectedDates.length === 2) {
+                const startDate = selectedDates[0];
+                const endDate = selectedDates[1];
+                const maxRangeLength = 30;
+                
+                const rangeLength = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+
+                if (rangeLength > maxRangeLength) {
+                    alert(`The maximum trip length is ${maxRangeLength} days.`);
+                    this.clear();
+                }
+            }
+        }
+    });
+});
