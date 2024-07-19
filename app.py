@@ -30,6 +30,10 @@ oauth.register(
 def serve_soon():
     return send_from_directory('static', 'soon.html')
 
+@app.route('/new')
+def serve_new():
+    return send_from_directory('static', 'new.html') 
+
 @app.route('/terms')
 def serve_terms():
     return send_from_directory('static', 'tac.html')
