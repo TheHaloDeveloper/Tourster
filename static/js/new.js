@@ -55,22 +55,20 @@ document.addEventListener("DOMContentLoaded", function() {
 document.getElementById('travelForm').onsubmit = function(event) {
     event.preventDefault();
 
-    var from = document.getElementById('from').value;
-    var to = document.getElementById('to').value;
-    var date = document.getElementById('datePicker').value;
-    var adults = document.getElementById('adults').value;
-    var seniors = document.getElementById('seniors').value;
-    var children = document.getElementById('children').value;
-    var pets = document.querySelector('input[name="pets"]:checked').value;
-    var people = document.querySelector('input[name="people"]:checked').value;
-    var occasion = document.getElementById('occasion').value;
-    var extra = document.getElementById('extra').value;
-    var food = document.getElementById('food').value;
-    var dietRestrictions = document.getElementById('diet-restrictions').value;
-
-    var checkboxValues = Array.from(document.querySelectorAll('input[type="checkbox"]:checked')).map(function(checkbox) {
-        return checkbox.value;
-    });
+    let from = document.getElementById('from').value;
+    let to = document.getElementById('to').value;
+    let date = document.getElementById('datePicker').value;
+    let adults = document.getElementById('adults').value;
+    let seniors = document.getElementById('seniors').value;
+    let children = document.getElementById('children').value;
+    let pets = document.querySelector('input[name="pets"]:checked').value;
+    let people = document.querySelector('input[name="people"]:checked').value;
+    let occasion = document.getElementById('occasion').value;
+    let extra = document.getElementById('extra').value;
+    let food = document.getElementById('food').value;
+    let dietRestrictions = document.getElementById('diet-restrictions').value;
+    let timeSpent = Array.from(document.querySelectorAll('#time input[type="checkbox"]:checked')).map(function(checkbox) {return checkbox.value});
+    let restrictions = Array.from(document.querySelectorAll('#restrictions input[type="checkbox"]:checked')).map(function(checkbox) {return checkbox.value});
     
-    window.location.href = `/chat?from=${from}&to=${to}&date=${date}&adults=${adults}&seniors=${seniors}&children=${children}&pets=${pets}&people=${people}&occasion=${occasion}&extra=${extra}&food=${food}&dietRestrictions=${dietRestrictions}&time=${checkboxValues}`;
+    window.location.href = `/chat?from=${from}&to=${to}&date=${date}&adults=${adults}&seniors=${seniors}&children=${children}&pets=${pets}&people=${people}&occasion=${occasion}&extra=${extra}&food=${food}&dietRestrictions=${dietRestrictions}&time=${encodeURIComponent(JSON.stringify(timeSpent))}&restrictions=${encodeURIComponent(JSON.stringify(restrictions))}`;
 }
