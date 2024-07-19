@@ -26,13 +26,18 @@ oauth.register(
     server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration'
 )
 
+arr = []
+with open('static/data/search-airports.txt', 'r') as f:
+    arr = [line.rstrip() for line in f]
+
+
 @app.route('/soon')
 def serve_soon():
     return send_from_directory('static', 'soon.html')
 
 @app.route('/new')
 def serve_new():
-    return render_template('new.html', array=['test'])
+    return render_template('new.html', search=arr)
 
 @app.route('/terms')
 def serve_terms():
