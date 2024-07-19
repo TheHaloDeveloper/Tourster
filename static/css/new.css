@@ -150,7 +150,7 @@ body {
 
 #blocker {
     width: 100vw;
-    height: 100vh;
+    height: 220vh;
 }
 
 #content {
@@ -276,9 +276,66 @@ footer a {
     width: 200px;
     padding: 5px;
 }
+
 .flatpickr-calendar {
     font-size: 12px;
 }
+
+input[type=number] {
+    height: 35px;
+    width: 50px;
+}
+
+.radio-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px;
+  }
+  .radio-group label {
+    border: 2px solid #1a1a8c;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .radio-group input[type="radio"] {
+    display: none;
+  }
+  .radio-group input[type="radio"]:checked + label {
+    background-color: #1a1a8c;
+    color: white;
+  }
+
+textarea {
+    width: 100%;
+    height: 100px;
+}
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 20px;
+  }
+  .checkbox-group label {
+    border: 2px solid #1a1a8c;
+    border-radius: 25px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  .checkbox-group input[type="checkbox"] {
+    display: none;
+  }
+  .checkbox-group input[type="checkbox"]:checked + label {
+    background-color: #1a1a8c;
+    color: white;
+  }
 
 /* resizing for different sizes/devices */
 @media only screen and (max-width: 872px) {
