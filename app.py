@@ -30,7 +30,6 @@ arr = []
 with open('static/data/search-airports.txt', 'r') as f:
     arr = [line.rstrip() for line in f]
 
-
 @app.route('/soon')
 def serve_soon():
     return send_from_directory('static', 'soon.html')
@@ -42,6 +41,10 @@ def serve_new():
 @app.route('/terms')
 def serve_terms():
     return send_from_directory('static', 'tac.html')
+
+@app.route('/chat')
+def serve_chat():
+    return send_from_directory('static', 'chat.html')
 
 @app.route('/privacy')
 def serve_privacy():
