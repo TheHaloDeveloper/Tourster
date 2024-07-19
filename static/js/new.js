@@ -3,10 +3,12 @@ let input = document.getElementById("from");
 
 input.addEventListener("keyup", (e) => {
     removeElements();
+    let resultCount = 0;
     for (let i of array) {
         if (
             i.toLowerCase().includes(input.value.toLowerCase()) &&
-            input.value != ""
+            input.value != "" &&
+            resultCount < 5
         ) {
             let listItem = document.createElement("li");
             listItem.classList.add("list-items");
@@ -16,6 +18,7 @@ input.addEventListener("keyup", (e) => {
             let word = i.substr(0, index) + "<b>" + i.substr(index, input.value.length) + "</b>" + i.substr(index + input.value.length);
             listItem.innerHTML = word;
             document.querySelector(".list").appendChild(listItem);
+            resultCount++;
         }
     }
 });
