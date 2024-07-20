@@ -86,20 +86,9 @@ def home():
     return render_template("home.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
 
 prompt = """
-You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. 
-Your job is to ask the user questions and identifying their travel situation, and create filters based on that information. 
-Your responses should be a max of 100 words.
-Messages will have 2 parts: system and user... users can request information given to you from the system, such as the date in TEXT (January 1, 2000).
-You need to ask the following questions (in your own words/style), one at a time: 
-    (After some of the questions, there is a symbol. Send the symbol as well)
-    (If they don't answer / don't know, you can give them suggestions or skip the question, and leave the answer as "none")
-    (You can recommend certain cities for them, and dates as well)
-    * Where are you going? å
-    * When do you want to go? ∫
-    * Who's going with you (pets included)?
-    * How do you want to spend your time? / What type of travel are you looking for?
-    * Anything else you want to add?
-    (After all the questions above are finished, either with an answer or "none", reply with a single = sign.)
+You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your responses should be a max of 100 words.
+Messages will have 2 parts: system and user. Users can request information given to you from the system, such as the date in TEXT (January 1, 2000).
+When the user tells you all about their trip information, you need to recap with A LIST WITH BULLET POINTS.
 """
 
 history = [
@@ -109,7 +98,7 @@ history = [
         },
         {
             "role": "model",
-            "parts": ["Understood."]
+            "parts": ["Hello, I am ToursterAI, created to help you plan your trips. What is your estimated travel budget?"]
         }
 ]
 

@@ -14,7 +14,14 @@ function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const paramDict = {};
     for (const [key, value] of params.entries()) {
-        paramDict[key] = value;
+        let val;
+
+        if(value.replace(' ', '') == ''){
+            val = "UNSET";
+        } else {
+            val = value;
+        }
+        paramDict[key] = val;
     }
 
     if (paramDict['time']) {
@@ -27,8 +34,7 @@ function getUrlParams() {
     return paramDict;
 }
 
-const params = getUrlParams();
-console.log(params);
+const p = getUrlParams();
 
 function animateLogo() {
     mainLogo.classList.add("spin-fade");
@@ -58,29 +64,39 @@ function msg(sender, text) {
     messages_list.appendChild(message)
 }
 
-msg("ai", "Hello, I am ToursterAI, created to help you plan your trips. How can I help you today?")
+msg("ai", "Hello, I am ToursterAI, created to help you plan your trips. What is your estimated travel budget?")
 
 function message_send() {
     if (message_input.value.replace(/ /g, '') != ''){
         let req = message_input.value
+        let message;
         message_input.value = '';
 
-        msg("user",req)
+        if (!first_message) {
+            first_message = true;
+            animateLogo();
+        
+            message = `I am flying from ${p.from} to ${p.to}.
+            There are ${p.children} children, ${p.adults} adult(s), and ${p.seniors} senior(s).
+            The trip will be from ${p.date}.
+            Our culinary preferences are "${p.food}", and our dietary restrictions are "${p.restrictions.toString()} + ${p.dietRestrictions}".
+            We want to spend our time by: "${p.time.toString()} + ${p.extra}".
+            Pets: ${p.pets}.
+            I am traveling with my ${p.people}.
+            The occasion is: "${p.occasion}". CUSTOM: ${req}.`;
+        }        
+
+        msg("user", req)
 
         fetch('/ai_response', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({message: req})
+            body: JSON.stringify({message: message})
         }).then(response => response.json()).then(data => {
             scrollToBottom();
             msg("ai", data.response)
-
-            if (!first_message) {
-                first_message = true;
-                animateLogo();
-            }
         })
     }
 }
