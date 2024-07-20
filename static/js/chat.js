@@ -14,14 +14,7 @@ function getUrlParams() {
     const params = new URLSearchParams(window.location.search);
     const paramDict = {};
     for (const [key, value] of params.entries()) {
-        let val;
-
-        if(value.replace(' ', '') == ''){
-            val = "UNSET";
-        } else {
-            val = value;
-        }
-        paramDict[key] = val;
+        paramDict[key] = value;
     }
 
     if (paramDict['time']) {
@@ -52,7 +45,7 @@ function msg(sender, text) {
             if (i < text.length) {
                 message.innerHTML += text.charAt(i);
                 i++;
-                setTimeout(type, 30);
+                setTimeout(type, 20);
                 scrollToBottom();
             }
         }
