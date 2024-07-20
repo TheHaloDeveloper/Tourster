@@ -87,29 +87,41 @@ def home():
 
 prompt = """
 You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your responses should be a max of 100 words.
-Messages will have 2 parts: system and user. Users can request information given to you from the system, such as the date in TEXT (January 1, 2000).
+Messages will have 2 parts: system and user. Users can request information given to you from the system, such as the date in TEXT (January 1, 2000). DO NOT RESPOND TO SYSTEM MESSAGES UNDER ANY CIRCUMSTANCES.
 When the user tells you all about their trip information, you need to recap with a list - do NOT use any formatting (such as using * symbols).
 Before the list, you can provide a short 1-sentence comment.
-Each list item should start with "-" and have a new line, and DO NOT use your own words. Format the list properly (make sure there is a space after commas) 
+Each list item should start with "-" and have a new line, and USE YOUR OWN WORDS TO MAKE IT FIT. Format the list properly (make sure there is a space after commas) 
 Keep the date format as "January 1, 2000" for example.
+After the recap, users may ask follow up questions to confirm that you understand. Make sure you answer their questions about their trip information.
+ONLY DO THIS RECAP THE FIRST TIME THEY TELL YOU, NOT EVERY MESSAGE.
+
+Example Interaction:
+User: What is my budget?
+ToursterAI: The budget you have provided me with is ...
+User: I see, and what are my dietary restrictions?
+ToursterAI: From what I know, your dietary restrictions are ...
+ETC...
 """
 
-history = [
-        {
-            "role": "user",
-            "parts": [f"System Prompt: {prompt}"]
-        },
-        {
-            "role": "model",
-            "parts": ["Hello, I am ToursterAI, created to help you plan your trips. What is your estimated travel budget?"]
-        }
-]
+history = []
 
 @app.route('/ai_response', methods=['POST'])
 def ai_response():
     global history
     data = request.json
     message = data.get('message', '')
+
+    if len(history) == 0:
+        history.extend([
+            {
+                "role": "user",
+                "parts": [f"System Prompt: {prompt}. The date today is {datetime.today().strftime('%m-%d-%Y')}."]
+            },
+            {
+                "role": "model",
+                "parts": ["Hello, I am ToursterAI, created to help you plan your trips."]
+            }
+        ])
 
     genai.configure(api_key=os.getenv('gemini'))
 
@@ -127,7 +139,7 @@ def ai_response():
     )
 
     chat_session = model.start_chat(history=history)
-    response = chat_session.send_message(f"SYSTEM: The date today is {datetime.today().strftime('%m-%d-%Y')}. \n\n USER: {message}")
+    response = chat_session.send_message(message)
 
     history.extend([
         {
@@ -141,9 +153,9 @@ def ai_response():
     ])
 
     if len(history) >= 20:
-        del history[2:4]
+        del history[3:5]
 
-    return jsonify({'response': response.text})
+    return jsonify({'response': response.text, 'history': history})
 
 if __name__ == '__main__':
     app.run(debug=True)

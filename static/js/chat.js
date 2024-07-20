@@ -77,7 +77,9 @@ function message_send() {
             Pets: ${p.pets}.
             I am traveling with my ${p.people}.
             The occasion is: "${p.occasion}". CUSTOM: ${req}.`;
-        }        
+        } else {
+            message = req;
+        }
 
         msg("user", req)
 
@@ -90,6 +92,7 @@ function message_send() {
         }).then(response => response.json()).then(data => {
             scrollToBottom();
             msg("ai", data.response)
+            console.log(data.history)
         })
     }
 }
