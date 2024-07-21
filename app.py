@@ -110,9 +110,32 @@ ETC...
 
 history = []
 
+genai.configure(api_key=os.getenv('gemini'))
+
+generation_config = {
+    "temperature": 1,
+    "top_p": 0.95,
+    "top_k": 64,
+    "max_output_tokens": 200,
+    "response_mime_type": "text/plain",
+}
+
+safety_settings = {
+    HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+}
+
+model = genai.GenerativeModel(
+    model_name="gemini-1.5-flash",
+    generation_config=generation_config,
+    safety_settings=safety_settings
+)
+
 @app.route('/ai_response', methods=['POST'])
 def ai_response():
-    global history
+    global history, model
     data = request.json
     message = data.get('message', '')
 
@@ -127,29 +150,6 @@ def ai_response():
                 "parts": ["Hello, I am ToursterAI. Anything else you want to tell me about your trip?"]
             }
         ])
-
-    genai.configure(api_key=os.getenv('gemini'))
-
-    generation_config = {
-        "temperature": 1,
-        "top_p": 0.95,
-        "top_k": 64,
-        "max_output_tokens": 200,
-        "response_mime_type": "text/plain",
-    }
-
-    safety_settings = {
-        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
-    }
-
-    model = genai.GenerativeModel(
-        model_name="gemini-1.5-flash",
-        generation_config=generation_config,
-        safety_settings=safety_settings
-    )
 
     chat_session = model.start_chat(history=history)
 
@@ -186,6 +186,79 @@ def ai_response():
             },
         ])
         return jsonify({'response': error})
+
+@app.route('/end_response', methods=['POST'])
+def end_response():
+    global model, history
+    data = request.json
+    message = data.get('message', '')
+
+    side_history = [
+        {
+            "role": "user",
+            "parts": ["""
+                Messages will be given with a list. Your job is to put the items into the same format. Do NOT use formatting such as ```json etc...
+                MAKE SURE YOU DONT CUT OFF THE MESSAGE, FINISH THE WHOLE THING
+
+                ###
+                Example Input:
+                Okay, I understand.
+
+                - You are flying from San Francisco, CA (SFO) to Little Rock, AR (LIT)
+                - You are traveling with your romantic-partner
+                - You are traveling with 2 adult(s) and 0 children and 0 seniors
+                - Your trip is from July 20, 2024 to July 24, 2024
+                - Your culinary preferences are "no spicy food" and you have a dietary restriction of "vegetarian"
+                - You want to experience "Must-see Attractions, Great Food, Beaches, Live Music and Concerts, Luxury Shopping, Nightlife, Spas" and restaurants
+                - You are bringing a pet with you
+                - Your budget is 30000 dollars
+                - The occasion is a "honeymoon"
+
+                Is this correct?
+                ###
+
+                ###
+                Example Output:
+                {
+                    "from": "San Francisco, CA (SFO)",
+                    "to": "Little Rock, AR (LIT)",
+                    "date": "07-20-2024 to 07-24-2024",
+                    "adults": "2",
+                    "seniors": "0",
+                    "children": "0",
+                    "pets": "yes",
+                    "people": "romantic-partner",
+                    "occasion": "honeymoon",
+                    "extra": "restaurants",
+                    "food": "no spicy food",
+                    "dietRestrictions": "one of us is vegetarian",
+                    "time": [
+                        "Must-see Attractions",
+                        "Great Food",
+                        "Beaches",
+                        "Live Music and Concerts",
+                        "Luxury Shopping",
+                        "Nightlife",
+                        "Spas"
+                    ],
+                    "restrictions": [
+                        "vegetarian"
+                    ],
+                    "budget": "10000"
+                }
+                ###
+                """]
+        },
+        {
+            "role": "model",
+            "parts": ["Understood."]
+        }
+    ]
+
+    chat_session = model.start_chat(history=side_history)
+    response = chat_session.send_message(history[len(history) - 3]["parts"][0])
+
+    return jsonify({'response': response.text})
 
 if __name__ == '__main__':
     app.run(debug=True)

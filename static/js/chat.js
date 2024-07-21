@@ -45,7 +45,7 @@ function msg(sender, text) {
             if (i < text.length) {
                 message.innerHTML += text.charAt(i);
                 i++;
-                setTimeout(type, 20);
+                setTimeout(type, 15);
                 scrollToBottom();
             }
         }
@@ -68,17 +68,17 @@ function message_send() {
         if (!first_message) {
             first_message = true;
             animateLogo();
-        
-            message = `I am flying from ${p.from} to ${p.to}.
+
+            info = `I am flying from ${p.from} to ${p.to}.
             There are ${p.children} children, ${p.adults} adult(s), and ${p.seniors} senior(s).
             The trip will be from ${p.date}.
             Our culinary preferences are "${p.food}", and our dietary restrictions are "${p.restrictions.toString()}" and ${p.dietRestrictions}.
             We want to spend our time by: "${p.time.toString()}" and ${p.extra}.
             Pets: ${p.pets}.
             I am traveling with my ${p.people}. My budget is ${p.budget.toString()} dollars.
-            The occasion is: "${p.occasion}". 
-            
-            Anything else I want to tell you about my trip? - ${req}.`;
+            The occasion is: "${p.occasion}".`
+        
+            message = `${info}\n\nAnything else I want to tell you about my trip? - ${req}.`;
         } else {
             message = req;
         }
@@ -93,7 +93,22 @@ function message_send() {
             body: JSON.stringify({message: message})
         }).then(response => response.json()).then(data => {
             scrollToBottom();
-            msg("ai", data.response)
+
+            if (data.response.trim() != ".") {
+                msg("ai", data.response)
+            } else {
+                // done interaction
+
+                fetch('/end_response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({message: 'done'})
+                }).then(res => res.json()).then(info => {
+                    console.log(JSON.parse(info.response))
+                })
+            }
         })
     }
 }
