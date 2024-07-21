@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, jsonify, send_from_directory,
 from datetime import datetime
 import os
 import google.generativeai as genai
+from google.generativeai.types import HarmCategory, HarmBlockThreshold, StopCandidateException
 
 import json
 from os import environ as env
@@ -94,12 +95,16 @@ Each list item should start with "-" and have a new line, and USE YOUR OWN WORDS
 Keep the date format as "January 1, 2000" for example.
 After the recap, users may ask follow up questions to confirm that you understand. Make sure you answer their questions about their trip information.
 ONLY DO THIS RECAP THE FIRST TIME THEY TELL YOU, NOT EVERY MESSAGE.
+KEEP YOUR RESPONSES ON TOPIC, AND ONLY TRAVEL RELATED. Do not take user requests if they are not travel related.
+Once you have all the information, AND after you have confirmed with "Is this correct?", reply with a single "." to mark your info gathering complete.
 
 Example Interaction:
 User: What is my budget?
 ToursterAI: The budget you have provided me with is ...
 User: I see, and what are my dietary restrictions?
 ToursterAI: From what I know, your dietary restrictions are ...
+User: Can you help me with coding?
+ToursterAI: Sorry, I am created to be a travel chatbot. Let's talk about your trip!
 ETC...
 """
 
@@ -119,7 +124,7 @@ def ai_response():
             },
             {
                 "role": "model",
-                "parts": ["Hello, I am ToursterAI, created to help you plan your trips."]
+                "parts": ["Hello, I am ToursterAI. Anything else you want to tell me about your trip?"]
             }
         ])
 
@@ -133,29 +138,54 @@ def ai_response():
         "response_mime_type": "text/plain",
     }
 
+    safety_settings = {
+        HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+        HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+        HarmCategory.HARM_CATEGORY_SEXUALLY_EXPLICIT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+        HarmCategory.HARM_CATEGORY_DANGEROUS_CONTENT: HarmBlockThreshold.BLOCK_ONLY_HIGH,
+    }
+
     model = genai.GenerativeModel(
         model_name="gemini-1.5-flash",
         generation_config=generation_config,
+        safety_settings=safety_settings
     )
 
     chat_session = model.start_chat(history=history)
-    response = chat_session.send_message(message)
 
-    history.extend([
-        {
-            "role": "user",
-            "parts": [message]
-        },
-        {
-            "role": "model",
-            "parts": [response.text]
-        }
-    ])
+    try:
+        response = chat_session.send_message(message)
 
-    if len(history) >= 20:
-        del history[3:5]
+        history.extend([
+            {
+                "role": "user",
+                "parts": [message]
+            },
+            {
+                "role": "model",
+                "parts": [response.text]
+            }
+        ])
 
-    return jsonify({'response': response.text, 'history': history})
+        if len(history) >= 20:
+            del history[3:5]
+
+        return jsonify({'response': response.text})
+    
+    except StopCandidateException as e:
+        error = "Your message triggered a safety filter and could not be processed. Please try again with a different input."
+
+        history.extend([
+            {
+                "role": "user",
+                "parts": [message.split('Anything else I want to tell you about my trip?')[0].strip()]
+            },
+            {
+                "role": "model",
+                "parts": [error]
+            },
+        ])
+        return jsonify({'response': error})
 
 if __name__ == '__main__':
     app.run(debug=True)

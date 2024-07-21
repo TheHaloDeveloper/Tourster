@@ -57,7 +57,7 @@ function msg(sender, text) {
     messages_list.appendChild(message)
 }
 
-msg("ai", "Hello, I am ToursterAI, created to help you plan your trips. What is your estimated travel budget?")
+msg("ai", "Hello, I am ToursterAI. Anything else you want to tell me about your trip?")
 
 function message_send() {
     if (message_input.value.replace(/ /g, '') != ''){
@@ -72,11 +72,13 @@ function message_send() {
             message = `I am flying from ${p.from} to ${p.to}.
             There are ${p.children} children, ${p.adults} adult(s), and ${p.seniors} senior(s).
             The trip will be from ${p.date}.
-            Our culinary preferences are "${p.food}", and our dietary restrictions are "${p.restrictions.toString()} + ${p.dietRestrictions}".
-            We want to spend our time by: "${p.time.toString()} + ${p.extra}".
+            Our culinary preferences are "${p.food}", and our dietary restrictions are "${p.restrictions.toString()}" and ${p.dietRestrictions}.
+            We want to spend our time by: "${p.time.toString()}" and ${p.extra}.
             Pets: ${p.pets}.
-            I am traveling with my ${p.people}.
-            The occasion is: "${p.occasion}". CUSTOM: ${req}.`;
+            I am traveling with my ${p.people}. My budget is ${p.budget.toString()} dollars.
+            The occasion is: "${p.occasion}". 
+            
+            Anything else I want to tell you about my trip? - ${req}.`;
         } else {
             message = req;
         }
@@ -92,7 +94,6 @@ function message_send() {
         }).then(response => response.json()).then(data => {
             scrollToBottom();
             msg("ai", data.response)
-            console.log(data.history)
         })
     }
 }

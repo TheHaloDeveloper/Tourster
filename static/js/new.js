@@ -50,6 +50,36 @@ document.addEventListener("DOMContentLoaded", function() {
             }
         }
     });
+
+    const budgetText = document.getElementById('budgetText');
+    const budgetSlider = document.getElementById('budgetSlider');
+
+    function updateTextBox(value) {
+        budgetText.value = `$${Number(value).toLocaleString()}`;
+    }
+
+    function updateSlider(value) {
+        budgetSlider.value = value;
+    }
+
+    updateTextBox(budgetSlider.value);
+
+    budgetSlider.addEventListener('input', () => {
+        updateTextBox(budgetSlider.value);
+    });
+
+    budgetText.addEventListener('input', () => {
+        let value = budgetText.value.replace(/[^0-9]/g, '');
+        value = Math.min(Math.max(value, 1000), 100000); // Clamping value between 1000 and 100000
+        updateSlider(value);
+    });
+
+    budgetText.addEventListener('change', () => {
+        let value = budgetText.value.replace(/[^0-9]/g, '');
+        value = Math.min(Math.max(value, 1000), 100000); // Clamping value between 1000 and 100000
+        updateTextBox(value);
+        updateSlider(value);
+    });
 });
 
 document.getElementById('travelForm').onsubmit = function(event) {
@@ -69,6 +99,7 @@ document.getElementById('travelForm').onsubmit = function(event) {
     let dietRestrictions = document.getElementById('diet-restrictions').value;
     let timeSpent = Array.from(document.querySelectorAll('#time input[type="checkbox"]:checked')).map(function(checkbox) {return checkbox.value});
     let restrictions = Array.from(document.querySelectorAll('#restrictions input[type="checkbox"]:checked')).map(function(checkbox) {return checkbox.value});
-    
-    window.location.href = `/chat?from=${from}&to=${to}&date=${date}&adults=${adults}&seniors=${seniors}&children=${children}&pets=${pets}&people=${people}&occasion=${occasion}&extra=${extra}&food=${food}&dietRestrictions=${dietRestrictions}&time=${encodeURIComponent(JSON.stringify(timeSpent))}&restrictions=${encodeURIComponent(JSON.stringify(restrictions))}`;
+    let budget = document.getElementById('budgetSlider').value;
+
+    window.location.href = `/chat?from=${from}&to=${to}&date=${date}&adults=${adults}&seniors=${seniors}&children=${children}&pets=${pets}&people=${people}&occasion=${occasion}&extra=${extra}&food=${food}&dietRestrictions=${dietRestrictions}&time=${encodeURIComponent(JSON.stringify(timeSpent))}&restrictions=${encodeURIComponent(JSON.stringify(restrictions))}&budget=${budget}`;
 }

@@ -336,6 +336,18 @@ textarea {
     background-color: #1a1a8c;
     color: white;
   }
+  
+#budgetText {
+    width: 100px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: right;
+}
+
+#budgetSlider {
+    width: 300px;
+}
 
 /* resizing for different sizes/devices */
 @media only screen and (max-width: 872px) {
