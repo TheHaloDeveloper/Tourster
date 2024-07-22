@@ -35,6 +35,10 @@ with open('static/data/search-airports.txt', 'r') as f:
 def serve_soon():
     return send_from_directory('static', 'soon.html')
 
+@app.route('/trip')
+def serve_trip():
+    return send_from_directory('static', 'trip.html')
+
 @app.route('/new')
 def serve_new():
     return render_template('new.html', search=arr)
@@ -208,7 +212,7 @@ def end_response():
                 - You are traveling with your romantic-partner
                 - You are traveling with 2 adult(s) and 0 children and 0 seniors
                 - Your trip is from July 20, 2024 to July 24, 2024
-                - Your culinary preferences are "no spicy food" and you have a dietary restriction of "vegetarian"
+                - Your culinary preferences are "no spicy food, chinese, italian, and indian food" and you have a dietary restriction of "vegetarian"
                 - You want to experience "Must-see Attractions, Great Food, Beaches, Live Music and Concerts, Luxury Shopping, Nightlife, Spas" and restaurants
                 - You are bringing a pet with you
                 - Your budget is 30000 dollars
@@ -230,7 +234,7 @@ def end_response():
                     "people": "romantic-partner",
                     "occasion": "honeymoon",
                     "extra": "restaurants",
-                    "food": "no spicy food",
+                    "food": ["no-spicy", "chinese", "italian", "indian"],
                     "dietRestrictions": "one of us is vegetarian",
                     "time": [
                         "Must-see Attractions",
