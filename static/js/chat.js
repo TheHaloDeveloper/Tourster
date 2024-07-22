@@ -109,7 +109,7 @@ function message_send() {
                     i = JSON.parse(info.response)
 
                     setTimeout(function() {
-                        window.location.href = `/trip?from=${i.from}&to=${i.to}&date=${i.date}&adults=${i.adults}&seniors=${i.seniors}&children=${i.children}&pets=${i.pets}&people=${i.people}&occasion=${i.occasion}&extra=${i.extra}&food=${i.food}&dietRestrictions=${i.dietRestrictions}&time=${encodeURIComponent(JSON.stringify(i.timeSpent))}&restrictions=${encodeURIComponent(JSON.stringify(i.restrictions))}&budget=${i.budget}`;
+                        window.location.href = `/trip?from=${i.from}&to=${i.to}&date=${i.date}&adults=${i.adults}&seniors=${i.seniors}&children=${i.children}&pets=${i.pets}&people=${i.people}&occasion=${i.occasion}&extra=${i.extra}&food=${i.food}&dietRestrictions=${i.dietRestrictions}&time=${encodeURIComponent(JSON.stringify(i.time))}&restrictions=${encodeURIComponent(JSON.stringify(i.restrictions))}&budget=${i.budget}`;
                     }, 900)
                 })
             }

@@ -202,7 +202,7 @@ def end_response():
             "role": "user",
             "parts": ["""
                 Messages will be given with a list. Your job is to put the items into the same format. Do NOT use formatting such as ```json etc...
-                MAKE SURE YOU DONT CUT OFF THE MESSAGE, FINISH THE WHOLE THING
+                MAKE SURE YOU DONT CUT OFF THE MESSAGE, FINISH THE WHOLE THING. If something is empty, put it as null.
 
                 ###
                 Example Input:
@@ -235,7 +235,7 @@ def end_response():
                     "occasion": "honeymoon",
                     "extra": "restaurants",
                     "food": ["no-spicy", "chinese", "italian", "indian"],
-                    "dietRestrictions": "one of us is vegetarian",
+                    "dietRestrictions": null,
                     "time": [
                         "Must-see Attractions",
                         "Great Food",
