@@ -94,6 +94,11 @@ body {
     align-self: flex-end;
 }
 
+#messages img {
+    height: 35px;
+    width: 35px;
+}
+
 @keyframes fadeInSlideUp {
     from {
         opacity: 0;
