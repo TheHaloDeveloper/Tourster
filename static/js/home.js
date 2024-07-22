@@ -21,3 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function waitlist() {
     window.location.href = 'https://forms.gle/5qgL5C5a9PgmBiA46';
 }
+
+function purchase() {
+    window.location.href = 'https://buy.stripe.com/28o00851jf2N0Mw4jC';
+}

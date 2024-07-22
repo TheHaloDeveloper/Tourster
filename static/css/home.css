@@ -259,7 +259,7 @@ body {
 
 #blocker {
     width: 100vw;
-    height: 100vh;
+    height: 110vh;
 }
 
 footer {
@@ -368,6 +368,100 @@ footer a {
     display: none;
 }
 
+#special {
+    position: absolute;
+    left: 50%;
+    top: 350px;
+    transform: translateX(-50%);
+    text-align: center;
+    font-family: sans-serif;
+}
+
+#purchase-widget {
+    width: 350px;
+    height: auto;
+    background-color: #F5EFE4;
+    position: absolute;
+    top: 450px;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 20px;
+    border: 1px solid #E3E3E3;
+    text-align: left;
+    color: #000;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#purchase-widget h3 {
+    text-align: center;
+    color: #212353;
+    margin-bottom: 10px;
+}
+
+#purchase-widget p {
+    text-align: center;
+    margin: 5px 0;
+    font-size: 1.2em;
+}
+
+#purchase-widget .price {
+    color: #3A3D99;
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+#purchase-widget s {
+    color: #999;
+    margin-right: 10px;
+}
+
+#purchase-widget ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+#purchase-widget ul ul {
+    list-style-type: none;
+    padding-left: 20px;
+    font-size: 0.9em;
+}
+
+#purchase-widget ul li {
+    margin: 5px 0;
+}
+
+#purchase-widget ul li::before {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free";
+    margin-right: 5px;
+}
+
+#purchase-widget ul ul li::before {
+    content: "\f061";
+    font-family: "Font Awesome 6 Free";
+    margin-right: 5px;
+}
+
+#purchase-widget button {
+    width: 100%;
+    padding: 10px;
+    background-color: #3A3D99;
+    color: #FFF;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+}
+
+#purchase-widget button:hover {
+    background-color: #2C2E7A;
+}
+
 /* resizing for different sizes/devices */
 @media only screen and (max-width: 872px) {
     #tourster span {
@@ -403,6 +497,12 @@ footer a {
 
     #agreements a {
         padding: 5px;
+    }
+}
+
+@media only screen and (max-width: 770px) {
+    #purchase-widget {
+        top: 470px;
     }
 }
 
@@ -500,6 +600,12 @@ footer a {
 
     #soon {
         top: 240px;
+    }
+}
+
+@media only screen and (max-width: 490px) {
+    #purchase-widget {
+        top: 500px;
     }
 }
 
