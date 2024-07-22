@@ -422,11 +422,11 @@ footer a {
         padding: 5px;
     }
 
-    #buttons {
+    .buttons {
         line-height: 50px;
     }
 
-    #buttons button {
+    .buttons button {
         width: 60px;
         height: 20px;
         border-radius: 5px;
