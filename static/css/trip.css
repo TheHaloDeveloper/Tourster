@@ -23,3 +23,10 @@ body {
     animation-fill-mode: forwards
 }
 
+#map {
+    width: 40vw;
+    height: calc(100vh - 100px);
+    position: absolute;
+    top: 50px;
+    right: 50px;
+}

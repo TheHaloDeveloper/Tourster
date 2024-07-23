@@ -31,13 +31,25 @@ arr = []
 with open('static/data/search-airports.txt', 'r') as f:
     arr = [line.rstrip() for line in f]
 
+data = {}
+with open('static/data/attractions.txt', 'r') as f:
+    data['attractions'] = [line.rstrip() for line in f]
+with open('static/data/restaurants.txt', 'r') as f:
+    data['restaurants'] = [line.rstrip() for line in f]
+with open('static/data/hotels.txt', 'r') as f:
+    data['hotels'] = [line.rstrip() for line in f]
+with open('static/data/rentals.txt', 'r') as f:
+    data['rentals'] = [line.rstrip() for line in f]
+with open('static/data/restaurants.txt', 'r') as f:
+    data['restaurants'] = [line.rstrip() for line in f]
+
 @app.route('/soon')
 def serve_soon():
     return send_from_directory('static', 'soon.html')
 
 @app.route('/trip')
 def serve_trip():
-    return send_from_directory('static', 'trip.html')
+    return render_template('trip.html', data=data)
 
 @app.route('/new')
 def serve_new():
