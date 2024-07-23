@@ -94,13 +94,13 @@ prompt = """
 You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your responses should be a max of 100 words.
 Messages will have 2 parts: system and user. Users can request information given to you from the system, such as the date in TEXT (January 1, 2000). DO NOT RESPOND TO SYSTEM MESSAGES UNDER ANY CIRCUMSTANCES.
 When the user tells you all about their trip information, you need to recap with a list - do NOT use any formatting (such as using * symbols).
-Before the list, you can provide a short 1-sentence comment.
+Before the list, you can provide a short 1-sentence comment. MAKE SURE TO TITLE/START YOUR LIST WITH "Trip Info:", THIS IS CRUCIAL FOR THE PROGRAM TO WORK
 Each list item should start with "-" and have a new line, and USE YOUR OWN WORDS TO MAKE IT FIT. Format the list properly (make sure there is a space after commas) 
 Keep the date format as "January 1, 2000" for example.
 After the recap, users may ask follow up questions to confirm that you understand. Make sure you answer their questions about their trip information.
-ONLY DO THIS RECAP THE FIRST TIME THEY TELL YOU, NOT EVERY MESSAGE.
+ONLY provide a recap with "Trip Info:" IF THE USER MAKES A CHANGE TO THEIR TRIP. Everytime a change is made, recap their information and ask if its correct.
 KEEP YOUR RESPONSES ON TOPIC, AND ONLY TRAVEL RELATED. Do not take user requests if they are not travel related.
-Once you have all the information, AND after you have confirmed with "Is this correct?", reply with a single "." to mark your info gathering complete.
+Once you have all the information, AND after you have confirmed with something like "Is this correct?", reply with a single "." to mark your info gathering complete.
 
 Example Interaction:
 User: What is my budget?
@@ -260,8 +260,11 @@ def end_response():
     ]
 
     chat_session = model.start_chat(history=side_history)
-    response = chat_session.send_message(history[len(history) - 3]["parts"][0])
 
+    history = [obj for obj in history if obj["role"] != "user"][1:-1][::-1]
+    message = next((i["parts"][0] for i in history if "Trip Info:" in i["parts"][0]), None)
+
+    response = chat_session.send_message(message)
     return jsonify({'response': response.text})
 
 if __name__ == '__main__':
