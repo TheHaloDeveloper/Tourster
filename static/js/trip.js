@@ -1,7 +1,7 @@
 let data = window.data;
-console.log(data)
+console.log(data);
 let matches = window.location.href.match(/[a-z\d]+=[a-z\d]+/gi);
-if ((matches? matches.length : 0) == 0) {
+if ((matches ? matches.length : 0) == 0) {
     window.location.href = '/'
 }
 
@@ -38,11 +38,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     map.on('load', () => {
-        new tt.Marker().setLngLat(center).addTo(map);
+        for (let i = 0; i < data['attractions'].length; i++) {
+            let attraction = JSON.parse(data['attractions'][i]);
+            new tt.Marker().setLngLat([attraction['longitude'], attraction['latitude']]).addTo(map);
+        }
+
         map.resize();
-    }); 
+    });
 
     setTimeout(() => {
         map.resize();
     }, 100);
 });
+
+let c = document.getElementsByClassName("collapsible");
+for (let i = 0; i < c.length; i++) {
+    c[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var content = this.nextElementSibling;
+        if (content.style.display === "block") {
+            content.style.display = "none";
+        } else {
+            content.style.display = "block";
+        }
+    });
+}

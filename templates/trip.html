@@ -11,8 +11,14 @@
 </head>
 
 <body>
-    <div id="blocker"></div>
     <div id="map"></div>
+
+    <button type="button" class="collapsible">Open Collapsible</button>
+    <div class="content">
+    <p>test</p>
+    </div>
+
+    <div id="blocker"></div>
     <script>
         window.data = {{ data|tojson }};
     </script>
