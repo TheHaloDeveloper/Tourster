@@ -28,7 +28,7 @@ function getUrlParams() {
 }
 
 const p = getUrlParams();
-window.history.replaceState(null, '', window.location.pathname);
+// window.history.replaceState(null, '', window.location.pathname);
 
 function animateLogo() {
     mainLogo.classList.add("spin-fade");
@@ -38,25 +38,37 @@ function msg(sender, text) {
     let message = document.createElement('li');
     message.classList.add(`list-${sender}`);
 
-    if(sender == "ai"){
-        message.innerHTML = "";
-        
+    if (sender === "ai") {
+        message.innerHTML = `
+            <img src="/static/images/tourster-transparent.png">
+            <div class="message-bubble"></div>
+        `;
+    } else {
+        message.innerHTML = `
+            <div class="message-bubble">${text}</div>
+            <img src="/static/images/guest.png">
+        `;
+    }
+
+    messages_list.appendChild(message);
+
+    if (sender === "ai") {
+        text = text.trim()
+        let bubble = message.querySelector('.message-bubble');
         let i = 0;
+
         function type() {
             if (i < text.length) {
-                message.innerHTML += text.charAt(i);
+                bubble.innerHTML += text.charAt(i);
                 i++;
                 setTimeout(type, 15);
                 scrollToBottom();
             }
         }
         type();
-    } else {
-        message.innerHTML = text;
     }
-
-    messages_list.appendChild(message)
 }
+
 
 msg("ai", "Hello, I am ToursterAI. Anything else you want to tell me about your trip?")
 

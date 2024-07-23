@@ -72,31 +72,54 @@ body {
 }
 
 #messages ul li {
-    display: inline-block;
-    max-width: 30%;
-    padding: 10px;
-    border-radius: 20px;
+    display: flex;
+    align-items: center;
     margin-bottom: 15px;
-    word-wrap: break-word;
-    white-space: pre-wrap;
-    opacity: 0;
-    animation: fadeInSlideUp 0.5s ease-in-out forwards;
+    position: relative;
+    max-width: 80%;
 }
 
 .list-ai {
-    background-color: lightgray;
     align-self: flex-start;
 }
 
 .list-user {
+    align-self: flex-end;
+    justify-content: flex-end;
+}
+
+.list-ai div {
+    background-color: lightgray;
+}
+
+.list-user div {
     background-color: rgb(0, 145, 255);
     color: white;
-    align-self: flex-end;
+}
+
+.list-ai img {
+    margin-right: 10px;
+}
+
+.list-user img {
+    margin-left: 10px;
 }
 
 #messages img {
     height: 35px;
     width: 35px;
+    animation: fadeInSlideUp 0.5s ease-in-out forwards;
+}
+
+.message-bubble {
+    display: inline-block;
+    max-width: 80%;
+    padding: 10px;
+    border-radius: 20px;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    animation: fadeInSlideUp 0.5s ease-in-out forwards;
+    opacity: 0;
 }
 
 @keyframes fadeInSlideUp {
