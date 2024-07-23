@@ -54,3 +54,9 @@ body {
     overflow: hidden;
     background-color: #f1f1f1;
 }
+
+.custom-marker {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+}
