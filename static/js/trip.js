@@ -23,7 +23,31 @@ function getUrlParams() {
 
 const p = getUrlParams();
 
+function flightCost(d, days) {
+    const baseFare = 30; 
+    const costPerMile = 0.10; 
 
+    const distanceFactor = d * costPerMile;
+
+    let bookingTimeFactor;
+    if (days >= 60) {
+        bookingTimeFactor = 0.8; 
+    } else if (days >= 30) {
+        bookingTimeFactor = 1.0; 
+    } else if (days >= 15) {
+        bookingTimeFactor = 1.1; 
+    } else if (days >= 7) {
+        bookingTimeFactor = 1.2; 
+    } else {
+        bookingTimeFactor = 1.4; 
+    }
+
+    let oneWayCost = (baseFare + distanceFactor) * bookingTimeFactor;
+    const roundTripDiscount = 0.85; 
+    let estimatedCost = 2 * oneWayCost * roundTripDiscount;
+
+    return Math.round(estimatedCost * 100) / 100;
+}
 
 function budgetAllocation(x) {
     //Fixed costs: Flights, Transportation: $50/day
@@ -35,43 +59,47 @@ function budgetAllocation(x) {
     const lunchPercent = 0.35
     const dinnerPercent = 0.4;
     const attractionPercent = 0.2;
+    const ms = 86400000;
     
     let budget = parseInt(x.budget);
     let start = x.date.split(' to ')[0].split('-');
     let end = x.date.split(' to ')[1].split('-');
-    let tripLength = (new Date(`${end[2]}-${end[0]}-${end[1]}`) - new Date(`${start[2]}-${start[0]}-${start[1]}`)) / 86400000;
-    let numPeople = parseInt(x.children) + parseInt(x.adults) + parseInt(x.seniors)
+    let tripLength = (new Date(`${end[2]}-${end[0]}-${end[1]}`) - new Date(`${start[2]}-${start[0]}-${start[1]}`)) / ms;
+    let numPeople = parseInt(x.children) + parseInt(x.adults) + parseInt(x.seniors);
+    let today = `0${(new Date()).toLocaleDateString('en-US')}`.split('/');
 
-    let transportationCost = tripLength * 50;
-    let remainingBudget = budget - transportationCost;
-
-    fetch('/calculate_rooms', {
+    fetch('/airport_distance', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({message: `${x.children} children, ${x.adults} adults, ${x.seniors} seniors - Relationship: ${x.people}`})
-    }).then(response => response.json()).then(data => {
-        let numRooms = parseInt(data.response.trim())
-        let hotelBudgetPerNight = Math.floor((remainingBudget * hotelPercent) / numRooms / tripLength); //filter
+        body: JSON.stringify({message: `${x.from} --> ${x.to}`})
+    }).then(response => response.json()).then(distance => {
+        distance = parseInt(distance.response.trim());
+        let daysUntilDeparture = (new Date(`${start[2]}-${start[0]}-${start[1]}`) - new Date(`${today[2]}-${today[0]}-${today[1]}`)) / ms;
+        let totalFlightCost = flightCost(distance, daysUntilDeparture) * numPeople;
 
-        let restaurantBudget = remainingBudget * restaurantPercent;
+        let transportationCost = tripLength * 50;
+        let remainingBudget = budget - transportationCost - totalFlightCost;
+        console.log(remainingBudget)
 
-        let breakfastBudgetPerNight = Math.floor((restaurantBudget * breakfastPercent) / numPeople / tripLength); //filter
-        let lunchBudgetPerNight = Math.floor((restaurantBudget * lunchPercent) / numPeople / tripLength); //filter
-        let dinnerBudgetPerNight = Math.floor((restaurantBudget * dinnerPercent) / numPeople / tripLength); //filter
+        fetch('/calculate_rooms', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({message: `${x.children} children, ${x.adults} adults, ${x.seniors} seniors - Relationship: ${x.people}`})
+        }).then(response => response.json()).then(data => {
+            let numRooms = parseInt(data.response.trim())
+            let hotelBudgetPerNight = Math.floor((remainingBudget * hotelPercent) / numRooms / tripLength); //filter
 
-        let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength / 2); //filter
+            let restaurantBudget = remainingBudget * restaurantPercent;
+            let breakfastBudgetPerNight = Math.floor((restaurantBudget * breakfastPercent) / numPeople / tripLength); //filter
+            let lunchBudgetPerNight = Math.floor((restaurantBudget * lunchPercent) / numPeople / tripLength); //filter
+            let dinnerBudgetPerNight = Math.floor((restaurantBudget * dinnerPercent) / numPeople / tripLength); //filter
 
-        console.log(`Days: ${tripLength} days`);
-        console.log(`People: ${numPeople} days`);
-        console.log(`Hotel Rooms: ${numRooms} rooms`);
-        console.log(`Hotels budget per night: $${hotelBudgetPerNight}`);
-        console.log(`Breakfast budget per night: $${breakfastBudgetPerNight}`);
-        console.log(`Lunch budget per night: $${lunchBudgetPerNight}`);
-        console.log(`Dinner budget per night: $${dinnerBudgetPerNight}`);
-        console.log(`Estimated cost: $${(hotelBudgetPerNight * tripLength * numRooms) + (breakfastBudgetPerNight * numPeople * tripLength) + (lunchBudgetPerNight * numPeople * tripLength) + (dinnerBudgetPerNight * numPeople * tripLength) + (attractionsPerPerson * numPeople * tripLength * 2) + (tripLength * 50)}`)
-        console.log(`Total budget ${budget}`);
+            let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength / 2); //filter
+        })
     })
 }
 

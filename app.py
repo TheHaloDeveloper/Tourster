@@ -248,8 +248,38 @@ def calculate_rooms():
     response = chat_session.send_message(message)
     
     return jsonify({'response': response.text})
-    
 
+@app.route('/airport_distance', methods=['POST'])
+def airport_distance():
+    global model
+    data = request.json
+    message = data.get('message', '')
+    
+    history = [
+        {
+            "role": "user",
+            "parts": ["""
+                Your job is to determine the distance between two cities or airports. Your output format should simply be the number, in miles.
+                Examples:
+                
+                Input: Dallas, Texas (DFW) --> Los Angeles, California (LAX)
+                Output: 1230
+                
+                Input: San Francisco, California (SFO) --> New York City, New York (NYC)
+                Output: 2570
+            """]
+        },
+        {
+            "role": "model",
+            "parts": ["Understood."]
+        }
+    ]
+    
+    chat_session = model.start_chat(history=history)
+    response = chat_session.send_message(message)
+    
+    return jsonify({'response': response.text})
+    
 @app.route('/end_response', methods=['POST'])
 def end_response():
     global model, history
