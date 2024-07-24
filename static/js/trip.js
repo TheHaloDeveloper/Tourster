@@ -74,7 +74,7 @@ function allocationComplete(){
         
         // new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
         console.log(attraction)
-        let main = JSON.parse(attraction)
+        let main = JSON5.parse(attraction)
         // console.log(data['attractions'][1])
         // break;
     }
