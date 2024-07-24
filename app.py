@@ -202,6 +202,53 @@ def ai_response():
             },
         ])
         return jsonify({'response': error})
+    
+@app.route('/calculate_rooms', methods=['POST'])
+def calculate_rooms():
+    global model
+    data = request.json
+    message = data.get('message', '')
+    
+    history = [
+        {
+            "role": "user",
+            "parts": ["""
+                Your job is to determine how many rooms a group of people would need, and output a single number.
+                A family with 2 adults and 1-2 kids would need 1 room. Examples:
+                
+                Input: 2 children, 2 adults, 0 seniors - Relationship: family
+                Output: 1
+                
+                Input: 0 children, 2 adults, 0 seniors - Relationship: romantic-partner
+                Output: 1
+                
+                Input: 0 children, 4 adults, 0 seniors - Relationship: friends
+                Output: 2
+                
+                Input: 2 children, 2 adults, 0 seniors - Relationship: friends
+                Output: 2
+                
+                Input: 2 children, 2 adults, 2 seniors - Relationship: family
+                Output: 2
+                
+                Input: 0 children, 2 adults, 2 seniors - Relationship: business-partner
+                Output: 2
+                
+                Input: 0 children, 3 adults, 0 seniors - Relationship: business-partner
+                Output: 3
+            """]
+        },
+        {
+            "role": "model",
+            "parts": ["Understood."]
+        }
+    ]
+    
+    chat_session = model.start_chat(history=history)
+    response = chat_session.send_message(message)
+    
+    return jsonify({'response': response.text})
+    
 
 @app.route('/end_response', methods=['POST'])
 def end_response():
@@ -263,7 +310,7 @@ def end_response():
                     "budget": "10000"
                 }
                 ###
-                """]
+            """]
         },
         {
             "role": "model",
