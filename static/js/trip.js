@@ -73,15 +73,12 @@ function budgetAllocation(x) {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({message: `${x.from} --> ${x.to}`})
+        body: JSON.stringify({message: `${x.from.split('(')[1].replace(')', '')}-${x.to.split('(')[1].replace(')', '')}`})
     }).then(response => response.json()).then(distance => {
-        distance = parseInt(distance.response.trim());
         let daysUntilDeparture = (new Date(`${start[2]}-${start[0]}-${start[1]}`) - new Date(`${today[2]}-${today[0]}-${today[1]}`)) / ms;
-        let totalFlightCost = flightCost(distance, daysUntilDeparture) * numPeople;
-
+        let totalFlightCost = flightCost(distance.response, daysUntilDeparture) * numPeople;
         let transportationCost = tripLength * 50;
         let remainingBudget = budget - transportationCost - totalFlightCost;
-        console.log(remainingBudget)
 
         fetch('/calculate_rooms', {
             method: 'POST',

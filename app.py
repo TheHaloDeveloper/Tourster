@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, send_from_directory, redirect, session, url_for
 from datetime import datetime
 import os
+import ast
 import google.generativeai as genai
 from google.generativeai.types import HarmCategory, HarmBlockThreshold, StopCandidateException
 
@@ -10,6 +11,7 @@ from urllib.parse import quote_plus, urlencode
 
 from authlib.integrations.flask_client import OAuth
 from dotenv import find_dotenv, load_dotenv
+import geopy.distance
 
 load_dotenv()
 
@@ -255,30 +257,22 @@ def airport_distance():
     data = request.json
     message = data.get('message', '')
     
-    history = [
-        {
-            "role": "user",
-            "parts": ["""
-                Your job is to determine the distance between two cities or airports. Your output format should simply be the number, in miles.
-                Examples:
-                
-                Input: Dallas, Texas (DFW) --> Los Angeles, California (LAX)
-                Output: 1230
-                
-                Input: San Francisco, California (SFO) --> New York City, New York (NYC)
-                Output: 2570
-            """]
-        },
-        {
-            "role": "model",
-            "parts": ["Understood."]
-        }
-    ]
+    start_airport = message.split('-')[0]
+    end_airport = message.split('-')[1]
     
-    chat_session = model.start_chat(history=history)
-    response = chat_session.send_message(message)
+    coordinates = []
+    with open('static/data/airport-locations.txt', 'r') as file:
+        for line in file:
+            parts = line.split(': ')
+            if parts[0] == start_airport or parts[0] == end_airport:
+                coordinates.append(parts[1].replace('\n', ''))
+            if len(coordinates) == 2:
+                break
     
-    return jsonify({'response': response.text})
+    one = ast.literal_eval(coordinates[0])
+    two = ast.literal_eval(coordinates[1])
+    
+    return jsonify({'response': geopy.distance.geodesic(one, two).miles})
     
 @app.route('/end_response', methods=['POST'])
 def end_response():
