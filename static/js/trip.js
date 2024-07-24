@@ -1,4 +1,6 @@
 let data = window.data;
+let allocation = {};
+
 let matches = window.location.href.match(/[a-z\d]+=[a-z\d]+/gi);
 if ((matches ? matches.length : 0) == 0) {
     window.location.href = '/'
@@ -21,7 +23,7 @@ function getUrlParams() {
     return paramDict;
 }
 
-const p = getUrlParams();
+const x = getUrlParams();
 
 function flightCost(d, days) {
     const baseFare = 30; 
@@ -49,10 +51,68 @@ function flightCost(d, days) {
     return Math.round(estimatedCost * 100) / 100;
 }
 
-function budgetAllocation(x) {
+function marker(type) {
+    let mark = document.createElement('div');
+    mark.className = 'custom-marker';
+    mark.style.backgroundImage = `url(/static/images/map/${type}.png)`;
+    mark.style.width = '32px';
+    mark.style.height = '32px';
+    mark.style.backgroundSize = '100%';
+    
+    return mark;
+}
+
+let map;
+let mapLoaded = false;
+
+function allocationComplete(){
+    setInterval(function(){if(mapLoaded) return}, 100);
+    for (let i = 0; i < data['attractions'].length; i++) {
+        let attraction = data['attractions'][i];
+        // let lng = parseFloat(attraction.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
+        // let lat = parseFloat(attraction.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
+        
+        // new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
+        console.log(attraction)
+        let main = JSON.parse(attraction)
+        // console.log(data['attractions'][1])
+        // break;
+    }
+
+    for (let i = 0; i < data['restaurants'].length; i++) {
+        // let restaurant = data['restaurants'][i];
+        // let lng = parseFloat(restaurant.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
+        // let lat = parseFloat(restaurant.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
+
+        // new tt.Marker({element: new marker('restaurants')}).setLngLat([lng, lat]).addTo(map);
+        break;
+    }
+
+    map.resize();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    let center = [-118.243683, 34.052235];
+
+    map = tt.map({
+        key: "",
+        container: "map",
+        center: center,
+        zoom: 11,
+        minZoom: 11,
+        maxZoom: 15,
+    });
+
+    map.on('load', () => {
+        mapLoaded = true;
+    })
+
+    setTimeout(() => {
+        map.resize();
+    }, 100);
+
     //Fixed costs: Flights, Transportation: $50/day
     //Variable costs: Hotels, Restaurants, Attractions, Taxs/Gratuity
-    console.log(x)
     const hotelPercent = 0.3;
     const restaurantPercent = 0.5;
     const breakfastPercent = 0.25;
@@ -60,7 +120,7 @@ function budgetAllocation(x) {
     const dinnerPercent = 0.4;
     const attractionPercent = 0.2;
     const ms = 86400000;
-    
+
     let budget = parseInt(x.budget);
     let start = x.date.split(' to ')[0].split('-');
     let end = x.date.split(' to ')[1].split('-');
@@ -96,58 +156,23 @@ function budgetAllocation(x) {
             let dinnerBudgetPerNight = Math.floor((restaurantBudget * dinnerPercent) / numPeople / tripLength); //filter
 
             let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength / 2); //filter
+
+            allocation = {
+                totalFlightCost: totalFlightCost,
+                transportationCost: transportationCost,
+                hotelBudgetPerNight: hotelBudgetPerNight,
+                breakfastBudgetPerNight: breakfastBudgetPerNight,
+                lunchBudgetPerNight: lunchBudgetPerNight,
+                dinnerBudgetPerNight: dinnerBudgetPerNight,
+                attractionsPerPerson: attractionsPerPerson,
+                numRooms: numRooms,
+                numPeople: numPeople,
+                tripLength: tripLength
+            }
+
+            allocationComplete()
         })
     })
-}
-
-budgetAllocation(p)
-
-function marker(type) {
-    let mark = document.createElement('div');
-    mark.className = 'custom-marker';
-    mark.style.backgroundImage = `url(/static/images/map/${type}.png)`;
-    mark.style.width = '32px';
-    mark.style.height = '32px';
-    mark.style.backgroundSize = '100%';
-    
-    return mark;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    let center = [-118.243683, 34.052235];
-
-    let map = tt.map({
-        key: "",
-        container: "map",
-        center: center,
-        zoom: 11,
-        minZoom: 11,
-        maxZoom: 15,
-    });
-
-    map.on('load', () => {
-        for (let i = 0; i < data['attractions'].length; i++) {
-            let attraction = data['attractions'][i];
-            let lng = parseFloat(attraction.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
-            let lat = parseFloat(attraction.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
-
-            new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
-        }
-
-        for (let i = 0; i < data['restaurants'].length; i++) {
-            let restaurant = data['restaurants'][i];
-            let lng = parseFloat(restaurant.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
-            let lat = parseFloat(restaurant.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
-    
-            new tt.Marker({element: new marker('restaurants')}).setLngLat([lng, lat]).addTo(map);
-        }
-
-        map.resize();
-    });
-
-    setTimeout(() => {
-        map.resize();
-    }, 100);
 });
 
 let c = document.getElementsByClassName("collapsible");
