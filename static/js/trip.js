@@ -64,21 +64,12 @@ function marker(type) {
 
 let map;
 let mapLoaded = false;
+let remainingAttractions = [];
 
-function shuffle(obj1, obj2) {
-    var index = obj1.length;
-    var rnd, tmp1, tmp2;
-  
-    while (index) {
-        rnd = Math.floor(Math.random() * index);
-        index -= 1;
-        tmp1 = obj1[index];
-        tmp2 = obj2[index];
-        obj1[index] = obj1[rnd];
-        obj2[index] = obj2[rnd];
-        obj1[rnd] = tmp1;
-        obj2[rnd] = tmp2;
-    }
+function del(type, num) {
+    data[`${type}s`].splice(num, 1);
+    data[`${type}-filters`].splice(num, 1);
+    data[`${type}-people`].splice(num, 1);
 }
 
 function allocationComplete(){
@@ -86,6 +77,7 @@ function allocationComplete(){
     for (let i = data['attractions'].length - 1; i >= 0; i--) {
         let attraction = eval(`(${data['attractions'][i]})`);
         let filters = eval(`(${data['attraction-filters'][i]})`);
+        let people = eval(`(${data['attraction-people'][i]})`);
     
         if (attraction && attraction.offerGroup && attraction.offerGroup.offerList) {
             let prices = [];
@@ -107,26 +99,29 @@ function allocationComplete(){
             if (lowest < allocation.attractionsPerPerson) {
                 for (let item of x.time) {
                     if (!filters.includes(item)) {
-                        data['attractions'].splice(i, 1);
-                        data['attraction-filters'].splice(i, 1);
+                        del('attraction', i)
                     }
                 } 
+
+                if (!people.includes(x.people)) {
+                    del('attraction', i)
+                } else {
+                    remainingAttractions.push([attraction.numberOfReviews * attraction.rating, attraction])
+                }
             } else {
-                data['attractions'].splice(i, 1);
-                data['attraction-filters'].splice(i, 1);
+                del('attraction', i)
             }
         } else {
             //free?
         }
     }
 
-    shuffle(data['attractions'], data['attraction-filters'])
-    let final_attractions = data['attractions'].slice(0, 5);
-    let final_filters = data['attraction-filters'].slice(0, 5);
+    remainingAttractions.sort((a, b) => a[0] - b[0]).reverse()
+    let attractionOptions = remainingAttractions.slice(0, 5);
 
-    for (let i = 0; i < final_attractions.length; i++) {
-        let lng = parseFloat(final_attractions[i].match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
-        let lat = parseFloat(final_attractions[i].match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
+    for (let i = 0; i < attractionOptions.length; i++) {
+        let lng = parseFloat(attractionOptions[i][1].longitude);
+        let lat = parseFloat(attractionOptions[i][1].latitude);
 
         new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
     }

@@ -38,6 +38,8 @@ with open('static/data/attractions.txt', 'r') as f:
     data['attractions'] = [line.rstrip() for line in f]
 with open('static/data/attraction-filters.txt', 'r') as f:
     data['attraction-filters'] = [line.rstrip() for line in f]
+with open('static/data/attraction-people.txt', 'r') as f:
+    data['attraction-people'] = [line.rstrip() for line in f]
     
 with open('static/data/restaurants.txt', 'r') as f:
     data['restaurants'] = [line.rstrip() for line in f]
