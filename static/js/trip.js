@@ -68,15 +68,16 @@ let mapLoaded = false;
 function allocationComplete(){
     setInterval(function(){if(mapLoaded) return}, 100);
     for (let i = 0; i < data['attractions'].length; i++) {
-        let attraction = data['attractions'][i];
+        let attraction = eval(`(${data['attractions'][i]})`);
+        if (attraction && attraction.offerGroup && attraction.offerGroup.offerList) {
+            console.log(attraction.offerGroup.offerList);
+        } else {
+            console.error('offerList is null or undefined');
+        }
         // let lng = parseFloat(attraction.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
         // let lat = parseFloat(attraction.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
         
         // new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
-        console.log(attraction)
-        let main = JSON5.parse(attraction)
-        // console.log(data['attractions'][1])
-        // break;
     }
 
     for (let i = 0; i < data['restaurants'].length; i++) {
