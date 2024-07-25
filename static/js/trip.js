@@ -83,7 +83,12 @@ function allocationComplete(){
             } else {
                 priceRange = `$${prices[0]}`;
             }
-            console.log(priceRange)
+
+            let lowest = parseInt(priceRange.split(' - ')[0].replace('$', ''));
+        
+            if (lowest < allocation.attractionsPerPerson) {
+                console.log(priceRange)
+            }
         } //else free?
         // let lng = parseFloat(attraction.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
         // let lat = parseFloat(attraction.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
@@ -107,11 +112,11 @@ function budgetAllocation() {
     //Fixed costs: Flights, Transportation: $50/day
     //Variable costs: Hotels, Restaurants, Attractions, Taxs/Gratuity
     const hotelPercent = 0.3;
-    const restaurantPercent = 0.5;
+    const restaurantPercent = 0.35;
     const breakfastPercent = 0.25;
     const lunchPercent = 0.35
     const dinnerPercent = 0.4;
-    const attractionPercent = 0.2;
+    const attractionPercent = 0.35;
     const ms = 86400000;
 
     let budget = parseInt(x.budget);
@@ -148,7 +153,7 @@ function budgetAllocation() {
             let lunchBudgetPerNight = Math.floor((restaurantBudget * lunchPercent) / numPeople / tripLength); //filter
             let dinnerBudgetPerNight = Math.floor((restaurantBudget * dinnerPercent) / numPeople / tripLength); //filter
 
-            let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength / 2); //filter
+            let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength); //filter
 
             allocation = {
                 totalFlightCost: totalFlightCost,
@@ -188,8 +193,8 @@ document.addEventListener('DOMContentLoaded', () => {
         map.resize();
     }, 100);
 
-    // budgetAllocation();
-    allocationComplete();
+    budgetAllocation();
+    // allocationComplete();
 });
 
 let c = document.getElementsByClassName("collapsible");
