@@ -212,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         container: "map",
         center: center,
         zoom: 11,
-        minZoom: 11,
+        minZoom: 9,
         maxZoom: 15,
     });
 
