@@ -11,6 +11,6 @@ def remove_duplicates(file_path):
     with open(file_path, 'w') as file:
         file.writelines(unique_lines)
 
-file_path = 'static/data/hotels.txt'
+file_path = 'static/data/rentals.txt'
 
 remove_duplicates(file_path)
