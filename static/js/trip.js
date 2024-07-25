@@ -70,10 +70,21 @@ function allocationComplete(){
     for (let i = 0; i < data['attractions'].length; i++) {
         let attraction = eval(`(${data['attractions'][i]})`);
         if (attraction && attraction.offerGroup && attraction.offerGroup.offerList) {
-            console.log(attraction.offerGroup.offerList);
-        } else {
-            console.error('offerList is null or undefined');
-        }
+            let prices = [];
+            let priceRange;
+
+            for (let offer of attraction.offerGroup.offerList) {
+                prices.push(parseInt(offer.roundedUpPrice.replace('$', '')))
+            }
+            prices.sort((a, b) => a - b)
+            
+            if (prices.length > 1) {
+                priceRange = `$${prices[0]} - $${prices[prices.length - 1]}`;
+            } else {
+                priceRange = `$${prices[0]}`;
+            }
+            console.log(priceRange)
+        } //else free?
         // let lng = parseFloat(attraction.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
         // let lat = parseFloat(attraction.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
         
@@ -92,26 +103,7 @@ function allocationComplete(){
     map.resize();
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    let center = [-118.243683, 34.052235];
-
-    map = tt.map({
-        key: "",
-        container: "map",
-        center: center,
-        zoom: 11,
-        minZoom: 11,
-        maxZoom: 15,
-    });
-
-    map.on('load', () => {
-        mapLoaded = true;
-    })
-
-    setTimeout(() => {
-        map.resize();
-    }, 100);
-
+function budgetAllocation() {
     //Fixed costs: Flights, Transportation: $50/day
     //Variable costs: Hotels, Restaurants, Attractions, Taxs/Gratuity
     const hotelPercent = 0.3;
@@ -174,6 +166,30 @@ document.addEventListener('DOMContentLoaded', () => {
             allocationComplete()
         })
     })
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    let center = [-118.243683, 34.052235];
+
+    map = tt.map({
+        key: "",
+        container: "map",
+        center: center,
+        zoom: 11,
+        minZoom: 11,
+        maxZoom: 15,
+    });
+
+    map.on('load', () => {
+        mapLoaded = true;
+    })
+
+    setTimeout(() => {
+        map.resize();
+    }, 100);
+
+    // budgetAllocation();
+    allocationComplete();
 });
 
 let c = document.getElementsByClassName("collapsible");
