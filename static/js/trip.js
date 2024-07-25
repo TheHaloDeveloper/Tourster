@@ -118,6 +118,7 @@ function allocationComplete(){
 
     remainingAttractions.sort((a, b) => a[0] - b[0]).reverse()
     let attractionOptions = remainingAttractions.slice(0, 5);
+    console.log(attractionOptions)
 
     for (let i = 0; i < attractionOptions.length; i++) {
         let lng = parseFloat(attractionOptions[i][1].longitude);
