@@ -65,43 +65,78 @@ function marker(type) {
 let map;
 let mapLoaded = false;
 
+function shuffle(obj1, obj2) {
+    var index = obj1.length;
+    var rnd, tmp1, tmp2;
+  
+    while (index) {
+        rnd = Math.floor(Math.random() * index);
+        index -= 1;
+        tmp1 = obj1[index];
+        tmp2 = obj2[index];
+        obj1[index] = obj1[rnd];
+        obj2[index] = obj2[rnd];
+        obj1[rnd] = tmp1;
+        obj2[rnd] = tmp2;
+    }
+}
+
 function allocationComplete(){
     setInterval(function(){if(mapLoaded) return}, 100);
-    for (let i = 0; i < data['attractions'].length; i++) {
+    for (let i = data['attractions'].length - 1; i >= 0; i--) {
         let attraction = eval(`(${data['attractions'][i]})`);
+        let filters = eval(`(${data['attraction-filters'][i]})`);
+    
         if (attraction && attraction.offerGroup && attraction.offerGroup.offerList) {
             let prices = [];
             let priceRange;
-
+    
             for (let offer of attraction.offerGroup.offerList) {
-                prices.push(parseInt(offer.roundedUpPrice.replace('$', '')))
+                prices.push(parseInt(offer.roundedUpPrice.replace('$', '')));
             }
-            prices.sort((a, b) => a - b)
-            
+            prices.sort((a, b) => a - b);
+    
             if (prices.length > 1) {
                 priceRange = `$${prices[0]} - $${prices[prices.length - 1]}`;
             } else {
                 priceRange = `$${prices[0]}`;
             }
-
+    
             let lowest = parseInt(priceRange.split(' - ')[0].replace('$', ''));
-        
+    
             if (lowest < allocation.attractionsPerPerson) {
-                console.log(priceRange)
+                for (let item of x.time) {
+                    if (!filters.includes(item)) {
+                        data['attractions'].splice(i, 1);
+                        data['attraction-filters'].splice(i, 1);
+                    }
+                } 
+            } else {
+                data['attractions'].splice(i, 1);
+                data['attraction-filters'].splice(i, 1);
             }
-        } //else free?
-        // let lng = parseFloat(attraction.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
-        // let lat = parseFloat(attraction.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
-        
-        // new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
+        } else {
+            //free?
+        }
     }
+
+    shuffle(data['attractions'], data['attraction-filters'])
+    let final_attractions = data['attractions'].slice(0, 5);
+    let final_filters = data['attraction-filters'].slice(0, 5);
+
+    for (let i = 0; i < final_attractions.length; i++) {
+        let lng = parseFloat(final_attractions[i].match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
+        let lat = parseFloat(final_attractions[i].match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
+
+        new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
+    }
+    
 
     for (let i = 0; i < data['restaurants'].length; i++) {
         // let restaurant = data['restaurants'][i];
         // let lng = parseFloat(restaurant.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
         // let lat = parseFloat(restaurant.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
 
-        // new tt.Marker({element: new marker('restaurants')}).setLngLat([lng, lat]).addTo(map);
         break;
     }
 
@@ -153,7 +188,7 @@ function budgetAllocation() {
             let lunchBudgetPerNight = Math.floor((restaurantBudget * lunchPercent) / numPeople / tripLength); //filter
             let dinnerBudgetPerNight = Math.floor((restaurantBudget * dinnerPercent) / numPeople / tripLength); //filter
 
-            let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength); //filter
+            let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength / 2); //filter
 
             allocation = {
                 totalFlightCost: totalFlightCost,
