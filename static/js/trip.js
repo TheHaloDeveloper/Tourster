@@ -51,13 +51,14 @@ function flightCost(d, days) {
     return Math.round(estimatedCost * 100) / 100;
 }
 
-function marker(type) {
+function marker(type, o) {
     let mark = document.createElement('div');
     mark.className = 'custom-marker';
     mark.style.backgroundImage = `url(/static/images/map/${type}.png)`;
     mark.style.width = '32px';
     mark.style.height = '32px';
     mark.style.backgroundSize = '100%';
+    mark.style.opacity = `${o}`;
     
     return mark;
 }
@@ -68,9 +69,30 @@ function del(type, num) {
     data[`${type}-people`].splice(num, 1);
 }
 
-function giveOptions(options) {
+function giveOptions(options, num) {
     options.sort((a, b) => a[0] - b[0]).reverse()
-    return options.slice(0, 5);
+    return options.slice(0, num);
+}
+
+function updateClick() {
+    document.querySelectorAll('.item').forEach(header => {
+        header.addEventListener('click', () => {
+            const dropdown = header.children[0].nextElementSibling;
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        });
+    });
+}
+
+function addToItenerary(data, type){
+    let icon;
+    if (type == 'attraction') {
+        icon = '<i class="fa-solid fa-map-location-dot"></i>'
+    } else if (type == 'restaurant') {
+        icon = '<i class="fa-solid fa-utensils"></i>'
+    }
+
+    document.getElementsByClassName('container')[0].innerHTML += `<div class="item"><div class="header"><div class="icon ${type}">${icon}</div><div class="title">${data.name}</div><i class="fa-solid fa-trash-can"></i></div><div class="dropdown">${data.description}</div></div>`;
+    updateClick();
 }
 
 let map;
@@ -122,11 +144,17 @@ function allocationComplete(){
         }
     }
 
-    let attractionOptions = giveOptions(remainingAttractions);
+    let attractionOptions = giveOptions(remainingAttractions, 12);
     for (let i = 0; i < attractionOptions.length; i++) {
+        let opacity = 0.6;
+        if (i % 6 == 1){
+            addToItenerary(attractionOptions[i][1], 'attraction')
+            opacity = 1;
+        }
+
         let lng = parseFloat(attractionOptions[i][1].longitude);
         let lat = parseFloat(attractionOptions[i][1].latitude);
-        new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
+        new tt.Marker({element: new marker('attractions', opacity)}).setLngLat([lng, lat]).addTo(map);
     }
     
     for (let i = data['restaurants'].length - 1; i >= 0; i--) {
@@ -134,7 +162,7 @@ function allocationComplete(){
         remainingRestaurants.push([restaurant.numberOfReviews * restaurant.rating, restaurant]);
     }
 
-    let restaurantOptions = giveOptions(remainingRestaurants);
+    let restaurantOptions = giveOptions(remainingRestaurants, 18);
     for (let i = 0; i < restaurantOptions.length; i++) {
         let lng = parseFloat(restaurantOptions[i][1].longitude);
         let lat = parseFloat(restaurantOptions[i][1].latitude);
@@ -229,25 +257,5 @@ document.addEventListener('DOMContentLoaded', () => {
         map.resize();
     }, 100);
 
-    // budgetAllocation();
-});
-
-let c = document.getElementsByClassName("collapsible");
-for (let i = 0; i < c.length; i++) {
-    c[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.display === "block") {
-            content.style.display = "none";
-        } else {
-            content.style.display = "block";
-        }
-    });
-}
-
-document.querySelectorAll('.item').forEach(header => {
-    header.addEventListener('click', () => {
-        const dropdown = header.children[0].nextElementSibling;
-        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-    });
+    budgetAllocation();
 });
