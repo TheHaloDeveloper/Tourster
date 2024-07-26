@@ -51,14 +51,59 @@ function flightCost(d, days) {
     return Math.round(estimatedCost * 100) / 100;
 }
 
-function marker(type, o) {
+function animatePanAndZoom(targetLat, targetLng, targetZoom, panDuration, zoomDuration) {
+    var startZoom = map.getZoom();
+    var startLatLng = map.getCenter();
+    var startTime = performance.now();
+
+    function panStep(timestamp) {
+        var progress = (timestamp - startTime) / panDuration;
+        if (progress < 1) {
+            var currentLat = startLatLng.lat + (targetLat - startLatLng.lat) * progress;
+            var currentLng = startLatLng.lng + (targetLng - startLatLng.lng) * progress;
+
+            map.setCenter([currentLng, currentLat]);
+            requestAnimationFrame(panStep);
+        } else {
+            map.setCenter([targetLng, targetLat]);
+            startZoomAnimation();
+        }
+    }
+
+    function startZoomAnimation() {
+        var zoomStartTime = performance.now();
+
+        function zoomStep(timestamp) {
+            var progress = (timestamp - zoomStartTime) / zoomDuration;
+            if (progress < 1) {
+                var currentZoom = startZoom + (targetZoom - startZoom) * progress;
+                map.setZoom(currentZoom);
+
+                requestAnimationFrame(zoomStep);
+            } else {
+                map.setZoom(targetZoom);
+            }
+        }
+
+        requestAnimationFrame(zoomStep);
+    }
+
+    requestAnimationFrame(panStep);
+}
+
+function marker(type, o, elem) {
     let mark = document.createElement('div');
     mark.className = 'custom-marker';
     mark.style.backgroundImage = `url(/static/images/map/${type}.png)`;
-    mark.style.width = '32px';
-    mark.style.height = '32px';
-    mark.style.backgroundSize = '100%';
     mark.style.opacity = `${o}`;
+    mark.dataset.longitude = elem.longitude;
+    mark.dataset.latitude = elem.latitude;
+
+    mark.addEventListener('click', function(e) {
+        let lat = parseFloat(e.target.dataset.latitude);
+        let long = parseFloat(e.target.dataset.longitude);
+        animatePanAndZoom(lat, long, 10, 500, 1000);
+    });
     
     return mark;
 }
@@ -170,7 +215,7 @@ function allocationComplete(){
 
         let lng = parseFloat(attractionOptions[i][1].longitude);
         let lat = parseFloat(attractionOptions[i][1].latitude);
-        new tt.Marker({element: new marker('attractions', opacity)}).setLngLat([lng, lat]).addTo(map);
+        new tt.Marker({element: new marker('attractions', opacity, attractionOptions[i][1])}).setLngLat([lng, lat]).addTo(map);
     }
 
     let counts = {
@@ -247,7 +292,7 @@ function allocationComplete(){
 
             let lng = parseFloat(current.longitude);
             let lat = parseFloat(current.latitude);
-            new tt.Marker({element: new marker('restaurants', opacity)}).setLngLat([lng, lat]).addTo(map);
+            new tt.Marker({element: new marker('restaurants', opacity, current)}).setLngLat([lng, lat]).addTo(map);
         }
     }
 
