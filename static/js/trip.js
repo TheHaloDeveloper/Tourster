@@ -62,15 +62,21 @@ function marker(type) {
     return mark;
 }
 
-let map;
-let mapLoaded = false;
-let remainingAttractions = [];
-
 function del(type, num) {
     data[`${type}s`].splice(num, 1);
     data[`${type}-filters`].splice(num, 1);
     data[`${type}-people`].splice(num, 1);
 }
+
+function giveOptions(options) {
+    options.sort((a, b) => a[0] - b[0]).reverse()
+    return options.slice(0, 5);
+}
+
+let map;
+let mapLoaded = false;
+let remainingAttractions = [];
+let remainingRestaurants = [];
 
 function allocationComplete(){
     setInterval(function(){if(mapLoaded) return}, 100);
@@ -116,24 +122,23 @@ function allocationComplete(){
         }
     }
 
-    remainingAttractions.sort((a, b) => a[0] - b[0]).reverse()
-    let attractionOptions = remainingAttractions.slice(0, 5);
-    console.log(attractionOptions)
-
+    let attractionOptions = giveOptions(remainingAttractions);
     for (let i = 0; i < attractionOptions.length; i++) {
         let lng = parseFloat(attractionOptions[i][1].longitude);
         let lat = parseFloat(attractionOptions[i][1].latitude);
-
         new tt.Marker({element: new marker('attractions')}).setLngLat([lng, lat]).addTo(map);
     }
     
+    for (let i = data['restaurants'].length - 1; i >= 0; i--) {
+        let restaurant = eval(`(${data['restaurants'][i]})`);
+        remainingRestaurants.push([restaurant.numberOfReviews * restaurant.rating, restaurant]);
+    }
 
-    for (let i = 0; i < data['restaurants'].length; i++) {
-        // let restaurant = data['restaurants'][i];
-        // let lng = parseFloat(restaurant.match(/"longitude":\s*(-?\d+(\.\d+)?)/)[1]);
-        // let lat = parseFloat(restaurant.match(/"latitude":\s*(-?\d+(\.\d+)?)/)[1]);
-
-        break;
+    let restaurantOptions = giveOptions(remainingRestaurants);
+    for (let i = 0; i < restaurantOptions.length; i++) {
+        let lng = parseFloat(restaurantOptions[i][1].longitude);
+        let lat = parseFloat(restaurantOptions[i][1].latitude);
+        new tt.Marker({element: new marker('restaurants')}).setLngLat([lng, lat]).addTo(map);
     }
 
     map.resize();
