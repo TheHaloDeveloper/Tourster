@@ -102,7 +102,7 @@ function marker(type, o, elem) {
     mark.addEventListener('click', function(e) {
         let lat = parseFloat(e.target.dataset.latitude);
         let long = parseFloat(e.target.dataset.longitude);
-        animatePanAndZoom(lat, long, 10, 500, 1000);
+        animatePanAndZoom(lat, long, 20, 500, 1000);
     });
     
     return mark;
@@ -119,13 +119,18 @@ function giveOptions(options, num) {
     return options.slice(0, num);
 }
 
-function updateClick() {
-    document.querySelectorAll('.item').forEach(header => {
-        header.addEventListener('click', () => {
-            const dropdown = header.children[0].nextElementSibling;
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-        });
-    });
+function collapse(elem) {
+    let dropdown = elem.children[1];
+    let arrow = elem.children[0].children[2]
+    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+
+    if (arrow.classList.contains('fa-chevron-up')) {
+        arrow.classList.remove('fa-chevron-up');
+        arrow.classList.add('fa-chevron-down');
+    } else {
+        arrow.classList.remove('fa-chevron-down');
+        arrow.classList.add('fa-chevron-up');
+    }
 }
 
 let itenerary = [];
@@ -138,7 +143,7 @@ function addToItenerary(data, type){
         icon = '<i class="fa-solid fa-utensils"></i>'
     }
 
-    let elem = `<div class="item"><div class="header"><div class="icon ${type}">${icon}</div><div class="title">${data.name}</div><i class="fa-solid fa-trash-can"></i></div><div class="dropdown">${data.description}</div></div>`;
+    let elem = `<div class="item" onclick="collapse(this)"><div class="header"><div class="icon ${type}">${icon}</div><div class="title">${data.name}</div><i class="arrow fa-solid fa-chevron-up"></i><i class="fa-solid fa-trash-can"></i></div><div class="dropdown">${data.description}</div></div>`;
 
     if (type == 'restaurant') {
         meals += 1
@@ -146,8 +151,6 @@ function addToItenerary(data, type){
     } else {
         itenerary.push(elem);
     }
-
-    updateClick();
 }
 
 function createItenerary(){
