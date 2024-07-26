@@ -91,6 +91,7 @@ function animatePanAndZoom(targetLat, targetLng, targetZoom, panDuration, zoomDu
     requestAnimationFrame(panStep);
 }
 
+let markers = [];
 function marker(type, o, elem) {
     let mark = document.createElement('div');
     mark.className = 'custom-marker';
@@ -98,6 +99,7 @@ function marker(type, o, elem) {
     mark.style.opacity = `${o}`;
     mark.dataset.longitude = elem.longitude;
     mark.dataset.latitude = elem.latitude;
+    mark.dataset.name = elem.name;
 
     mark.addEventListener('click', function(e) {
         let lat = parseFloat(e.target.dataset.latitude);
@@ -105,6 +107,7 @@ function marker(type, o, elem) {
         animatePanAndZoom(lat, long, 20, 500, 1000);
     });
     
+    markers.push(mark);
     return mark;
 }
 
@@ -121,12 +124,21 @@ function giveOptions(options, num) {
 
 function collapse(elem) {
     let dropdown = elem.children[1];
-    let arrow = elem.children[0].children[2]
+    let arrow = elem.children[0].children[2];
+    let title = elem.children[0].children[1].innerHTML;
     dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
 
     if (arrow.classList.contains('fa-chevron-up')) {
         arrow.classList.remove('fa-chevron-up');
         arrow.classList.add('fa-chevron-down');
+
+        for(let marker = 0; marker < markers.length; marker++) {
+            let current = markers[marker];
+            if (current.dataset.name == title) {
+                animatePanAndZoom(current.dataset.latitude, current.dataset.longitude, 20, 500, 1000);
+                break;
+            }
+        }
     } else {
         arrow.classList.remove('fa-chevron-down');
         arrow.classList.add('fa-chevron-up');
