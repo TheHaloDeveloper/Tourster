@@ -5,19 +5,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trip Itinerary</title>
+    <link rel="icon" href="/static/images/tourster-transparent.png">
     <link rel="stylesheet" href="/static/css/trip.css">
     <link rel="stylesheet" type="text/css" href="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+    
     <script src="https://api.tomtom.com/maps-sdk-for-web/cdn/6.x/6.25.0/maps/maps-web.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/json5/2.2.3/index.min.js"></script>
 </head>
 
 <body>
-    <div id="map"></div>
-
-    <button type="button" class="collapsible">Open Collapsible</button>
-    <div class="content">
-    <p>test</p>
+    <div class="container">
+        <div class="item">
+            <div class="header">
+                <div class="icon restaurant"><i class="fa-solid fa-utensils"></i></div>
+                <div class="title">Joe's Cafe</div>
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <div class="dropdown">Details about Joe's Cafe...</div>
+        </div>
+        <div class="item">
+            <div class="header">
+                <div class="icon attraction"><i class="fa-solid fa-map-location-dot"></i></div>
+                <div class="title">Los Angeles Convention Center</div>
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <div class="dropdown">Details about Los Angeles Convention Center...</div>
+        </div>
+        <div class="item">
+            <div class="header">
+                <div class="icon restaurant"><i class="fa-solid fa-utensils"></i></div>
+                <div class="title">Yard House</div>
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <div class="dropdown">Details about Yard House...</div>
+        </div>
+        <div class="item">
+            <div class="header">
+                <div class="icon attraction"><i class="fa-solid fa-map-location-dot"></i></div>
+                <div class="title">Griffith Observatory</div>
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <div class="dropdown">Details about Griffith Observatory...</div>
+        </div>
+        <div class="item">
+            <div class="header">
+                <div class="icon restaurant"><i class="fa-solid fa-utensils"></i></div>
+                <div class="title">Rivalry Sports Bar</div>
+                <i class="fa-solid fa-trash-can"></i>
+            </div>
+            <div class="dropdown">Details about Rivalry Sports Bar...</div>
+        </div>
+        <div class="add-more">
+            <button>Add more</button>
+        </div>
     </div>
+
+    <div id="map"></div>
 
     <div id="blocker"></div>
     <script>

@@ -229,8 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         map.resize();
     }, 100);
 
-    budgetAllocation();
-    // allocationComplete();
+    // budgetAllocation();
 });
 
 let c = document.getElementsByClassName("collapsible");
@@ -245,3 +244,10 @@ for (let i = 0; i < c.length; i++) {
         }
     });
 }
+
+document.querySelectorAll('.item').forEach(header => {
+    header.addEventListener('click', () => {
+        const dropdown = header.children[0].nextElementSibling;
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+    });
+});

@@ -1,5 +1,12 @@
+:root {
+    --highlight: rgb(35, 41, 127);
+    --accent: rgb(67, 74, 175);
+    --beige: rgb(242, 235, 223);
+}
+
 body {
     margin: 0;
+    font-family: 'DM Sans', sans-serif;
 }
 
 @keyframes fade {
@@ -20,39 +27,112 @@ body {
     opacity: 1;
     pointer-events: none;
     animation: 1s linear fade;
-    animation-fill-mode: forwards
+    animation-fill-mode: forwards;
+    z-index: 100;
 }
 
 #map {
-    width: 40vw;
+    width: calc(50vw - 75px);
     height: calc(100vh - 100px);
     position: absolute;
     top: 50px;
     right: 50px;
 }
 
-.collapsible {
-    background-color: #777;
-    color: white;
-    cursor: pointer;
-    padding: 18px;
-    width: 100%;
-    border: none;
-    text-align: left;
-    outline: none;
-    font-size: 15px;
-}
-
-.active,
-.collapsible:hover {
-    background-color: #555;
-}
-
-.content {
-    padding: 0 18px;
-    display: none;
+#collapsible-group > div:first-child {
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
     overflow: hidden;
-    background-color: #f1f1f1;
+}
+
+.container {
+    width: calc(50vw - 75px);
+    height: calc(100vh - 100px);
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    border-radius: 25px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 15px;
+    cursor: pointer;
+}
+
+.item:last-child {
+    border-bottom: none;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.fa-trash-can {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.icon i {
+    font-size: 24px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.restaurant {
+    background-color: white;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 3px solid var(--highlight);
+}
+
+.restaurant i {
+    color: var(--highlight);
+}
+
+.attraction {
+    background-color: var(--highlight);
+    color: white 
+}
+
+.title {
+    flex-grow: 1;
+}
+
+.dropdown {
+    display: none;
+    margin-top: 10px;
+    padding-left: 34px;
+    color: #555;
+}
+
+.add-more {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.trash-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
 
 .custom-marker {
