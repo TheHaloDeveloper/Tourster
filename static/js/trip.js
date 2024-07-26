@@ -83,6 +83,8 @@ function updateClick() {
     });
 }
 
+let itenerary = [];
+let meals = 0;
 function addToItenerary(data, type){
     let icon;
     if (type == 'attraction') {
@@ -91,8 +93,22 @@ function addToItenerary(data, type){
         icon = '<i class="fa-solid fa-utensils"></i>'
     }
 
-    document.getElementsByClassName('container')[0].innerHTML += `<div class="item"><div class="header"><div class="icon ${type}">${icon}</div><div class="title">${data.name}</div><i class="fa-solid fa-trash-can"></i></div><div class="dropdown">${data.description}</div></div>`;
+    let elem = `<div class="item"><div class="header"><div class="icon ${type}">${icon}</div><div class="title">${data.name}</div><i class="fa-solid fa-trash-can"></i></div><div class="dropdown">${data.description}</div></div>`;
+
+    if (type == 'restaurant') {
+        meals += 1
+        itenerary.splice((meals - 1) * 2, 0, elem)
+    } else {
+        itenerary.push(elem);
+    }
+
     updateClick();
+}
+
+function createItenerary(){
+    for (let i = 0; i < itenerary.length; i++) {
+        document.getElementsByClassName('container')[0].innerHTML += itenerary[i];
+    }
 }
 
 let map;
@@ -235,6 +251,7 @@ function allocationComplete(){
         }
     }
 
+    createItenerary();
     map.resize();
 }
 
