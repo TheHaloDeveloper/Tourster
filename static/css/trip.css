@@ -129,6 +129,28 @@ body {
     cursor: pointer;
 }
 
+#badges {
+    width: 120px;
+    height: 35px;
+    position: absolute;
+    right: 90px;
+    text-align: right;
+    letter-spacing: 5px;
+    font-size: 25px;
+}
+
+.fa-carrot {
+    color: rgb(255, 131, 52);
+}
+
+.fa-leaf {
+    color: rgb(39, 116, 49);
+}
+
+.fa-wheat-awn {
+    color: rgb(229, 190, 38);
+}
+
 .custom-marker {
     background-color: transparent;
     background-repeat: no-repeat;

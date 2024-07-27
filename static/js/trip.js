@@ -24,7 +24,11 @@ function getUrlParams() {
 }
 
 const x = getUrlParams();
-x.dietRestrictions = x.dietRestrictions.split(',')
+
+x.dietRestrictions = x.dietRestrictions.split(',');
+if (x.dietRestrictions.length == 1 && x.dietRestrictions[0] == ''){
+    x.dietRestrictions = [];
+}
 
 function flightCost(d, days) {
     const baseFare = 30; 
@@ -159,7 +163,35 @@ function addToItenerary(data, type){
         icon = '<i class="fa-solid fa-utensils"></i>'
     }
 
-    let elem = `<div class="item" onclick="collapse(this)"><div class="header"><div class="icon ${type}">${icon}</div><div class="title">${data.name}</div><i class="arrow fa-solid fa-chevron-up"></i><i class="fa-solid fa-trash-can"></i></div><div class="dropdown">${data.description}</div></div>`;
+    let badges = ``;
+
+    if (type == 'restaurant') {
+        badges = `<div id="badges">`;
+        let res = data.dietaryRestrictions;
+
+        if (res.includes('vegan')) {
+            badges += `<i class="fa-solid fa-carrot"></i>`;
+        }
+        if (res.includes('vegetarian')) {
+            badges += `<i class="fa-solid fa-leaf"></i>`;
+        }
+        if (res.includes('gluten-free')) {
+            badges += `<i class="fa-solid fa-wheat-awn"></i>`;
+        }
+        badges += `</div>`
+    }
+
+    let elem = `
+    <div class="item" onclick="collapse(this)">
+        <div class="header">
+            <div class="icon ${type}">${icon}</div>
+            <div class="title">${data.name}</div>
+            <i class="arrow fa-solid fa-chevron-up"></i>
+            <i class="fa-solid fa-trash-can"></i>
+            ${badges}
+        </div>
+        <div class="dropdown">${data.description}</div>
+    </div>`;
 
     if (type == 'restaurant') {
         meals += 1
