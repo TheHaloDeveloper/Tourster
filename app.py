@@ -93,7 +93,7 @@ ETC...
 
 history = []
 
-genai.configure(api_key=os.getenv('gemini'))
+genai.configure(api_key=os.getenv('gemini1'))
 
 generation_config = {
     "temperature": 1,

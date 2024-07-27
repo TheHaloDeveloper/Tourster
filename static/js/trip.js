@@ -24,6 +24,7 @@ function getUrlParams() {
 }
 
 const x = getUrlParams();
+x.dietRestrictions = x.dietRestrictions.split(',')
 
 function flightCost(d, days) {
     const baseFare = 30; 
@@ -113,8 +114,11 @@ function marker(type, o, elem) {
 
 function del(type, num) {
     data[`${type}s`].splice(num, 1);
-    data[`${type}-filters`].splice(num, 1);
-    data[`${type}-people`].splice(num, 1);
+
+    if (type == 'attraction') {
+        data[`${type}-filters`].splice(num, 1);
+        data[`${type}-people`].splice(num, 1);
+    }
 }
 
 function giveOptions(options, num) {
@@ -241,8 +245,18 @@ function allocationComplete(){
     
     for (let i = data['restaurants'].length - 1; i >= 0; i--) {
         let restaurant = eval(`(${data['restaurants'][i]})`);
-        remainingRestaurants.push([restaurant.numberOfReviews * restaurant.rating, restaurant])        
+        let filters = restaurant.dietaryRestrictions;
+        let user = x.dietRestrictions;
+    
+        let meetsCriteria = user.every(pref => filters.includes(pref));
+    
+        if (meetsCriteria) {
+            remainingRestaurants.push([restaurant.numberOfReviews * restaurant.rating, restaurant]);
+        } else {
+            del('restaurant', i);
+        }
     }
+
     remainingRestaurants.sort((a, b) => a[0] - b[0]).reverse()
 
     for (let i = 0; i < remainingRestaurants.length; i++) {
@@ -290,7 +304,7 @@ function allocationComplete(){
                 counts[meal.toLowerCase()].push(restaurant);
                 break;   
             } else {
-                data['restaurants'].splice(i, 1);
+                del('restaurant', i);
             }
         }
     }
