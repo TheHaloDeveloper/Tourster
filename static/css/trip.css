@@ -31,11 +31,17 @@ body {
     z-index: 100;
 }
 
+#buttons {
+    position: absolute;
+    left: 50px;
+    top: 120px;
+}
+
 #map {
     width: calc(50vw - 75px);
-    height: calc(100vh - 100px);
+    height: calc(100vh - 200px);
     position: absolute;
-    top: 50px;
+    top: 150px;
     right: 50px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border: 1px solid #ddd;
@@ -44,9 +50,9 @@ body {
 
 .container {
     width: calc(50vw - 75px);
-    height: calc(100vh - 100px);
+    height: calc(100vh - 200px);
     position: absolute;
-    top: 50px;
+    top: 150px;
     left: 50px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     border: 1px solid #ddd;

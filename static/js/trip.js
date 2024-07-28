@@ -216,6 +216,11 @@ let remainingRestaurants = [];
 function allocationComplete(){
     setInterval(function(){if(mapLoaded) return}, 100);
 
+    for(let i = 1; i < x.tripLength + 1; i++) {
+        let select = document.getElementById('days');
+        select.innerHTML += `<option value="${i}">Day ${i}</option>`;
+    }
+    
     //Hotels
     for (let i = data['hotels'].length - 1; i >= 0; i--) {
         let hotel = eval(`(${data['hotels'][i]})`);
@@ -437,6 +442,7 @@ function budgetAllocation() {
                 tripLength: tripLength
             }
 
+            x.tripLength = tripLength;
             allocationComplete()
         })
     })
