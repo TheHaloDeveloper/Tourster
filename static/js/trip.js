@@ -209,11 +209,26 @@ function createItenerary(){
 
 let map;
 let mapLoaded = false;
+let remainingHotels = [];
 let remainingAttractions = [];
 let remainingRestaurants = [];
 
 function allocationComplete(){
     setInterval(function(){if(mapLoaded) return}, 100);
+
+    //Hotels
+    for (let i = data['hotels'].length - 1; i >= 0; i--) {
+        let hotel = eval(`(${data['hotels'][i]})`);
+
+        if (parseInt(hotel.lowest.replace('$', '')) <= allocation.hotelBudgetPerNight) {
+            remainingHotels.push([hotel.overall_rating * hotel.reviews, hotel])
+        }
+    }
+
+    remainingHotels.sort((a, b) => a[0] - b[0]).reverse()
+    console.log(remainingHotels.splice(0, 6))
+
+    //Atractions
     for (let i = data['attractions'].length - 1; i >= 0; i--) {
         let attraction = eval(`(${data['attractions'][i]})`);
         let filters = eval(`(${data['attraction-filters'][i]})`);
@@ -269,6 +284,7 @@ function allocationComplete(){
         new tt.Marker({element: new marker('attractions', opacity, attractionOptions[i][1])}).setLngLat([lng, lat]).addTo(map);
     }
 
+    //Restaurants
     let counts = {
         "breakfast": [],
         "lunch": [],
