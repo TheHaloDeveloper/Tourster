@@ -60,6 +60,63 @@ body {
     overflow: scroll;
 }
 
+#hotels-container {
+    width: calc(50vw - 75px);
+    height: calc(100vh - 200px);
+    position: absolute;
+    top: 150px;
+    left: 50px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: scroll;
+    background-color: white;
+    z-index: 100;
+}
+
+.hotel {
+    width: 100%;
+    height: 200px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    border: 3px solid black;
+    position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+.h-image {
+    height: 100%;
+    width: 200px;
+    object-fit: cover;
+    outline: 3px solid black;
+}
+
+.h-name {
+    position: absolute;
+    top: 10px;
+    left: 210px;
+}
+
+.h-price {
+    position: absolute;
+    top: 100px;
+    right: 10px;
+}
+
+.h-amenities {
+    width: calc(100% - 300px);
+    position: absolute;
+    bottom: 10px;
+    left: 210px;
+    font-size: 14px;
+}
+
+.h-amenities td {
+    height: 23px;
+}
+
 .item {
     border-bottom: 1px solid #ddd;
     padding: 15px 15px;
