@@ -79,9 +79,12 @@ def geocode():
 
     response = requests.get(url)
     data = response.json()
-    result = data['results'][0]
     
-    return jsonify({'response': [result['geometry']['lat'], result['geometry']['lng']]})
+    if data['results']:
+        result = data['results'][0]
+        return jsonify({'response': [result['geometry']['lat'], result['geometry']['lng']]})
+    else:
+        return jsonify({'error': 'No results found'})
 
 prompt = """
 You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your responses should be a max of 100 words.

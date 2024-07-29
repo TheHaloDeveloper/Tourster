@@ -315,18 +315,22 @@ function addHotel(hotel) {
                 <div class="h-cover"></div>
             </div>
             `;
-
-        fetch('/geocode', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({name: hotel.name})
-        }).then(response => response.json()).then(data => {
-            let long = data.response[1];
-            let lat = data.response[0]
-            new tt.Marker({element: new marker('hotels', 1, {'name': hotel.name, 'longitude': long, 'latitude': lat})}).setLngLat([long, lat]).addTo(map);
-        })
+        
+        setTimeout(function (){
+            fetch('/geocode', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({name: hotel.name})
+            }).then(response => response.json()).then(data => {
+                if(data.response) {
+                    let long = data.response[1];
+                    let lat = data.response[0]
+                    new tt.Marker({element: new marker('hotels', 1, {'name': hotel.name, 'longitude': long, 'latitude': lat})}).setLngLat([long, lat]).addTo(map);
+                }
+            })
+        }, 250)
     }
 }
 
