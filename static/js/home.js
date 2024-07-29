@@ -23,5 +23,5 @@ function waitlist() {
 }
 
 function purchase() {
-    window.location.href = 'https://buy.stripe.com/28o00851jf2N0Mw4jC';
+    window.location.href = 'https://buy.stripe.com/aEUfZDfgFc4xczm000';
 }
