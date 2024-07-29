@@ -105,6 +105,7 @@ function marker(type, o, elem) {
     mark.dataset.longitude = elem.longitude;
     mark.dataset.latitude = elem.latitude;
     mark.dataset.name = elem.name;
+    mark.dataset.type = type;
 
     mark.addEventListener('click', function(e) {
         let lat = parseFloat(e.target.dataset.latitude);
@@ -126,8 +127,15 @@ function del(type, num) {
 }
 
 function giveOptions(options, num) {
+    let arr = {};
+    const drop = (arr, n = 1) => arr.slice(n);
     options.sort((a, b) => a[0] - b[0]).reverse()
-    return options.slice(0, num);
+
+    for (let i = 0; i < x.tripLength; i++) {
+        arr[i + 1] = options.slice(0, num / x.tripLength);
+        options = drop(options, num / x.tripLength)
+    }
+    return arr
 }
 
 function collapse(elem) {
@@ -155,6 +163,19 @@ function collapse(elem) {
 
 let itenerary = [];
 let meals = 0;
+function clearItenerary() {
+    itenerary = [];
+    meals = 0;
+    document.getElementsByClassName('container')[0].innerHTML = '';
+
+    markers.forEach(marker => {
+        if(marker.dataset.type != 'hotels') {
+            marker.remove();
+        }
+    });    
+    markers = [];
+}
+
 function addToItenerary(data, type){
     let icon;
     if (type == 'attraction') {
@@ -336,6 +357,41 @@ function addHotel(hotel) {
 
 function changeDay(i){
     document.getElementById('hotels-container').style.display = 'none';
+    iteneraryPerDay(attractionOptions, counts, i)
+}
+
+function iteneraryPerDay(a, r, day) {
+    clearItenerary();
+
+    for (let i = 0; i < a[day].length; i++) {
+        let opacity = 0.6;
+        if (i % 6 == 1){
+            addToItenerary(a[day][i][1], 'attraction')
+            opacity = 1;
+        }
+
+        let lng = parseFloat(a[day][i][1].longitude);
+        let lat = parseFloat(a[day][i][1].latitude);
+        new tt.Marker({element: new marker('attractions', opacity, a[day][i][1])}).setLngLat([lng, lat]).addTo(map);
+    }
+
+    for (const [key, value] of Object.entries(r[day])) {
+        for(let i = 0; i < value.length; i++) {
+            let current = value[i];
+            let opacity = 0.6;
+
+            if (i == 0) {
+                addToItenerary(current, 'restaurant')
+                opacity = 1;
+            }
+
+            let lng = parseFloat(current.longitude);
+            let lat = parseFloat(current.latitude);
+            new tt.Marker({element: new marker('restaurants', opacity, current)}).setLngLat([lng, lat]).addTo(map);
+        }
+    }
+
+    createItenerary();
 }
 
 let map;
@@ -343,6 +399,8 @@ let mapLoaded = false;
 let remainingHotels = [];
 let remainingAttractions = [];
 let remainingRestaurants = [];
+let attractionOptions;
+let counts = {};
 
 function allocationComplete(){
     setInterval(function(){if(mapLoaded) return}, 100);
@@ -410,27 +468,9 @@ function allocationComplete(){
             //free?
         }
     }
-
-    let attractionOptions = giveOptions(remainingAttractions, 12);
-    for (let i = 0; i < attractionOptions.length; i++) {
-        let opacity = 0.6;
-        if (i % 6 == 1){
-            addToItenerary(attractionOptions[i][1], 'attraction')
-            opacity = 1;
-        }
-
-        let lng = parseFloat(attractionOptions[i][1].longitude);
-        let lat = parseFloat(attractionOptions[i][1].latitude);
-        new tt.Marker({element: new marker('attractions', opacity, attractionOptions[i][1])}).setLngLat([lng, lat]).addTo(map);
-    }
+    attractionOptions = giveOptions(remainingAttractions, 2 * 6 * x.tripLength);
 
     //Restaurants
-    let counts = {
-        "breakfast": [],
-        "lunch": [],
-        "dinner": [],
-    }
-    
     for (let i = data['restaurants'].length - 1; i >= 0; i--) {
         let restaurant = eval(`(${data['restaurants'][i]})`);
         let filters = restaurant.dietaryRestrictions;
@@ -447,10 +487,20 @@ function allocationComplete(){
 
     remainingRestaurants.sort((a, b) => a[0] - b[0]).reverse()
 
+    for (let day = 1; day <= x.tripLength; day++) {
+        counts[day] = {
+            breakfast: [],
+            lunch: [],
+            dinner: []
+        };
+    }
+    
+    let allocatedRestaurants = new Set();
+    
     for (let i = 0; i < remainingRestaurants.length; i++) {
         let restaurant = remainingRestaurants[i][1];
         
-        if (restaurant.priceRange != null){
+        if (restaurant.priceRange != null) {
             let sections = restaurant.priceRange.replace('$', '').split(' - $');
             restaurant.cost = (parseFloat(sections[0]) + parseFloat(sections[1])) / 2;
         } else {
@@ -459,12 +509,12 @@ function allocationComplete(){
                 "$$": [10, 25],
                 "$$$": [25, 50],
                 "$$$$": [50, 100]
-            }
-
+            };
+    
             let sections = restaurant.priceLevel.split(' - ');
             let range = conversions[sections[0]];
             let first = (range[0] + range[1]) / 2;
-
+    
             if (sections.length == 1) {
                 restaurant.cost = first;
             } else {
@@ -473,45 +523,43 @@ function allocationComplete(){
                 restaurant.cost = (first + second) / 2;
             }
         }
-
+    
+        if (allocatedRestaurants.has(restaurant)) {
+            continue;
+        }
+    
         for (let meal of restaurant.mealTypes) {
             if (meal != 'Breakfast' && meal != 'Lunch' && meal != 'Dinner') {
                 continue;
             }
-
-            let val;
+    
+            let mealType = meal.toLowerCase();
+            let maxMealsPerDay = 6;
+            let mealBudget;
+    
             if (meal == 'Breakfast') {
-                val = allocation.breakfastBudgetPerNight;
+                mealBudget = allocation.breakfastBudgetPerNight;
             } else if (meal == 'Lunch') {
-                val = allocation.lunchBudgetPerNight;
+                mealBudget = allocation.lunchBudgetPerNight;
             } else if (meal == 'Dinner') {
-                val = allocation.dinnerBudgetPerNight;
+                mealBudget = allocation.dinnerBudgetPerNight;
             }
-
-            if (counts[meal.toLowerCase()].length < 6 && restaurant.cost <= val) {
-                counts[meal.toLowerCase()].push(restaurant);
-                break;   
-            } else {
-                del('restaurant', i);
+    
+            for (let day = 1; day <= x.tripLength; day++) {
+                if (counts[day][mealType].length < maxMealsPerDay && restaurant.cost <= mealBudget) {
+                    counts[day][mealType].push(restaurant);
+                    allocatedRestaurants.add(restaurant);
+                    break;
+                }
+            }
+    
+            if (allocatedRestaurants.has(restaurant)) {
+                break;
             }
         }
-    }
-
-    for (const [key, value] of Object.entries(counts)) {
-        for(let i = 0; i < value.length; i++) {
-            let current = value[i];
-            let opacity = 0.6;
-
-            if (i == 0) {
-                addToItenerary(current, 'restaurant')
-                opacity = 1;
-            }
-
-            let lng = parseFloat(current.longitude);
-            let lat = parseFloat(current.latitude);
-            new tt.Marker({element: new marker('restaurants', opacity, current)}).setLngLat([lng, lat]).addTo(map);
-        }
-    }
+        
+        del('restaurant', i);
+    }    
 
     createItenerary();
     map.resize();
