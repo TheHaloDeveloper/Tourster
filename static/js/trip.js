@@ -285,14 +285,21 @@ function addHotel(hotel) {
 
         let stars = ``;
         let rounded = (Math.round(parseFloat(hotel.overall_rating) * 2) / 2).toFixed(1).split('.');
+        let half = 0;
+
+        if (rounded[1] == '5') {
+            half = 1;
+        }
         
         for(let i = 0; i < parseInt(rounded[0]); i++) {
             stars += `<i class="fa-solid fa-star"></i>`;
         }
-        if(rounded[1] == '5') {
+        if(half == 1) {
             stars += `<i class="fa-solid fa-star-half-stroke"></i>`;
         }
-        for(let i = 0; i < 5 - (stars.split('<i ').length - 1); i++) {
+
+
+        for(let i = 0; i < 5 - (parseInt(rounded[0]) + half); i++) {
             stars += `<i class="fa-regular fa-star"></i>`;
         }
 
@@ -323,6 +330,10 @@ function addHotel(hotel) {
     }
 }
 
+function changeDay(i){
+    document.getElementById('hotels-container').style.display = 'none';
+}
+
 let map;
 let mapLoaded = false;
 let remainingHotels = [];
@@ -333,8 +344,8 @@ function allocationComplete(){
     setInterval(function(){if(mapLoaded) return}, 100);
 
     for(let i = 1; i < x.tripLength + 1; i++) {
-        let select = document.getElementById('days');
-        select.innerHTML += `<option value="${i}">Day ${i}</option>`;
+        let btns = document.getElementById('buttons');
+        btns.innerHTML += `<button value="${i}" onclick="changeDay(${i})">Day ${i}</button>`;
     }
     
     //Hotels

@@ -84,6 +84,7 @@ body {
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    color: rgb(150, 150, 150);
 }
 
 .h-image {
@@ -97,6 +98,7 @@ body {
     position: absolute;
     top: 10px;
     left: 210px;
+    color: black;
 }
 
 .h-price {
@@ -125,6 +127,7 @@ body {
 
 .h-link {
     padding: 5px;
+    color: black;
     border: 3px solid black;
     border-radius: 15px;
     position: absolute;
