@@ -3,6 +3,7 @@ from datetime import datetime
 import os
 import ast
 import google.generativeai as genai
+import requests
 from google.generativeai.types import HarmCategory, HarmBlockThreshold, StopCandidateException
 
 import json
@@ -68,6 +69,19 @@ def serve_cookies():
 @app.route('/')
 def home():
     return render_template("home.html", session=session.get('user'), pretty=json.dumps(session.get('user'), indent=4))
+
+@app.route('/geocode', methods=['POST'])
+def geocode():
+    info = request.json
+    name = info.get('name', '')
+
+    url = f"https://api.opencagedata.com/geocode/v1/json?q={requests.utils.quote(name)}&key={os.getenv('opencage')}"
+
+    response = requests.get(url)
+    data = response.json()
+    result = data['results'][0]
+    
+    return jsonify({'response': [result['geometry']['lat'], result['geometry']['lng']]})
 
 prompt = """
 You are ToursterAI, an AI chatbot who creates full travel plans as an all-in-one tool. Your responses should be a max of 100 words.

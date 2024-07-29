@@ -269,8 +269,6 @@ function addHotel(hotel) {
         }
         table += `</table>`;
 
-        console.log(hotel)
-
         document.getElementById('hotels-container').innerHTML += `
             <div class="hotel">
                 <img class="h-image" src="${hotel.images[0]}"></img>
@@ -279,6 +277,18 @@ function addHotel(hotel) {
                 ${table}
             </div>
             `;
+
+        fetch('/geocode', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({name: hotel.name})
+        }).then(response => response.json()).then(data => {
+            let long = data.response[1];
+            let lat = data.response[0]
+            new tt.Marker({element: new marker('hotels', 1, {'name': hotel.name, 'longitude': long, 'latitude': lat})}).setLngLat([long, lat]).addTo(map);
+        })
     }
 }
 
