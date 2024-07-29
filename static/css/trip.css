@@ -117,6 +117,20 @@ body {
     height: 23px;
 }
 
+.h-rating {
+    position: absolute;
+    top: 35px;
+    left: 210px;
+}
+
+.fa-star {
+    color: rgb(237, 182, 42);
+}
+
+.fa-star-half-stroke {
+    color: rgb(237, 182, 42);
+}
+
 .item {
     border-bottom: 1px solid #ddd;
     padding: 15px 15px;

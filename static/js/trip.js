@@ -269,10 +269,24 @@ function addHotel(hotel) {
         }
         table += `</table>`;
 
+        let stars = ``;
+        let rounded = (Math.round(parseFloat(hotel.overall_rating) * 2) / 2).toFixed(1).split('.');
+        
+        for(let i = 0; i < parseInt(rounded[0]); i++) {
+            stars += `<i class="fa-solid fa-star"></i>`;
+        }
+        if(rounded[1] == '5') {
+            stars += `<i class="fa-solid fa-star-half-stroke"></i>`;
+        }
+        for(let i = 0; i < 5 - (stars.split('<i ').length - 1); i++) {
+            stars += `<i class="fa-regular fa-star"></i>`;
+        }
+
         document.getElementById('hotels-container').innerHTML += `
             <div class="hotel">
                 <img class="h-image" src="${hotel.images[0]}"></img>
                 <div class="h-name">${hotel.name}</div>
+                <div class="h-rating">Rating: ${stars} ${hotel.reviews} reviews (${hotel.overall_rating})</div>
                 <div class="h-price">${hotel.lowest}</div>
                 ${table}
             </div>
