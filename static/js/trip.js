@@ -351,6 +351,7 @@ function allocationComplete(){
         let btns = document.getElementById('buttons');
         btns.innerHTML += `<button value="${i}" onclick="changeDay(${i})">Day ${i}</button>`;
     }
+    document.getElementById('header').innerHTML = `${x.tripLength}-day ${x.to.split(',')[0]} Itenerary`;
     
     //Hotels
     for (let i = data['hotels'].length - 1; i >= 0; i--) {
