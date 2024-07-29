@@ -230,6 +230,16 @@ function redirect(r) {
     window.open(r, '_blank').focus();
 }
 
+function selectHotel(elem) {
+    let hotels = document.getElementsByClassName('hotel')
+    elem.children[0].click();
+
+    for(let i = 0; i < hotels.length; i++) {
+        hotels[i].children[7].style.display = 'none';
+    }
+    elem.children[7].style.display = 'block';
+}
+
 function addHotel(hotel) {
     let a = hotel.amenities;
     let count = 0;
@@ -287,13 +297,15 @@ function addHotel(hotel) {
         }
 
         document.getElementById('hotels-container').innerHTML += `
-            <div class="hotel">
+            <div class="hotel" onclick="selectHotel(this)">
+                <input type="radio" class="h-radio" name="hotels" value="${hotel.name}">
                 <img class="h-image" src="${hotel.images[0]}"></img>
                 <div class="h-name"><b>${hotel.name}</b></div>
                 <div class="h-rating">Rating: ${stars} ${hotel.reviews} reviews (${hotel.overall_rating})</div>
                 <div class="h-price">${hotel.lowest}</div>
                 <div class="h-link" onclick="redirect('${hotel.link}')">Visit Website <i class="fa-solid fa-chevron-right"></i></div>
                 ${table}
+                <div class="h-cover"></div>
             </div>
             `;
 
