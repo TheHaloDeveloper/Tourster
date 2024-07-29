@@ -226,6 +226,10 @@ let amenities = {
     "beach access": "umbrella-beach"
 };
 
+function redirect(r) {
+    window.open(r, '_blank').focus();
+}
+
 function addHotel(hotel) {
     let a = hotel.amenities;
     let count = 0;
@@ -285,9 +289,10 @@ function addHotel(hotel) {
         document.getElementById('hotels-container').innerHTML += `
             <div class="hotel">
                 <img class="h-image" src="${hotel.images[0]}"></img>
-                <div class="h-name">${hotel.name}</div>
+                <div class="h-name"><b>${hotel.name}</b></div>
                 <div class="h-rating">Rating: ${stars} ${hotel.reviews} reviews (${hotel.overall_rating})</div>
                 <div class="h-price">${hotel.lowest}</div>
+                <div class="h-link" onclick="redirect('${hotel.link}')">Visit Website <i class="fa-solid fa-chevron-right"></i></div>
                 ${table}
             </div>
             `;
