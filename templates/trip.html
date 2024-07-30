@@ -29,9 +29,15 @@
     <div id="map"></div>
 
     <div id="blocker"></div>
-    <script>
-        window.data = {{ data|tojson }};
-    </script>
-    <script src="/static/js/trip.js"></script>
+
+    <script>window.data = {{ data|tojson }};</script>
+    <script src="/static/js/trip/map.js"></script>
+    <script src="/static/js/trip/restaurants.js"></script>
+    <script src="/static/js/trip/attractions.js"></script>
+    <script src="/static/js/trip/hotels.js"></script>    
+    <script src="/static/js/trip/tools.js"></script>
+    <script src="/static/js/trip/allocation.js"></script>
+    <script src="/static/js/trip/itenerary.js"></script>
+    <script src="/static/js/trip/main.js"></script>
 </body>
 </html>
