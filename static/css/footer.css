@@ -1,0 +1,135 @@
+#tourster2 {
+    margin-bottom: 32px;
+}
+
+#tourster2 img {
+    width: 55px;
+}
+
+#tourster2 span {
+    font-size: 40px;
+    text-transform: uppercase;
+    line-height: 65px;
+}
+
+footer a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+#waitlist {
+    height: 40px;
+    width: 80px;
+    border-radius: 10px;
+    border: none;
+    outline: 3px solid var(--highlight);
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+footer {
+    margin: 50px;
+    height: 350px;
+    width: calc(100% - 100px);
+    position: relative;
+    overflow: hidden;
+}
+
+footer hr {
+    border: none;
+    height: 3px;
+    color: rgb(87, 89, 114);
+    background-color: rgb(87, 89, 114);
+}
+
+footer a {
+    text-decoration: underline;
+}
+
+#footer_topleft {
+    width: 50%;
+    height: calc(100% - 35px);
+}
+
+#footer_topright {
+    width: 50%;
+    height: calc(100% - 35px);
+    position: absolute;
+    top: 0;
+    left: 50%;
+}
+
+#footer_bottom {
+    position: absolute;
+    width: 100%;
+    height: 35px;
+    bottom: 0px;
+    line-height: 35px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+#agreements {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+}
+
+#agreements a {
+    text-decoration: none;
+    padding: 15px;
+}
+
+#desc {
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+#waitlist {
+    background-color: white;
+    color: var(--highlight);
+    margin: 20px;
+    margin-left: 3px;
+    width: 100px;
+    display: block;
+}
+
+#waitlist:hover {
+    background-color: var(--highlight);
+    color: white;
+}
+
+#tiny {
+    font-size: 12px;
+}
+
+.table_component {
+    overflow: auto;
+    width: 100%;
+    position: absolute;
+    bottom: 50px;
+}
+
+.table_component table {
+    border: 3px none #000005;
+    height: 180px;
+    width: 100%;
+    table-layout: fixed;
+    text-align: left;
+}
+
+.table_component th {
+    border: 3px none #000005;
+    color: #000000;
+    padding: 30px 0 30px 0;
+}
+
+.table_component td {
+    border: 3px none #000005;
+    color: #000000;
+    height: 10px;
+}
+
+#small_table {
+    display: none;
+}
