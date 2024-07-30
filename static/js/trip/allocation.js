@@ -16,49 +16,47 @@ function budgetAllocation() {
     let numPeople = parseInt(x.children) + parseInt(x.adults) + parseInt(x.seniors);
     let today = `0${(new Date()).toLocaleDateString('en-US')}`.split('/');
 
-    fetch('/airport_distance', {
+    fetch('/trip_info', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({message: `${x.from.split('(')[1].replace(')', '')}-${x.to.split('(')[1].replace(')', '')}`})
-    }).then(response => response.json()).then(distance => {
+        body: JSON.stringify({
+            airports: `${x.from.split('(')[1].replace(')', '')}-${x.to.split('(')[1].replace(')', '')}`,
+            rooms: `${x.children} children, ${x.adults} adults, ${x.seniors} seniors - Relationship: ${x.people}`
+        })
+    }).then(response => response.json()).then(data => {
+        let distance = data.airport_response;
+        let rooms = data.rooms_response;
+
         let daysUntilDeparture = (new Date(`${start[2]}-${start[0]}-${start[1]}`) - new Date(`${today[2]}-${today[0]}-${today[1]}`)) / ms;
-        let totalFlightCost = flightCost(distance.response, daysUntilDeparture) * numPeople;
+        let totalFlightCost = flightCost(distance, daysUntilDeparture) * numPeople;
         let transportationCost = tripLength * 50;
         let remainingBudget = budget - transportationCost - totalFlightCost;
 
-        fetch('/calculate_rooms', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({message: `${x.children} children, ${x.adults} adults, ${x.seniors} seniors - Relationship: ${x.people}`})
-        }).then(response => response.json()).then(data => {
-            let numRooms = parseInt(data.response.trim())
-            let hotelBudgetPerNight = Math.floor((remainingBudget * hotelPercent) / numRooms / tripLength); //filter
+        let numRooms = parseInt(rooms.trim())
+        let hotelBudgetPerNight = Math.floor((remainingBudget * hotelPercent) / numRooms / tripLength); //filter
 
-            let restaurantBudget = remainingBudget * restaurantPercent;
-            let breakfastBudgetPerNight = Math.floor((restaurantBudget * breakfastPercent) / numPeople / tripLength); //filter
-            let lunchBudgetPerNight = Math.floor((restaurantBudget * lunchPercent) / numPeople / tripLength); //filter
-            let dinnerBudgetPerNight = Math.floor((restaurantBudget * dinnerPercent) / numPeople / tripLength); //filter
+        let restaurantBudget = remainingBudget * restaurantPercent;
+        let breakfastBudgetPerNight = Math.floor((restaurantBudget * breakfastPercent) / numPeople / tripLength); //filter
+        let lunchBudgetPerNight = Math.floor((restaurantBudget * lunchPercent) / numPeople / tripLength); //filter
+        let dinnerBudgetPerNight = Math.floor((restaurantBudget * dinnerPercent) / numPeople / tripLength); //filter
 
-            let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength / 2); //filter
+        let attractionsPerPerson = Math.floor((remainingBudget * attractionPercent) / numPeople / tripLength / 2); //filter
 
-            allocation = {
-                totalFlightCost: totalFlightCost,
-                transportationCost: transportationCost,
-                hotelBudgetPerNight: hotelBudgetPerNight,
-                breakfastBudgetPerNight: breakfastBudgetPerNight,
-                lunchBudgetPerNight: lunchBudgetPerNight,
-                dinnerBudgetPerNight: dinnerBudgetPerNight,
-                attractionsPerPerson: attractionsPerPerson,
-                numRooms: numRooms,
-                numPeople: numPeople,
-                tripLength: tripLength
-            }
+        allocation = {
+            totalFlightCost: totalFlightCost,
+            transportationCost: transportationCost,
+            hotelBudgetPerNight: hotelBudgetPerNight,
+            breakfastBudgetPerNight: breakfastBudgetPerNight,
+            lunchBudgetPerNight: lunchBudgetPerNight,
+            dinnerBudgetPerNight: dinnerBudgetPerNight,
+            attractionsPerPerson: attractionsPerPerson,
+            numRooms: numRooms,
+            numPeople: numPeople,
+            tripLength: tripLength
+        }
 
-            allocationComplete(allocation);
-        })
+        allocationComplete(allocation);
     })
 }

@@ -186,13 +186,31 @@ def ai_response():
             },
         ])
         return jsonify({'response': error})
-    
-@app.route('/calculate_rooms', methods=['POST'])
-def calculate_rooms():
+
+@app.route('/trip_info', methods=['POST'])
+def trip_info():
     global model
     data = request.json
-    message = data.get('message', '')
+    airports = data.get('airports', '')
+    rooms = data.get('rooms', '')
     
+    #Airport Distance
+    start_airport = airports.split('-')[0]
+    end_airport = airports.split('-')[1]
+    
+    coordinates = []
+    with open('static/data/airport-locations.txt', 'r') as file:
+        for line in file:
+            parts = line.split(': ')
+            if parts[0] == start_airport or parts[0] == end_airport:
+                coordinates.append(parts[1].replace('\n', ''))
+            if len(coordinates) == 2:
+                break
+    
+    one = ast.literal_eval(coordinates[0])
+    two = ast.literal_eval(coordinates[1])
+    
+    #Number of Rooms
     history = [
         {
             "role": "user",
@@ -229,32 +247,12 @@ def calculate_rooms():
     ]
     
     chat_session = model.start_chat(history=history)
-    response = chat_session.send_message(message)
+    response = chat_session.send_message(rooms)
     
-    return jsonify({'response': response.text})
-
-@app.route('/airport_distance', methods=['POST'])
-def airport_distance():
-    global model
-    data = request.json
-    message = data.get('message', '')
-    
-    start_airport = message.split('-')[0]
-    end_airport = message.split('-')[1]
-    
-    coordinates = []
-    with open('static/data/airport-locations.txt', 'r') as file:
-        for line in file:
-            parts = line.split(': ')
-            if parts[0] == start_airport or parts[0] == end_airport:
-                coordinates.append(parts[1].replace('\n', ''))
-            if len(coordinates) == 2:
-                break
-    
-    one = ast.literal_eval(coordinates[0])
-    two = ast.literal_eval(coordinates[1])
-    
-    return jsonify({'response': geopy.distance.geodesic(one, two).miles})
+    return jsonify({
+        'airport_response': geopy.distance.geodesic(one, two).miles,
+        'rooms_response': response.text
+    })
     
 @app.route('/end_response', methods=['POST'])
 def end_response():
