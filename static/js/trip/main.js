@@ -39,6 +39,10 @@ function allocationComplete(a){
 
     createItenerary();
     map.resize();
+
+    let blocker = document.getElementById('blocker');
+    blocker.style.animation = '1s linear fade';
+    blocker.style.animationFillMode = 'forwards';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
