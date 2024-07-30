@@ -23,9 +23,9 @@ function addHotel(hotel) {
     let table = `<table class="h-amenities">`
     
     if (a) {
-        for (let i = 0; i < a.length; i++) {
+        for (let amenity of a) {
             let icon;
-            let t = a[i].trim().toLowerCase();
+            let t = amenity.trim().toLowerCase();
 
             if (t.includes('wi-fi')) {
                 icon = amenities['wifi'];
@@ -50,7 +50,7 @@ function addHotel(hotel) {
                 table += `<tr>`;
             }
 
-            table += `<td><i class="fa-solid fa-${icon}"></i> ${a[i]}</td>`
+            table += `<td><i class="fa-solid fa-${icon}"></i> ${amenity}</td>`
 
             count += 1;
         }
@@ -95,15 +95,15 @@ function selectHotel(elem) {
     let hotels = document.getElementsByClassName('hotel')
     elem.children[0].click();
 
-    for(let i = 0; i < hotels.length; i++) {
-        hotels[i].children[7].style.display = 'none';
+    for(let hotel of hotels) {
+        hotel.children[7].style.display = 'none';
     }
     elem.children[7].style.display = 'block';
 }
 
 function filterHotels() {
-    for (let i = data['hotels'].length - 1; i >= 0; i--) {
-        let hotel = eval(`(${data['hotels'][i]})`);
+    for (const [i, hotelStr] of data['hotels'].entries()) {
+        let hotel = eval(`(${hotelStr})`);
     
         if (parseInt(hotel.lowest.replace('$', '')) <= allocation.hotelBudgetPerNight) {
             remainingHotels.push([hotel.overall_rating * hotel.reviews, hotel])
@@ -112,7 +112,7 @@ function filterHotels() {
     
     remainingHotels.sort((a, b) => a[0] - b[0]).reverse();
     
-    for(let hotel of remainingHotels.splice(0, 6)) {
+    for (let hotel of remainingHotels.splice(0, 6)) {
         addHotel(hotel[1])
     }
 }

@@ -13,11 +13,11 @@ function clearItenerary() {
     meals = 0;
     document.getElementsByClassName('container')[0].innerHTML = '';
 
-    markers.forEach(marker => {
+    for (let marker of markers) {
         if(marker.dataset.type != 'hotels') {
             marker.remove();
         }
-    });    
+    }    
     markers = [];
 }
 
@@ -87,32 +87,31 @@ function addToItenerary(data, type){
 }
 
 function createItenerary(){
-    for (let i = 0; i < itenerary.length; i++) {
-        document.getElementsByClassName('container')[0].innerHTML += itenerary[i];
+    for (let item of itenerary) {
+        document.getElementsByClassName('container')[0].innerHTML += item;
     }
 }
 
 function iteneraryPerDay(a, r, day) {
     clearItenerary();
 
-    for (let i = 0; i < a[day].length; i++) {
+    for (let [index, attraction] of a[day].entries()) {
         let opacity = 0.6;
-        if (i % 6 == 1){
-            addToItenerary(a[day][i][1], 'attraction')
+        if (index % 6 == 1){
+            addToItenerary(attraction[1], 'attraction')
             opacity = 1;
         }
 
-        let lng = parseFloat(a[day][i][1].longitude);
-        let lat = parseFloat(a[day][i][1].latitude);
-        new tt.Marker({element: new marker('attractions', opacity, a[day][i][1])}).setLngLat([lng, lat]).addTo(map);
+        let lng = parseFloat(attraction[1].longitude);
+        let lat = parseFloat(attraction[1].latitude);
+        new tt.Marker({element: new marker('attractions', opacity, attraction[1])}).setLngLat([lng, lat]).addTo(map);
     }
 
     for (const [key, value] of Object.entries(r[day])) {
-        for(let i = 0; i < value.length; i++) {
-            let current = value[i];
+        for (let [index, current] of value.entries()) {
             let opacity = 0.6;
 
-            if (i == 0) {
+            if (index == 0) {
                 addToItenerary(current, 'restaurant')
                 opacity = 1;
             }

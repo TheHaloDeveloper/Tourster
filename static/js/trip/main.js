@@ -27,7 +27,7 @@ function allocationComplete(a){
 
     setInterval(function(){if(mapLoaded) return}, 100);
 
-    for(let i = 1; i < x.tripLength + 1; i++) {
+    for (let i = 1; i < x.tripLength + 1; i++) {
         let btns = document.getElementById('buttons');
         btns.innerHTML += `<button value="${i}" onclick="changeDay(${i})">Day ${i}</button>`;
     }

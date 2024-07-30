@@ -1,6 +1,6 @@
 function filterAttractions() {
-    for (let i = data['attractions'].length - 1; i >= 0; i--) {
-        let attraction = eval(`(${data['attractions'][i]})`);
+    for (let [i, attractionStr] of data['attractions'].entries()) {
+        let attraction = eval(`(${attractionStr})`);
         let filters = eval(`(${data['attraction-filters'][i]})`);
         let people = eval(`(${data['attraction-people'][i]})`);
     
@@ -27,7 +27,7 @@ function filterAttractions() {
                         del('attraction', i)
                     }
                 } 
-
+    
                 if (!people.includes(x.people)) {
                     del('attraction', i)
                 } else {

@@ -13,7 +13,7 @@ function filterRestaurants() {
         }
     }
     
-    remainingRestaurants.sort((a, b) => a[0] - b[0]).reverse()
+    remainingRestaurants.sort((a, b) => a[0] - b[0]).reverse();
     
     for (let day = 1; day <= x.tripLength; day++) {
         counts[day] = {
@@ -25,9 +25,7 @@ function filterRestaurants() {
     
     let allocatedRestaurants = new Set();
     
-    for (let i = 0; i < remainingRestaurants.length; i++) {
-        let restaurant = remainingRestaurants[i][1];
-        
+    for (const [i, [_, restaurant]] of remainingRestaurants.entries()) {
         if (restaurant.priceRange != null) {
             let sections = restaurant.priceRange.replace('$', '').split(' - $');
             restaurant.cost = (parseFloat(sections[0]) + parseFloat(sections[1])) / 2;
@@ -43,7 +41,7 @@ function filterRestaurants() {
             let range = conversions[sections[0]];
             let first = (range[0] + range[1]) / 2;
     
-            if (sections.length == 1) {
+            if (sections.length === 1) {
                 restaurant.cost = first;
             } else {
                 let range2 = conversions[sections[1]];
@@ -56,8 +54,8 @@ function filterRestaurants() {
             continue;
         }
     
-        for (let meal of restaurant.mealTypes) {
-            if (meal != 'Breakfast' && meal != 'Lunch' && meal != 'Dinner') {
+        for (const meal of restaurant.mealTypes) {
+            if (meal !== 'Breakfast' && meal !== 'Lunch' && meal !== 'Dinner') {
                 continue;
             }
     
@@ -65,11 +63,11 @@ function filterRestaurants() {
             let maxMealsPerDay = 6;
             let mealBudget;
     
-            if (meal == 'Breakfast') {
+            if (meal === 'Breakfast') {
                 mealBudget = allocation.breakfastBudgetPerNight;
-            } else if (meal == 'Lunch') {
+            } else if (meal === 'Lunch') {
                 mealBudget = allocation.lunchBudgetPerNight;
-            } else if (meal == 'Dinner') {
+            } else if (meal === 'Dinner') {
                 mealBudget = allocation.dinnerBudgetPerNight;
             }
     

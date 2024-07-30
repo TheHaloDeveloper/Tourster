@@ -31,13 +31,13 @@ function stars(d) {
         half = 1;
     }
     
-    for(let i = 0; i < parseInt(rounded[0]); i++) {
+    for (let i = 0; i < parseInt(rounded[0]); i++) {
         stars += `<i class="fa-solid fa-star"></i>`;
     }
-    if(half == 1) {
+    if (half == 1) {
         stars += `<i class="fa-solid fa-star-half-stroke"></i>`;
     }
-    for(let i = 0; i < 5 - (parseInt(rounded[0]) + half); i++) {
+    for (let i = 0; i < 5 - (parseInt(rounded[0]) + half); i++) {
         stars += `<i class="fa-regular fa-star"></i>`;
     }
 
@@ -136,8 +136,7 @@ function collapse(elem) {
         arrow.classList.remove('fa-chevron-up');
         arrow.classList.add('fa-chevron-down');
 
-        for(let marker = 0; marker < markers.length; marker++) {
-            let current = markers[marker];
+        for (let current of markers) {
             if (current.dataset.name == title) {
                 animatePanAndZoom(current.dataset.latitude, current.dataset.longitude, 20, 500, 1000);
                 break;
