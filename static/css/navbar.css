@@ -1,0 +1,91 @@
+#navbar {
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 75px;
+    border-bottom: 5px solid black;
+    background-color: var(--beige);
+    z-index: 9999;
+}
+
+.name {
+    font-family: "Josefin Sans", sans-serif;
+    position: absolute;
+    left: 70px;
+    cursor: pointer;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+#tourster img {
+    width: 50px;
+    margin-top: 13px;
+    margin-left: 10px;
+}
+
+#tourster span {
+    font-size: 35px;
+    line-height: 80px;
+}
+
+#links {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    line-height: 80px;
+    font-size: 20px;
+}
+
+#links span {
+    padding: 30px;
+}
+
+#links a {
+    color: inherit;
+    text-decoration: inherit;
+}
+
+.buttons {
+    position: absolute;
+    top: 0;
+    right: 17.5px;
+    line-height: 75px;
+}
+
+.buttons button {
+    height: 40px;
+    width: 80px;
+    border-radius: 10px;
+    border: none;
+    outline: 3px solid var(--highlight);
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+#signup_btn, #logout_btn {
+    background-color: var(--highlight);
+    color: white;
+}
+
+#signup_btn:hover, #logout_btn:hover {
+    background-color: var(--accent);
+    outline: 3px solid var(--accent);
+}
+
+#signup_btn {
+    margin-right: 20px;
+}
+
+#login_btn {
+    background-color: white;
+    color: var(--highlight);
+}
+
+#login_btn:hover {
+    background-color: var(--highlight);
+    color: white;
+}

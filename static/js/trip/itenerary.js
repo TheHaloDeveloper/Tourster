@@ -70,7 +70,7 @@ function addToItenerary(data, type){
             <div class="card">
                 <img src="${data.image}" alt="Los Angeles Convention Center">
                 <div class="card-content">
-                    Rating: ${stars(data)} ${data.numberOfReviews} reviews (${data.rating})
+                    Rating: ${stars(data)} ${data.numberOfReviews} reviews
                     <div class="price">Lowest Price: ${price} per person</div>
                     <p>${data.description}</p>
                 </div>

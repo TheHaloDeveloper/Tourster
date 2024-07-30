@@ -21,31 +21,7 @@
 
     <div id="blocker"></div>
 
-    <div id="navbar" class="noselect bg-semi">
-        <div id="tourster">
-            <img class="logo" src="/static/images/tourster-transparent.png">
-            <span class="name">Tourster</span>
-        </div>
-
-        <div id="links">
-            <span><a href="/">Home</a></span>
-            <span><a href="/soon">Our Services</a></span>
-            <span><a href="/soon">Contact</a></span>
-        </div>
-
-        {% if session %}
-            <!-- <h1>Welcome {{session.userinfo.name}}!</h1>
-            <div><pre>{{pretty}}</pre></div> -->
-            <div class="buttons">
-                <a href="/logout"><button id="logout_btn">Logout</button></a>
-            </div>
-        {% else %}
-            <div class="buttons">
-                <a href="/soon"><button id="signup_btn">Sign Up</button></a>
-                <a href="/soon"><button id="login_btn">Log In</button></a>
-            </div>
-        {% endif %}
-    </div>
+    {% include 'navbar.html' %}
 
     <div id="heading">
         <h1>All-in-one Travel Planner</h1>
