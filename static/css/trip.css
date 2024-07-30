@@ -123,7 +123,7 @@ body {
     left: 210px;
 }
 
-.h-link {
+.h-link, .card-link {
     padding: 5px;
     color: black;
     border: 3px solid black;
@@ -236,6 +236,7 @@ body {
     width: 100%;
     overflow: hidden;
     font-family: Arial, sans-serif;
+    position: relative;
 }
 
 .card img {

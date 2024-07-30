@@ -74,6 +74,7 @@ function addToItenerary(data, type){
                     <div class="price">Lowest Price: ${price} per person</div>
                     <p>${data.description}</p>
                 </div>
+                <br><div class="card-link" onclick="redirect('${data.website}')">Visit Website <i class="fa-solid fa-chevron-right"></i></div>
             </div>
         </div>
     </div>`;
