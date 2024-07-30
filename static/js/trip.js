@@ -202,16 +202,52 @@ function addToItenerary(data, type){
         badges += `</div>`
     }
 
+    let price;
+    let stars = ``;
+    let rounded = (Math.round(parseFloat(data.rating) * 2) / 2).toFixed(1).split('.');
+    let half = 0;
+
+    if (rounded[1] == '5') {
+        half = 1;
+    }
+    
+    for(let i = 0; i < parseInt(rounded[0]); i++) {
+        stars += `<i class="fa-solid fa-star"></i>`;
+    }
+    if(half == 1) {
+        stars += `<i class="fa-solid fa-star-half-stroke"></i>`;
+    }
+    for(let i = 0; i < 5 - (parseInt(rounded[0]) + half); i++) {
+        stars += `<i class="fa-regular fa-star"></i>`;
+    }
+
+    if (data.offerGroup) {
+        price = data.offerGroup.lowestPrice
+    } else {
+        if (data.priceRange) {
+            price = data.priceRange.split(' - ')[0]
+        } else {
+            price = data.priceLevel.split(' - ')[0]
+        }
+    }
     let elem = `
-    <div class="item" onclick="collapse(this)">
-        <div class="header">
+    <div class="item">
+        <div class="header" onclick="collapse(this.parentElement)">
             <div class="icon ${type}">${icon}</div>
             <div class="title">${data.name}</div>
             <i class="arrow fa-solid fa-chevron-up"></i>
-            <i class="fa-solid fa-trash-can"></i>
             ${badges}
         </div>
-        <div class="dropdown">${data.description}</div>
+        <div class="dropdown">
+            <div class="card">
+                <img src="${data.image}" alt="Los Angeles Convention Center">
+                <div class="card-content">
+                    Rating: ${stars} ${data.numberOfReviews} reviews (${data.rating})
+                    <div class="price">Lowest Price: ${price} per person</div>
+                    <p>${data.description}</p>
+                </div>
+            </div>
+        </div>
     </div>`;
 
     if (type == 'restaurant') {
@@ -318,8 +354,6 @@ function addHotel(hotel) {
         if(half == 1) {
             stars += `<i class="fa-solid fa-star-half-stroke"></i>`;
         }
-
-
         for(let i = 0; i < 5 - (parseInt(rounded[0]) + half); i++) {
             stars += `<i class="fa-regular fa-star"></i>`;
         }
@@ -357,6 +391,8 @@ function addHotel(hotel) {
 
 function changeDay(i){
     document.getElementById('hotels-container').style.display = 'none';
+    document.getElementById('map').style.width = 'calc(50vw - 75px)';
+    map.resize();
     iteneraryPerDay(attractionOptions, counts, i)
 }
 
