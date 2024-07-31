@@ -44,7 +44,7 @@ body {
 
 #blocker {
     width: 100vw;
-    height: 220vh;
+    height: 420vh;
 }
 
 #content {
@@ -52,6 +52,67 @@ body {
     top: 200px;
     left: 50%;
     transform: translateX(-50%);
+    text-align: center;
+    margin: 0 auto;
+}
+
+#from, #to {
+    width: 200px;
+    height: 40px;
+    padding-left: 10px;
+    border-radius: 20px 20px 0 0;
+    border: 3px solid var(--highlight);
+    margin: 20px 0 20px 20px;
+}
+
+#from:focus, #to:focus {
+    border: 3px solid var(--accent);
+    outline: none;
+}
+
+.list {
+    display: inline-block;
+    list-style: none;
+    min-width: 216px;
+    max-width: 216px;
+    position: absolute;
+    top: 100px;
+}
+
+#from_list {
+    left: 159.5px;
+}
+
+#to_list {
+    right: 139.5px;
+}
+
+.list-items {
+    background-color: white;
+    padding: 5px;
+    border: 3px solid grey;
+    border-top: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.list-items:last-child {
+    border-radius: 0 0 20px 20px;
+}
+
+#where span {
+    position: absolute;
+    top: 50px;
+}
+
+#where span:nth-child(1) {
+    left: 35%;
+    transform: translateX(-50%);
+}
+
+#where span:nth-child(2) {
+    right: 28%;
 }
 
 #content h2 {
@@ -67,11 +128,35 @@ body {
 
 .flatpickr-calendar {
     font-size: 12px;
+    width: auto;
+    margin: 0 auto;
 }
 
-input[type=number] {
-    height: 35px;
-    width: 50px;
+.number-inputs {
+    display: flex;
+    align-items: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="number"] {
+    width: 60px;
+    height: 30px;
+    padding: 5px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    font-size: 16px;
+    text-align: center;
+    margin-right: 20px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
 
 .radio-group {
@@ -80,7 +165,9 @@ input[type=number] {
     gap: 10px;
     font-size: 18px;
     font-weight: bold;
-    margin: 20px;
+    margin: 20px auto;
+    justify-content: center;
+    max-width: 100%;
 }
 
 .radio-group label {
@@ -111,7 +198,25 @@ textarea {
     gap: 10px;
     font-size: 18px;
     font-weight: bold;
-    margin: 20px;
+    margin: 20px auto;
+    justify-content: center;
+    max-width: 100%;
+}
+
+h4 {
+    line-height: 30px;
+}
+
+textarea {
+    width: 100%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    resize: none;
 }
 
 .checkbox-group label {
@@ -139,8 +244,105 @@ textarea {
     text-align: right;
 }
 
+.budget-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#budgetText {
+    width: 120px;
+    padding: 5px;
+    border: 2px solid #007BFF;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
 #budgetSlider {
-    width: 300px;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    margin: 0 10px;
+    position: relative;
+}
+
+#budgetSlider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #007BFF;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    margin-top: -6px; /* Center the thumb */
+}
+
+#budgetSlider::-moz-range-thumb {
+    background: #007BFF;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+#budgetSlider::-ms-thumb {
+    background: #007BFF;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+}
+
+#budgetSlider::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+#budgetSlider::-moz-range-track {
+    width: 100%;
+    height: 8px;
+    background: #ddd;
+    border-radius: 5px;
+}
+
+#budgetSlider::-ms-track {
+    width: 100%;
+    height: 8px;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+}
+
+#budgetSlider::-ms-fill-lower {
+    background: #ddd;
+    border-radius: 5px;
+}
+
+#budgetSlider::-ms-fill-upper {
+    background: #ddd;
+    border-radius: 5px;
+}
+
+input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007BFF;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+input[type="submit"]:hover {
+    background-color: #0056b3;
 }
 
 /* resizing for different sizes/devices */

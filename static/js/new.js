@@ -30,11 +30,13 @@ function removeElements() {
 
 // Calendar
 document.addEventListener("DOMContentLoaded", function() {
-    flatpickr("#datePicker", {
+    flatpickr("#calendar", {
         mode: "range",
         dateFormat: "m-d-Y",
         minDate: "today",
         maxDate: new Date().fp_incr(365),
+        inline: true,
+        showMonths: 2,
         onChange: function(selectedDates) {
             if (selectedDates.length === 2) {
                 const startDate = selectedDates[0];
@@ -87,7 +89,7 @@ document.getElementById('travelForm').onsubmit = function(event) {
 
     let from = document.getElementById('from').value;
     let to = document.getElementById('to').value;
-    let date = document.getElementById('datePicker').value;
+    let date = document.getElementById('calendar').value;
     let adults = document.getElementById('adults').value;
     let seniors = document.getElementById('seniors').value;
     let children = document.getElementById('children').value;
@@ -106,16 +108,22 @@ document.getElementById('travelForm').onsubmit = function(event) {
 
 function add(parent, type, group, value) {
     let encoded = value.replace(' ', '-').replace('and', '').replace('&', '').toLowerCase();
+    let checked = false;
+
+    if (value[value.length - 1] === '+') {
+        checked = true;
+        value = value.slice(0, -1);
+    }
 
     parent.innerHTML += `
-    <input type="${type}" id="${encoded}" name="${group}" value="${value}">
+    <input type="${type}" id="${encoded}" name="${group}" value="${value}" ${checked ? 'checked' : ''}>
     <label for="${encoded}">${value}</label>
     `;
 }
 
-let petsVals = ['Yes', 'No', 'I have a service animal'];
-let whoVals = ['Friends', 'Family', 'Romantic Partner', 'Business Partner'];
-let timeVals = ["Must-See Attractions", "Great Food", "Hidden Gems", "Beaches", "Museums", "Sports", "Live Music and Concerts", "Luxury Shopping", "History", "Culture", "Wine & Beer", "Active outdoors", "Festivals and events", "Local Markets", "Guided tours", "Nightlife", "Spas", "Amusement Parks"];
+let petsVals = ['Yes', 'No+', 'I have a service animal'];
+let whoVals = ['Friends', 'Family+', 'Romantic Partner', 'Business Partner'];
+let timeVals = ["Must-See Attractions+", "Great Food", "Hidden Gems", "Beaches", "Museums", "Sports", "Live Music and Concerts", "Luxury Shopping", "History", "Culture", "Wine & Beer", "Active outdoors", "Festivals and events", "Local Markets", "Guided tours+", "Nightlife", "Spas", "Amusement Parks"];
 let restrictionsVals = ['Gluten Free', 'Vegan', 'Vegetarian'];
 
 petsVals.forEach(value => {
@@ -132,4 +140,12 @@ timeVals.forEach(value => {
 
 restrictionsVals.forEach(value => {
     add(document.getElementById('restrictions'), 'checkbox', '', value);
+});
+
+document.querySelectorAll('input[type="number"]').forEach(input => {
+    input.addEventListener('blur', function() {
+        if (this.value === '' || this.value < 0) {
+            this.value = 0;
+        }
+    });
 });

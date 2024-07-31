@@ -25,45 +25,57 @@
     <div id="content">
         <h2>Where do you want to go?</h2>
         <form autocomplete="off" id="travelForm">
-            <div>
-                <input type="text" id="from" placeholder="Search by airport" />
-                <input type="text" id="to" placeholder="Search by airport" />
+            <div id="where">
+                <span>Flying from</span>
+                <span>Flying to</span><br>
+                <input type="text" id="from" placeholder="Search by airport or city" />
+                <input type="text" id="to" placeholder="Search by airport or city" />
             </div>
             <ul class="list" id="from_list"></ul>
             <ul class="list" id="to_list"></ul>
 
-            <h2>When do you want to go?</h2>
-            <input id="datePicker" type="text" placeholder="Select Date Range">
-            <h2>How many people are coming on this trip?</h2>
-            Adults: <input type="number" id="adults" min="0">
-            Seniors: <input type="number" id="seniors" min="0">
-            Children: <input type="number" id="children" min="0">
+            <br><br><br><br><br><br><br>
+            <h2>When do you want to go?</h2><br>
+            <div id="calendar"></div>
 
+            <br><br><br><br><br><br><br>
+            <h2>How many people are coming on this trip?</h2><br>
+            Adults: <input type="number" id="adults" min="0" value="0">
+            Seniors: <input type="number" id="seniors" min="0" value="0">
+            Children: <input type="number" id="children" min="0" value="0">
+
+            <br><br><br><br><br><br><br>
             <h2>Any pets?</h2>
             <div class="radio-group" id="pets"></div>  
             
+            <br><br><br><br><br><br><br>
             <h2>Who are you traveling with?</h2>
             <div class="radio-group" id="who"></div>
             <textarea id="occasion" placeholder="Any special occasions? (e.g. honeymoon, family trip, etc)"></textarea>
 
+            <br><br><br><br><br><br><br>
             <h2>How would you like to spend your time?</h2>
             <h4>Choose as many as you wish</h4>
             <div class="checkbox-group" id="time"></div>
             <textarea id="extra" placeholder="Anything else? (e.g. indoors, hiking, etc)"></textarea>
 
-            <h2>Do you have any culinary preferences?</h2>
+            <br><br><br><br><br><br><br>
+            <h2>Do you have any culinary preferences?</h2><br>
             <textarea id="food" placeholder="Type in your preference (e.g. seafood, Asian, Western, spicy, etc.)"></textarea>
 
+            <br><br><br><br><br><br><br>
             <h2>Do you have any dietary restrictions?</h2>
             <h4>Select all that applies</h4>
             <div class="checkbox-group" id="restrictions"></div>
             <textarea id="diet-restrictions" placeholder="Other"></textarea>
 
+            <br><br><br><br><br><br><br>
             <h2>Budget</h2>
-            <input type="text" id="budgetText">
-            <input type="range" id="budgetSlider" min="1000" max="100000" step="1000" value="1000">
-            <br>
-            <input type="submit" value="Submit">
+            <div class="budget-container">
+                <input type="text" id="budgetText" placeholder="Enter amount">
+                <input type="range" id="budgetSlider" min="1000" max="100000" step="1000" value="1000">
+                <input type="submit" value="Submit">
+            </div>
         </form>
     </div>
 
