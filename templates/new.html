@@ -40,68 +40,15 @@
             Children: <input type="number" id="children" min="0">
 
             <h2>Any pets?</h2>
-            <div class="radio-group">
-                <input type="radio" id="yes" name="pets" value="yes">
-                <label for="yes">Yes</label>
-                <input type="radio" id="no" name="pets" value="no">
-                <label for="no">No</label>
-                <input type="radio" id="service-dog" name="pets" value="service-dog">
-                <label for="service-dog">I have a service animal</label>
-            </div>  
+            <div class="radio-group" id="pets"></div>  
             
             <h2>Who are you traveling with?</h2>
-            <div class="radio-group">
-                <input type="radio" id="friends" name="people" value="friends">
-                <label for="friends">Friends</label>
-                <input type="radio" id="family" name="people" value="family">
-                <label for="family">Family</label>
-                <input type="radio" id="romantic-partner" name="people" value="romantic-partner">
-                <label for="romantic-partner">Romantic Partner</label>
-                <input type="radio" id="business-partner" name="people" value="business-partner">
-                <label for="business-partner">Business Partner</label>
-            </div>
+            <div class="radio-group" id="who"></div>
             <textarea id="occasion" placeholder="Any special occasions? (e.g. honeymoon, family trip, etc)"></textarea>
 
             <h2>How would you like to spend your time?</h2>
             <h4>Choose as many as you wish</h4>
-            <div class="checkbox-group" id="time">
-                <input type="checkbox" id="must-see-attractions" value="Must-see Attractions">
-                <label for="must-see-attractions">Must-see Attractions</label>
-                <input type="checkbox" id="great-food" value="Great Food">
-                <label for="great-food">Great Food</label>
-                <input type="checkbox" id="hidden-gems" value="Hidden Gems">
-                <label for="hidden-gems">Hidden Gems</label>
-                <input type="checkbox" id="beaches" value="Beaches">
-                <label for="beaches">Beaches</label>
-                <input type="checkbox" id="museums" value="Museums">
-                <label for="museums">Museums</label>
-                <input type="checkbox" id="sports" value="Sports">
-                <label for="sports">Sports</label>
-                <input type="checkbox" id="live-music-concerts" value="Live Music and Concerts">
-                <label for="live-music-concerts">Live Music and Concerts</label>
-                <input type="checkbox" id="luxury-shopping" value="Luxury Shopping">
-                <label for="luxury-shopping">Luxury Shopping</label>
-                <input type="checkbox" id="history" value="History">
-                <label for="history">History</label>
-                <input type="checkbox" id="culture" value="Culture">
-                <label for="culture">Culture</label>
-                <input type="checkbox" id="wine-beer" value="Wine & Beer">
-                <label for="wine-beer">Wine & Beer</label>
-                <input type="checkbox" id="active-outdoors" value="Active outdoors">
-                <label for="active-outdoors">Active outdoors</label>
-                <input type="checkbox" id="festivals-events" value="Festivals and events">
-                <label for="festivals-events">Festivals and events</label>
-                <input type="checkbox" id="local-markets" value="Local Markets">
-                <label for="local-markets">Local Markets</label>
-                <input type="checkbox" id="guided-tours" value="Guided tours">
-                <label for="guided-tours">Guided tours</label>
-                <input type="checkbox" id="nightlife" value="Nightlife">
-                <label for="nightlife">Nightlife</label>
-                <input type="checkbox" id="spas" value="Spas">
-                <label for="spas">Spas</label>
-                <input type="checkbox" id="amusement-parks" value="Amusement Parks">
-                <label for="amusement-parks">Amusement Parks</label>
-            </div>
+            <div class="checkbox-group" id="time"></div>
             <textarea id="extra" placeholder="Anything else? (e.g. indoors, hiking, etc)"></textarea>
 
             <h2>Do you have any culinary preferences?</h2>
@@ -109,14 +56,7 @@
 
             <h2>Do you have any dietary restrictions?</h2>
             <h4>Select all that applies</h4>
-            <div class="checkbox-group" id="restrictions">
-                <input type="checkbox" id="gluten-free" value="gluten-free">
-                <label for="gluten-free">Gluten Free</label>
-                <input type="checkbox" id="vegan" value="vegan">
-                <label for="vegan">Vegan</label>
-                <input type="checkbox" id="vegetarian" value="vegetarian">
-                <label for="vegetarian">Vegetarian</label>
-            </div>
+            <div class="checkbox-group" id="restrictions"></div>
             <textarea id="diet-restrictions" placeholder="Other"></textarea>
 
             <h2>Budget</h2>

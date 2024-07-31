@@ -70,13 +70,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     budgetText.addEventListener('input', () => {
         let value = budgetText.value.replace(/[^0-9]/g, '');
-        value = Math.min(Math.max(value, 1000), 100000); // Clamping value between 1000 and 100000
+        value = Math.min(Math.max(value, 1000), 100000);
         updateSlider(value);
     });
 
     budgetText.addEventListener('change', () => {
         let value = budgetText.value.replace(/[^0-9]/g, '');
-        value = Math.min(Math.max(value, 1000), 100000); // Clamping value between 1000 and 100000
+        value = Math.min(Math.max(value, 1000), 100000);
         updateTextBox(value);
         updateSlider(value);
     });
@@ -103,3 +103,33 @@ document.getElementById('travelForm').onsubmit = function(event) {
 
     window.location.href = `/chat?from=${from}&to=${to}&date=${date}&adults=${adults}&seniors=${seniors}&children=${children}&pets=${pets}&people=${people}&occasion=${occasion}&extra=${extra}&food=${food}&dietRestrictions=${dietRestrictions}&time=${encodeURIComponent(JSON.stringify(timeSpent))}&restrictions=${encodeURIComponent(JSON.stringify(restrictions))}&budget=${budget}`;
 }
+
+function add(parent, type, group, value) {
+    let encoded = value.replace(' ', '-').replace('and', '').replace('&', '').toLowerCase();
+
+    parent.innerHTML += `
+    <input type="${type}" id="${encoded}" name="${group}" value="${value}">
+    <label for="${encoded}">${value}</label>
+    `;
+}
+
+let petsVals = ['Yes', 'No', 'I have a service animal'];
+let whoVals = ['Friends', 'Family', 'Romantic Partner', 'Business Partner'];
+let timeVals = ["Must-See Attractions", "Great Food", "Hidden Gems", "Beaches", "Museums", "Sports", "Live Music and Concerts", "Luxury Shopping", "History", "Culture", "Wine & Beer", "Active outdoors", "Festivals and events", "Local Markets", "Guided tours", "Nightlife", "Spas", "Amusement Parks"];
+let restrictionsVals = ['Gluten Free', 'Vegan', 'Vegetarian'];
+
+petsVals.forEach(value => {
+    add(document.getElementById('pets'), 'radio', 'pets', value);
+});
+
+whoVals.forEach(value => {
+    add(document.getElementById('who'), 'radio', 'people', value);
+});
+
+timeVals.forEach(value => {
+    add(document.getElementById('time'), 'checkbox', '', value);
+});
+
+restrictionsVals.forEach(value => {
+    add(document.getElementById('restrictions'), 'checkbox', '', value);
+});
