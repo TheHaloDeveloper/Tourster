@@ -1,9 +1,12 @@
 <link rel="stylesheet" href="/static/css/navbar.css"></link>
 
 <div id="navbar" class="noselect bg-semi">
+    <div class="progress-container">
+        <div class="progress-bar" id="myBar"></div>
+    </div>
+
     <div id="tourster">
         <img class="logo" src="/static/images/tourster-transparent.png">
-        <span class="name">Tourster</span>
     </div>
 
     <div id="links">
@@ -17,3 +20,14 @@
         <a href="/soon"><button id="login_btn">Log In</button></a>
     </div>
 </div>
+
+<script>
+    window.onscroll = function() {myFunction()};
+
+    function myFunction() {
+        var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        var scrolled = (winScroll / height) * 100;
+        document.getElementById("myBar").style.width = scrolled + "%";
+    }
+</script>
