@@ -254,43 +254,6 @@ body {
 }
 
 /* resizing for different sizes/devices */
-@media only screen and (max-width: 872px) {
-    #tourster span {
-        display: none;
-    }
-
-    #links {
-        left: 70px;
-        transform: none;
-    }
-
-    #links span {
-        padding: 10px;
-    }
-}
-
-@media only screen and (max-width: 770px) {
-    #agreements {
-        right: unset;
-        left: 0;
-        top: 20px;
-        display: inline-block;
-    }
-
-    footer {
-        margin-bottom: 0;
-    }
-
-    #footer_bottom {
-        position: absolute;
-        bottom: 30px;
-    }
-
-    #agreements a {
-        padding: 5px;
-    }
-}
-
 @media only screen and (max-width: 770px) {
     #purchase-widget {
         top: 470px;
@@ -305,81 +268,6 @@ body {
 
     #soon {
         top: 250px;
-    }
-}
-
-@media only screen and (max-width: 600px) {
-    #links span {
-        padding: 5px;
-    }
-
-    .buttons {
-        line-height: 50px;
-    }
-
-    .buttons button {
-        width: 60px;
-        height: 20px;
-        border-radius: 5px;
-    }
-
-    #signup_btn {
-        margin-right: 10px;
-    }
-
-    #links {
-        left: unset;
-        right: 10px;
-        line-height: unset;
-        line-height: 115px;
-    }
-
-    #large_table {
-        display: none;
-    }
-
-    #small_table {
-        position: absolute;
-        top: -130px;
-        left: -2px;
-        display: block;
-    }
-
-    #footer_topleft {
-        width: 100%;
-        height: unset;
-    }
-
-    #footer_bottom {
-        top: 400px;
-    }
-
-    #desc {
-        margin-top: -20px;
-    }
-
-    #waitlist {
-        display: inline-block;
-        height: 20px;
-        width: 60px;
-        border-radius: 5px;
-        margin: 10px;
-    }
-
-    #footer_topright {
-        width: 100%;
-        position: absolute;
-        left: unset;
-        top: 220px;
-    }
-
-    #tourster2 {
-        margin-bottom: 0;
-    }
-
-    footer {
-        height: 500px;
-        margin-bottom: 0;
     }
 }
 
@@ -400,58 +288,8 @@ body {
     }
 }
 
-@media only screen and (max-width: 450px) {
-    #agreements a {
-        display: block;
-        padding: 0;
-    }
-
-    #footer_bottom {
-        line-height: 25px;
-    }
-}
-
-@media only screen and (max-width: 410px) {
-    #tourster2 img {
-        width: 40px;
-    }
-
-    #tourster2 span {
-        font-size: 25px;
-        line-height: 45px;
-        left: 50px;
-    }
-
-    #desc {
-        font-size: 15px;
-    }
-}
-
 @media only screen and (max-width: 360px) {
-    #links {
-        font-size: 15px;
-    }
-
-    #heading {
-        font-size: 10px;
-        width: calc(240px);
-    }
-
     #soon {
         top: 230px;
-    }
-
-    #footer_bottom span, #agreements a {
-        font-size: 12px;
-    }
-
-    #footer_bottom {
-        line-height: 20px;
-    }
-}
-
-@media only screen and (max-width: 350px) {
-    #waitlist {
-        margin-left: 0px;
     }
 }
