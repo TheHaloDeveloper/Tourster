@@ -4,8 +4,16 @@ let meals = 0;
 function changeDay(i){
     document.getElementById('hotels-container').style.display = 'none';
     document.getElementById('map').style.width = 'calc(50vw - 75px)';
+
     map.resize();
-    iteneraryPerDay(attractionOptions, counts, i)
+    iteneraryPerDay(attractionOptions, counts, i);
+    resetButtons(i + 1);
+}
+
+function showHotels() {
+    document.getElementById('hotels-container').style.display = 'block';
+    document.getElementById('map').style.width = 'calc(40vw - 75px)';
+    resetButtons(1);
 }
 
 function clearItenerary() {

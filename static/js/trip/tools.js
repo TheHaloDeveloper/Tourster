@@ -177,3 +177,15 @@ function flightCost(d, days) {
 
     return Math.round(estimatedCost * 100) / 100;
 }
+
+function resetButtons(index) {
+    let btns = document.getElementById('buttons');
+
+    for(let btn of btns.children) {
+        btn.style.backgroundColor = '#ffffff';
+        btn.style.color = '#000000';
+    }
+
+    btns.children[index].style.backgroundColor = 'rgb(35, 41, 127)';
+    btns.children[index].style.color = '#ffffff';
+}
