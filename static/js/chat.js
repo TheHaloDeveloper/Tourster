@@ -1,7 +1,6 @@
 let message_input = document.getElementById("message_input");
 let messages_list = document.getElementById("messages_list");
 let messages = document.getElementById("messages");
-let mainLogo = document.getElementById("main-logo");
 
 let first_message = false;
 
@@ -29,10 +28,6 @@ function getUrlParams() {
 
 const p = getUrlParams();
 // window.history.replaceState(null, '', window.location.pathname);
-
-function animateLogo() {
-    mainLogo.classList.add("spin-fade");
-}
 
 function msg(sender, text) {
     let message = document.createElement('li');
@@ -80,7 +75,6 @@ function message_send() {
 
         if (!first_message) {
             first_message = true;
-            animateLogo();
 
             info = `I am flying from ${p.from} to ${p.to}.
             There are ${p.children} children, ${p.adults} adult(s), and ${p.seniors} senior(s).

@@ -1,7 +1,7 @@
 body {
     margin: 0;
     overscroll-behavior: none;
-    background-color: rgb(229, 229, 229);
+    background-color: white;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
@@ -12,36 +12,35 @@ body {
 
 #input_holder {
     width: 100vw;
-    height: 60px;
+    height: auto;
     position: absolute;
-    bottom: 0;
+    bottom: 30px;
 }
 
 #message_input {
-    width: calc(100vw - 50px);
-    height: 25px;
-    margin-left: 20px;
-    margin-top: 15px;
+    width: calc(100vw - 120px);
+    height: 50px;
+    margin-left: 50px;
     border-radius: 20px;
-    border: 3px solid black;
     padding-left: 10px;
+    background-color: rgb(246, 243, 238);
+    outline: none;
+    border: none;
 }
 
 #message_input:focus {
     outline: none;
-    border: 3px solid rgb(19, 197, 93);
 }
 
 #send_btn {
-    height: 27px;
-    width: 25px;
+    height: 50px;
+    width: 50px;
     position: absolute;
-    top: 18px;
-    right: 15px;
+    right: 60px;
     outline: none;
     border: 0;
-    border-left: 3px solid black;
     border-radius: 0 15px 15px 0;
+    background-color: rgb(246, 243, 238);
 }
 
 #send_btn:hover {
@@ -89,12 +88,12 @@ body {
 }
 
 .list-ai div {
-    background-color: lightgray;
+    background-color: rgb(246, 243, 238);
 }
 
 .list-user div {
-    background-color: rgb(0, 145, 255);
-    color: white;
+    background-color: rgb(246, 243, 238);
+    color: black;
 }
 
 .list-ai img {
@@ -130,29 +129,6 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
-    }
-}
-
-#main-logo {
-    position: absolute;
-    width: 100px;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: opacity 1s;
-}
-
-.spin-fade {
-    animation: spin 0.5s linear;
-    opacity: 0.3;
-}
-
-@keyframes spin {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
     }
 }
 

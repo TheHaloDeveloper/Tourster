@@ -278,7 +278,7 @@ textarea {
     cursor: pointer;
     position: relative;
     z-index: 1;
-    margin-top: -6px; /* Center the thumb */
+    margin-top: -6px;
 }
 
 #budgetSlider::-moz-range-thumb {
